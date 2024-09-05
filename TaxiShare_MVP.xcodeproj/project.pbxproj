@@ -115,6 +115,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F03C9882C89B6E100FFF199 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		4F2AD02E2C87FF50004A32E5 /* SmsPinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmsPinCodeView.swift; sourceTree = "<group>"; };
 		4F3C94402C851F5F00EBA6A2 /* Authentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		4F3C94412C851F5F00EBA6A2 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -325,11 +326,12 @@
 		4FF5B0C42C851B6A00176585 /* TaxiShare_MVP */ = {
 			isa = PBXGroup;
 			children = (
+				4F03C9882C89B6E100FFF199 /* Secrets.xcconfig */,
 				4FF5B1E02C851BD800176585 /* TaxiShare-MVP-Info.plist */,
+				4FF5B15B2C851BB300176585 /* GoogleService-Info.plist */,
 				4FF5B0F42C851BB200176585 /* TaxiShare_MVP.entitlements */,
 				4FF5B0D02C851B6C00176585 /* TaxiShare_MVP.xcdatamodeld */,
 				4FF5B1022C851BB300176585 /* Localizable.xcstrings */,
-				4FF5B15B2C851BB300176585 /* GoogleService-Info.plist */,
 				4FF5B1522C851BB300176585 /* Assets.xcassets */,
 				4FF5B15F2C851BB300176585 /* Preview Content */,
 				4FF5B12A2C851BB300176585 /* Fonts */,
@@ -816,6 +818,7 @@
 /* Begin XCBuildConfiguration section */
 		4FF5B0E92C851B6C00176585 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4F03C9882C89B6E100FFF199 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -879,6 +882,7 @@
 		};
 		4FF5B0EA2C851B6C00176585 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4F03C9882C89B6E100FFF199 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
