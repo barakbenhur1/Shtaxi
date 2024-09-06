@@ -9,16 +9,15 @@ import Foundation
 
 // MARK: Networkble
 private protocol Networkble: ObservableObject {
-    typealias UrlPathHolder = () -> (String)
-    typealias UrlPathMaker = (String) -> UrlPathHolder
+    typealias UrlPathMaker = (String) -> String
     
     var responedQueue: DispatchQueue { get }
     var root: String { get }
-    var path: UrlPathMaker { get }
+    var url: UrlPathMaker { get }
 }
 
 // MARK: NetworkError
-internal enum NetworkError: Error {
+private enum NetworkError: Error {
     case badUrl
     case invalidRequestBody
     case badResponse
@@ -31,96 +30,6 @@ internal enum NetworkError: Error {
 internal enum HttpMethod: String {
     case post = "POST", get = "GET"
 }
-
-extension NetworkError: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case .badUrl:
-            return "There was an error creating the URL"
-        case .invalidRequestBody:
-            return "There was an error creating the request body"
-        case .badResponse:
-            return "Did not get a valid response"
-        case .badStatus:
-            return "Did not get a 2xx status code from the response"
-        case .noData:
-            return "No data"
-        case .failedToDecodeResponse:
-            return "Failed to decode response into the given type"
-        }
-    }
-}
-
-// MARK: BaseUrl
-internal class BaseUrl: ObservableObject {
-    static var value: String {
-        get {
-#if DEBUG
-            //                        return "http://localhost:3000/"
-            return "https://shtaxi-server.onrender.com/"
-#else
-            return "https://shtaxi-server.onrender.com/"
-#endif
-        }
-    }
-}
-
-// MARK: Request
-internal struct Request {
-    private var base: String { get { return BaseUrl.value } }
-    
-    let method: HttpMethod
-    let url: String
-    let parameters: [String: Any]
-    
-    // MARK: Public API
-    var build: () throws -> URLRequest { newRequest }
-    
-    
-    // MARK: Private
-    private func newRequest() throws -> URLRequest {
-        return try createRequestWithType()
-            .withHttpMethod(method.rawValue)
-            .withHeaders(.init(value: "application/json", headerField: "Content-Type"),
-                         .init(value: "application/json", headerField: "Accept"))
-    }
-    
-    // createRequestWithType -> throws
-    private func createRequestWithType() throws -> URLRequest {
-        switch method {
-        case .post:
-            guard let httpBody = parameters.httpBody() else { throw NetworkError.invalidRequestBody }
-            return try createRequest().withHttpBody(httpBody)
-        case .get:
-            return try createRequest()
-        }
-    }
-    
-    // createRequest -> throws
-    private func createRequest() throws -> URLRequest {
-        return URLRequest(url: try createUrl())
-    }
-    
-    // createUrl -> throws
-    private func createUrl() throws -> URL {
-        guard let url = URL(string: createUrlString()) else { throw NetworkError.badUrl }
-        return url
-    }
-    
-    // createUrlString
-    private func createUrlString() -> String {
-        switch method {
-        case .post:
-            return "\(base)\(url)"
-        case .get:
-            let prametrersFormatted = parameters.requestFormatted()
-            let keyValue = prametrersFormatted.isEmpty ? "" : "?\(prametrersFormatted)"
-            let urlString = "\(url)\(keyValue)"
-            return "\(base)\(urlString)"
-        }
-    }
-}
-
 
 // MARK: Network
 class Network: Networkble {
@@ -137,26 +46,22 @@ class Network: Networkble {
     }
     
     // MARK: path - path url value
-    fileprivate var path: UrlPathMaker {
-        return { url in
-            { [weak self] in
-                guard let self else { return "" }
-                return "\(root)/\(url)"
-            }
+    fileprivate var url: UrlPathMaker {
+        return { [weak self] url in
+            guard let self else { return "" }
+            return "\(root)/\(url)"
         }
     }
     
     // MARK: init
     internal init() {}
     
-    // MARK: private api
-    
-    // MARK: produceUrl
-    private func produceUrl(_ route: String) -> String {
-        return path(route)()
-    }
-    
     // MARK: send - to network
+    /// - Parameter method
+    /// - Parameter url
+    /// - Parameter parameters
+    /// - Parameter complition
+    /// - Parameter error
     private func send<T: Codable>(method: HttpMethod, url: String, parameters: [String: Any], complition: @escaping (Response<T>) -> (), error: @escaping (Error) -> ()) {
         do {
             let request = try Request(method: method, url: url, parameters: parameters).build()
@@ -190,19 +95,115 @@ class Network: Networkble {
     }
 }
 
+// MARK: Network public extension
 extension Network {
-    // MARK: public api
-    
     // MARK: send - call send to network and unwrap (result || error)
+    /// - Parameter method
+    /// - Parameter url
+    /// - Parameter parameters
+    /// - Parameter complition
+    /// - Parameter error
     internal func send<T: Codable>(method: HttpMethod, route: String, parameters: [String: Any] = [:], complition: @escaping (T) -> (), error: @escaping (String) -> ()) {
         send(method: method,
-             url: produceUrl(route),
+             url: url(route),
              parameters: parameters) { [weak self] result in
             guard let self else { return }
             responedQueue.async { complition(result.value) }
         } error: { [weak self] err in
             guard let self else { return }
             responedQueue.async { error(err.localizedDescription) }
+        }
+    }
+}
+
+// MARK: Network private extension
+extension Network {
+    // MARK: BaseUrl
+    private struct BaseUrl {
+        static var value: String {
+            get {
+#if DEBUG
+                //                        return "http://localhost:3000/"
+                return "https://shtaxi-server.onrender.com/"
+#else
+                return "https://shtaxi-server.onrender.com/"
+#endif
+            }
+        }
+    }
+    
+    // MARK: Request
+    private struct Request {
+        private var base: String { get { return BaseUrl.value } }
+        
+        let method: HttpMethod
+        let url: String
+        let parameters: [String: Any]
+        
+        // MARK: build
+        var build: () throws -> URLRequest { newRequest }
+        
+        // MARK: Private
+        private func newRequest() throws -> URLRequest {
+            return try createRequestWithType()
+                .withHttpMethod(method.rawValue)
+                .withHeaders(.init(value: "application/json", headerField: "Content-Type"),
+                             .init(value: "application/json", headerField: "Accept"))
+        }
+        
+        // createRequestWithType -> throws
+        private func createRequestWithType() throws -> URLRequest {
+            switch method {
+            case .post:
+                guard let httpBody = parameters.httpBody() else { throw NetworkError.invalidRequestBody }
+                return try createRequest().withHttpBody(httpBody)
+            case .get:
+                return try createRequest()
+            }
+        }
+        
+        // createRequest -> throws
+        private func createRequest() throws -> URLRequest {
+            return URLRequest(url: try createUrl())
+        }
+        
+        // createUrl -> throws
+        private func createUrl() throws -> URL {
+            guard let url = URL(string: createUrlString()) else { throw NetworkError.badUrl }
+            return url
+        }
+        
+        // createUrlString
+        private func createUrlString() -> String {
+            switch method {
+            case .post:
+                return "\(base)\(url)"
+            case .get:
+                let prametrersFormatted = parameters.requestFormatted()
+                let keyValue = prametrersFormatted.isEmpty ? "" : "?\(prametrersFormatted)"
+                let urlString = "\(url)\(keyValue)"
+                return "\(base)\(urlString)"
+            }
+        }
+    }
+}
+
+// MARK: NetworkError private extension
+extension NetworkError: LocalizedError {
+    fileprivate var errorDescription: String? {
+        switch self {
+        case .badUrl:
+            return "There was an error creating the URL"
+        case .invalidRequestBody:
+            return "There was an error creating the request body"
+        case .badResponse:
+            return "Did not get a valid response"
+        case .badStatus:
+            return "Did not get a 2xx status code from the response"
+        case .noData:
+            return "No data"
+        case .failedToDecodeResponse:
+            return "Failed to decode response into the given type"
         }
     }
 }
