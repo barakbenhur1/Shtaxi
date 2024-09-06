@@ -14,6 +14,7 @@ struct TLogo<S: Shape>: View {
     var body: some View {
        Image("logo")
             .resizable()
+            .aspectRatio(contentMode: .fit)
             .clipShape(shape)
             .frame(width: size)
             .frame(height: size)

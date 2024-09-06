@@ -12,7 +12,7 @@ extension Dictionary {
         return try? JSONSerialization.data(withJSONObject: self)
     }
     
-    func requestFormatted() -> String? {
+    func requestFormatted() -> String {
         map { key, value in
             let escapedKey = "\(key)".addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? ""
             let escapedValue = "\(value)".addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? ""

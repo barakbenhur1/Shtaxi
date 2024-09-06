@@ -53,8 +53,8 @@ struct LoginView: ViewWithTransition, ProfileHandeler {
         externalActionLoading = true
         ProfileSyncHendeler.shared.handleLoginTap(profile: profiles.last,
                                                   id: id,
-                                                  name: name ?? "",
                                                   email: email ?? "",
+                                                  name: name ?? "",
                                                   birthdate: birthdate ?? "",
                                                   gender: gender ?? "") { _ in   externalActionLoading = false }
     }

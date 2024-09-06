@@ -27,6 +27,7 @@ internal struct ColorItem {
     let progressStart: Color = Color(hex: "#6CC1FF")
     let progressEnd: Color = Color(hex: "#0094FF")
     let inputFiled: Color = Color(hex: "#727272")
+    let tYellow: Color = Color(hex: "#FFC100")
     let white: Color = .white
     let black: Color = .black
     let gray: Color = .gray

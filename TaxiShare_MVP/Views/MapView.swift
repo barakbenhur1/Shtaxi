@@ -17,7 +17,7 @@ struct MapView: ViewWithTransition {
     @StateObject var locationManager = LocationManager()
     
     @State private var locationService = LocationService(completer: .init())
-    @State private var postion: MapCameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275), span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)))
+    @State private var postion: MapCameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275), span: MKCoordinateSpan(latitudeDelta: 0.006, longitudeDelta: 0.006)))
     @State private var startPosition: CLLocation = .init()
     @State private var searchResults: [SearchResult] = []
     @State private var endText: String = ""
@@ -72,7 +72,7 @@ struct MapView: ViewWithTransition {
                         if endFocused {
                             viewModel.endPositionValue = item
                             isShowAlert = true
-                            postion = MapCameraPosition.region(MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)))
+                            postion = MapCameraPosition.region(MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.006, longitudeDelta: 0.006)))
                             endText = ""
                         }
                         else if startFocused {
@@ -125,7 +125,7 @@ struct MapView: ViewWithTransition {
                 }
                 viewModel.sheetValue = selection
             }
-            .mapStyle(.imagery(elevation: .realistic))
+            .mapStyle(.hybrid)
             .ignoresSafeArea()
             .onTapGesture {
                 startFocused = false
@@ -170,7 +170,7 @@ struct MapView: ViewWithTransition {
                 .padding(.top, 58)
                 .padding(.bottom, 20)
             }
-            .background(Custom.shared.color.black.opacity(0.8))
+            .background(Custom.shared.color.tYellow.opacity(0.98))
             .clipShape(UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 10, bottomTrailing: 10)))
             .ignoresSafeArea()
             

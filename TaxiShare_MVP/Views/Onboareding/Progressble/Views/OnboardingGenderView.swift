@@ -74,8 +74,8 @@ struct OnboardingGenderView: OnboardingProgress {
     
     func preformAction(manager: PersistenceController, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
         guard let profile else { return complete(false) }
-        vm.upload(profile: profile,
-                  uploadBody: .init(gender: holder.value)) {
+        vm.update(profile: profile,
+                  updateBody: .init(gender: holder.value)) {
             manager.set(profile: profile,
                         gender: holder.value)
             complete(true)

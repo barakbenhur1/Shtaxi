@@ -107,8 +107,8 @@ struct SmsPinCodeView: ProfileUpdater {
                 vm.login(id: id) { user in
                     let profile = manager.new(id: user.id)
                     didApprove(id, name, email) { uploadSuccess, onFail in
-                        vm.upload(profile: profile,
-                                  uploadBody: .init(phone: phone)) {
+                        vm.update(profile: profile,
+                                  updateBody: .init(phone: phone)) {
                             manager.set(profile: profile,
                                         phone: phone)
                             

@@ -64,8 +64,8 @@ struct OnboardingNameView: OnboardingProgress {
     func preformAction(manager: PersistenceController, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
         guard let profile else { return complete(false) }
         guard let name = holder.value else { return complete(false) }
-        vm.upload(profile: profile,
-                  uploadBody: .init(name: name)) {
+        vm.update(profile: profile,
+                  updateBody: .init(name: name)) {
             manager.set(profile: profile,
                         name: name)
             complete(true)

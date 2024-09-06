@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4F2AD02F2C87FF50004A32E5 /* SmsPinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2AD02E2C87FF50004A32E5 /* SmsPinCodeView.swift */; };
+		4F36D1AA2C89C7650025E91A /* Logo3DView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F36D1A92C89C7650025E91A /* Logo3DView.swift */; };
 		4F3C94442C851F5F00EBA6A2 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3C94402C851F5F00EBA6A2 /* Authentication.swift */; };
 		4F3C94452C851F5F00EBA6A2 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3C94412C851F5F00EBA6A2 /* Network.swift */; };
 		4F3C94462C851F5F00EBA6A2 /* OnboardringViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3C94422C851F5F00EBA6A2 /* OnboardringViewModel.swift */; };
@@ -15,7 +16,7 @@
 		4FC702772C85307200C85CE9 /* NotoSansHebrew-VariableFont_wdth,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4FC702762C85301300C85CE9 /* NotoSansHebrew-VariableFont_wdth,wght.ttf */; };
 		4FC702842C85524200C85CE9 /* CustomAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC7027D2C85524200C85CE9 /* CustomAlertView.swift */; };
 		4FC702852C85524200C85CE9 /* View-CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC7027E2C85524200C85CE9 /* View-CustomAlert.swift */; };
-		4FD3CFC92C888D9E00910867 /* UploadBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD3CFC82C888D9E00910867 /* UploadBody.swift */; };
+		4FD3CFC92C888D9E00910867 /* UpdateBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD3CFC82C888D9E00910867 /* UpdateBody.swift */; };
 		4FD3CFCB2C889FF600910867 /* UserIdBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD3CFCA2C889FF600910867 /* UserIdBody.swift */; };
 		4FD3CFCD2C8996AB00910867 /* URLRequest+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD3CFCC2C8996AB00910867 /* URLRequest+EXT.swift */; };
 		4FF5B0CF2C851B6C00176585 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0CE2C851B6C00176585 /* Persistence.swift */; };
@@ -117,6 +118,7 @@
 /* Begin PBXFileReference section */
 		4F03C9882C89B6E100FFF199 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		4F2AD02E2C87FF50004A32E5 /* SmsPinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmsPinCodeView.swift; sourceTree = "<group>"; };
+		4F36D1A92C89C7650025E91A /* Logo3DView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logo3DView.swift; sourceTree = "<group>"; };
 		4F3C94402C851F5F00EBA6A2 /* Authentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		4F3C94412C851F5F00EBA6A2 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		4F3C94422C851F5F00EBA6A2 /* OnboardringViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardringViewModel.swift; sourceTree = "<group>"; };
@@ -124,7 +126,7 @@
 		4FC702762C85301300C85CE9 /* NotoSansHebrew-VariableFont_wdth,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansHebrew-VariableFont_wdth,wght.ttf"; sourceTree = "<group>"; };
 		4FC7027D2C85524200C85CE9 /* CustomAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAlertView.swift; sourceTree = "<group>"; };
 		4FC7027E2C85524200C85CE9 /* View-CustomAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View-CustomAlert.swift"; sourceTree = "<group>"; };
-		4FD3CFC82C888D9E00910867 /* UploadBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadBody.swift; sourceTree = "<group>"; };
+		4FD3CFC82C888D9E00910867 /* UpdateBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBody.swift; sourceTree = "<group>"; };
 		4FD3CFCA2C889FF600910867 /* UserIdBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdBody.swift; sourceTree = "<group>"; };
 		4FD3CFCC2C8996AB00910867 /* URLRequest+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+EXT.swift"; sourceTree = "<group>"; };
 		4FF5B0C22C851B6A00176585 /* TaxiShare_MVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaxiShare_MVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -246,6 +248,21 @@
 			path = "Phone Login";
 			sourceTree = "<group>";
 		};
+		4F36D1A72C89C6E30025E91A /* Logo */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Logo;
+			sourceTree = "<group>";
+		};
+		4F36D1A82C89C7430025E91A /* Logo3DScreen */ = {
+			isa = PBXGroup;
+			children = (
+				4F36D1A92C89C7650025E91A /* Logo3DView.swift */,
+			);
+			path = Logo3DScreen;
+			sourceTree = "<group>";
+		};
 		4F3C94432C851F5F00EBA6A2 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,7 +314,7 @@
 		4FD3CFC72C888D8800910867 /* Body */ = {
 			isa = PBXGroup;
 			children = (
-				4FD3CFC82C888D9E00910867 /* UploadBody.swift */,
+				4FD3CFC82C888D9E00910867 /* UpdateBody.swift */,
 				4FD3CFCA2C889FF600910867 /* UserIdBody.swift */,
 			);
 			path = Body;
@@ -340,10 +357,9 @@
 				4FF5B15D2C851BB300176585 /* Modifiers */,
 				4FF5B16B2C851BB400176585 /* Hendelers */,
 				4FF5B1512C851BB300176585 /* Managers */,
-				4FF5B1722C851BB400176585 /* Models */,
 				4FF5B1042C851BB300176585 /* Services */,
+				4FF5B1722C851BB400176585 /* Models */,
 				4F3C94432C851F5F00EBA6A2 /* ViewModels */,
-				4FF5B1012C851BB200176585 /* Configiration */,
 				4FF5B14D2C851BB300176585 /* Views */,
 				4FF5B1642C851BB400176585 /* Storyboard.storyboard */,
 				4FF5B1632C851BB300176585 /* ShtaxiApp.swift */,
@@ -381,6 +397,8 @@
 		4FF5B0FB2C851BB200176585 /* Componnets */ = {
 			isa = PBXGroup;
 			children = (
+				4F36D1A72C89C6E30025E91A /* Logo */,
+				4F36D1A82C89C7430025E91A /* Logo3DScreen */,
 				4FF5B0F62C851BB200176585 /* Configs */,
 				4FC7027F2C85524200C85CE9 /* CustomAlert */,
 				4FF5B14A2C851BB300176585 /* SideMenu.swift */,
@@ -481,6 +499,7 @@
 		4FF5B14D2C851BB300176585 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4FF5B1012C851BB200176585 /* Configiration */,
 				4FF5B1622C851BB300176585 /* Router */,
 				4FF5B1422C851BB300176585 /* Wireframe */,
 				4FF5B13A2C851BB300176585 /* Onboareding */,
@@ -711,7 +730,7 @@
 			files = (
 				4F3C94452C851F5F00EBA6A2 /* Network.swift in Sources */,
 				4FF5B1C42C851BB400176585 /* UserLoginManager.swift in Sources */,
-				4FD3CFC92C888D9E00910867 /* UploadBody.swift in Sources */,
+				4FD3CFC92C888D9E00910867 /* UpdateBody.swift in Sources */,
 				4FF5B1A92C851BB400176585 /* OnboardingNameView.swift in Sources */,
 				4FF5B1AA2C851BB400176585 /* OnboardingRulesView.swift in Sources */,
 				4FF5B1C12C851BB400176585 /* SliderView.swift in Sources */,
@@ -779,6 +798,7 @@
 				4FF5B1DA2C851BB400176585 /* FacebookAuthModel.swift in Sources */,
 				4FF5B1752C851BB400176585 /* TButtonConfig.swift in Sources */,
 				4FF5B0D22C851B6C00176585 /* TaxiShare_MVP.xcdatamodeld in Sources */,
+				4F36D1AA2C89C7650025E91A /* Logo3DView.swift in Sources */,
 				4F2AD02F2C87FF50004A32E5 /* SmsPinCodeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -944,7 +964,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TaxiShare_MVP/TaxiShare_MVP.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_ASSET_PATHS = "\"TaxiShare_MVP/Preview Content\"";
 				DEVELOPMENT_TEAM = UNVTN9W8HQ;
 				ENABLE_PREVIEWS = YES;
@@ -978,7 +998,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TaxiShare_MVP/TaxiShare_MVP.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_ASSET_PATHS = "\"TaxiShare_MVP/Preview Content\"";
 				DEVELOPMENT_TEAM = UNVTN9W8HQ;
 				ENABLE_PREVIEWS = YES;

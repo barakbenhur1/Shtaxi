@@ -78,8 +78,8 @@ struct OnboardingRulesView: OnboardingProgress {
     
     func preformAction(manager: PersistenceController, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
         guard let profile else { return complete(false) }
-        vm.upload(profile: profile,
-                  uploadBody: .init(rules: true)) {
+        vm.update(profile: profile,
+                  updateBody: .init(rules: true)) {
             manager.set(profile: profile,
                         rules: true)
             complete(true)

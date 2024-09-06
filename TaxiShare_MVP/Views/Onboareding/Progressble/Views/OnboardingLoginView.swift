@@ -15,14 +15,17 @@ struct OnboardingLoginView: View {
     private let auth = Authentication()
     private let main = DispatchQueue.main
     
-    fileprivate func googleSignInButton() -> some View {
+    @ViewBuilder fileprivate var googleSignInButton: some View {
         let button = Button(action: {
             hideKeyboard()
             Task {
                 auth.googleOauth { model in
                     guard let model else { return }
                     main.async {
-                        didSignup(model.id, model.givenName, model.email, "", nil)
+                        didSignup(model.id,
+                                  model.givenName,
+                                  model.email, "",
+                                  nil)
                     }
                 }
             }
@@ -38,22 +41,24 @@ struct OnboardingLoginView: View {
                     .frame(maxWidth: .infinity)
                     .frame(maxHeight: .infinity)
             }
-            .frame(maxWidth: .infinity)
-            .frame(maxHeight: .infinity)
         })
             .buttonStyle(LoginButtonStyle())
             .font(.title2.weight(.medium))
             .foregroundStyle(Custom.shared.color.black)
         
-        return makeLoginButton(view: button)
+        makeLoginButton(view: button)
     }
     
-    fileprivate func facebookSignInButton() -> some View {
+    @ViewBuilder fileprivate var facebookSignInButton: some View {
         let button = Button(action: {
             hideKeyboard()
             auth.facebookAuth { model in
                 main.async {
-                    didSignup(model.id, model.name, model.email, model.birthday, model.gender)
+                    didSignup(model.id,
+                              model.name,
+                              model.email,
+                              model.birthday,
+                              model.gender)
                 }
             }
         }, label: {
@@ -68,17 +73,15 @@ struct OnboardingLoginView: View {
                     .frame(maxWidth: .infinity)
                     .frame(maxHeight: .infinity)
             }
-            .frame(maxWidth: .infinity)
-            .frame(maxHeight: .infinity)
         })
             .buttonStyle(LoginButtonStyle())
             .font(.title2.weight(.medium))
             .foregroundStyle(Custom.shared.color.black)
         
-        return makeLoginButton(view: button)
+        makeLoginButton(view: button)
     }
     
-    fileprivate func appleSignInButton() -> some View {
+    @ViewBuilder fileprivate var appleSignInButton: some View {
         let button = SignInWithAppleButton(.signUp) { request in
             hideKeyboard()
             request.requestedScopes = [.fullName, .email]
@@ -88,7 +91,9 @@ struct OnboardingLoginView: View {
                 main.async {
                     if let userCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
                         guard let id = userCredential.user.encrypt() else { return }
-                        didSignup(id, userCredential.fullName?.givenName, userCredential.email, "", nil)
+                        didSignup(id,
+                                  userCredential.fullName?.givenName,
+                                  userCredential.email, "", nil)
                     }
                 }
             case .failure:
@@ -97,12 +102,12 @@ struct OnboardingLoginView: View {
         }
             .signInWithAppleButtonStyle(.white)
             .overlay(
-                RoundedRectangle(cornerRadius: 149)
+                Capsule()
                     .stroke(Custom.shared.color.darkText ,
                             lineWidth: 1)
             )
         
-        return makeLoginButton(view: button)
+        makeLoginButton(view: button)
     }
     
     var body: some View {
@@ -118,9 +123,9 @@ struct OnboardingLoginView: View {
             .padding(.bottom)
             
             VStack(spacing: 28) {
-                facebookSignInButton()
-                appleSignInButton()
-                googleSignInButton()
+                facebookSignInButton
+                appleSignInButton
+                googleSignInButton
             }
             
             VStack {
@@ -160,30 +165,34 @@ struct OnboardingLoginView: View {
     
     @ViewBuilder private func makeLoginButton(view: some View) -> some View {
         view
-            .clipShape(RoundedRectangle(cornerRadius: 149))
+            .clipShape(Capsule())
             .frame(height: 56)
     }
 }
 
-struct LoginButtonStyle: ButtonStyle {
+private struct LoginButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .background {
                 configuration.isPressed ? Custom.shared.color.gray.opacity(0.8) :
                 Color.clear
             }
+            .contentShape(Capsule())
+            .frame(maxWidth: .infinity)
+            .frame(maxHeight: .infinity)
             .overlay(
-                RoundedRectangle(cornerRadius: 149)
-                    .stroke(Custom.shared.color.darkText ,
+                Capsule()
+                    .stroke(Custom.shared.color.darkText,
                             lineWidth: 1)
+                    .allowsHitTesting(false)
             )
     }
 }
 
-#Preview {
-    OnboardingLoginView() { _, _, _, _, _ in
-        
-    } didFillPhone: { _ in
-        
-    }
-}
+//#Preview {
+//    OnboardingLoginView() { _, _, _, _, _ in
+//        
+//    } didFillPhone: { _ in
+//        
+//    }
+//}

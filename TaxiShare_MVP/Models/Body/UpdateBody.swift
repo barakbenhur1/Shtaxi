@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UploadBody: DictionaryRepresentable {
+struct UpdateBody: DictionaryRepresentable {
     var email: String? = nil
     var phone: String? = nil
     var name: String? = nil

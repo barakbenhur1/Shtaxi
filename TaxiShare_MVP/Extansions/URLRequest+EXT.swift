@@ -13,8 +13,21 @@ struct Haeder {
 }
 
 extension URLRequest {
-    @discardableResult mutating func withHeaders(_ values: Haeder...) -> URLRequest {
-        values.forEach { setValue($0.value, forHTTPHeaderField: $0.headerField) }
-        return self
+    @discardableResult func withHeaders(_ values: Haeder...) -> URLRequest {
+        var request = self
+        values.forEach { request.setValue($0.value, forHTTPHeaderField: $0.headerField) }
+        return request
+    }
+    
+    @discardableResult func withHttpMethod(_ method: String) -> URLRequest {
+        var request = self
+        request.httpMethod = method
+        return request
+    }
+    
+    @discardableResult func withHttpBody(_ body: Data) -> URLRequest {
+        var request = self
+        request.httpBody = body
+        return request
     }
 }

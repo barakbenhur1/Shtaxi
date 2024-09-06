@@ -7,24 +7,27 @@
 
 import Foundation
 
+// MARK: LoginError
 enum LoginError: Error {
-    case failed, deleted, unknown, retry
+    case failed, retry, deleted, unknown
 }
+
 extension LoginError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .failed:
             return "לוגין נכשל, אנא נסה שנית".localized()
+        case .retry:
+            return "שגיאה: אנא בצע לוגין מחדש".localized()
         case .deleted:
             return "חשבונך נמחק, אנא בצע לוגין מחדש".localized()
         case .unknown:
             return "שגיאה: יוזר לא קיים במערכת".localized()
-        case .retry:
-            return "שגיאה: אנא בצע לוגין מחדש".localized()
         }
     }
 }
 
+// MARK: ProfileSyncHendeler
 struct ProfileSyncHendeler {
     static let shared = ProfileSyncHendeler()
     
@@ -32,11 +35,17 @@ struct ProfileSyncHendeler {
     private let router: Router
     private let manager: PersistenceController
     
+    // MARK: private
+    
+    // MARK: init
     private init() {
         self.router = Router.shared
         self.manager = PersistenceController.shared
     }
     
+    // MARK: syncedLocalProfile
+    /// - Parameter profile - local profile
+    /// - Parameter id - user id
     private func syncedLocalProfile(profile: Profile?, id: String) -> Profile {
         if let profile {
             return manager.replace(profile: profile,
@@ -47,6 +56,75 @@ struct ProfileSyncHendeler {
         }
     }
     
+    // MARK: handleError
+    /// - Parameter error - server error
+    /// - Parameter loginError - local error
+    private func handleError(error: String, loginError: LoginError? = nil) {
+        print(error)
+        goToLogin(message: loginError)
+    }
+    
+    // MARK: removeLocalProfile
+    /// - Parameter Profile - local profile
+    private func removeLocalProfile(profile: Profile?) {
+        guard let profile else { return }
+        manager.delete(profile: profile)
+    }
+    
+    // MARK: preform
+    /// - Parameter Profile - local profile
+    /// - Parameter id
+    /// - Parameter email
+    /// - Parameter name
+    /// - Parameter birthdate
+    /// - Parameter gender
+    /// - Parameter didLogin - return if login successful
+    private func preform(profile: Profile?, id: String?, name: String, email: String, birthdate: String, gender: String, didLogin: @escaping (Bool) -> (), navigteWith: @escaping ([OnboardingProgressble]) -> (), error: ((String, LoginError?) -> ())? = nil) {
+        guard let id, !id.isEmpty else {
+            removeAndPopToLogin(profile: profile)
+            return didLogin(false)
+        }
+        
+        vm.getUser(id: id) { result in
+            let serverProfileExist = result.exist
+            
+            if let profile, !serverProfileExist {
+                removeAndPopToLogin(profile: profile,
+                                    massege: .deleted)
+                return didLogin(false)
+            }
+            
+            vm.login(id: id) { user in
+                let syncedLocalProfile = syncedLocalProfile(profile: profile, id: id)
+                
+                let onboardingScreens = onboardingScreens(user: user,
+                                                          syncedProfile: syncedLocalProfile,
+                                                          email: email,
+                                                          name: name,
+                                                          birthdate: birthdate,
+                                                          gender: gender)
+                
+                didLogin(true)
+                navigteWith(onboardingScreens)
+            } error: { err in
+                error?(err, .failed)
+                return didLogin(false)
+            }
+        } error: { err in
+            error?(err, .failed)
+            return didLogin(false)
+        }
+    }
+    
+    // MARK: public
+    
+    // MARK: onboardingScreens
+    /// - Parameter user - server profile
+    /// - Parameter syncedProfile - local profile
+    /// - Parameter email
+    /// - Parameter name
+    /// - Parameter birthdate
+    /// - Parameter gender
     func onboardingScreens(user: ProfileModel, syncedProfile: Profile, email: String, name: String, birthdate: String, gender: String) -> [OnboardingProgressble] {
         var screens: [OnboardingProgressble] = []
         
@@ -89,8 +167,8 @@ struct ProfileSyncHendeler {
         }
         
         if user.email.isEmpty, !email.isEmpty && email.isValidEmail() {
-            vm.upload(profile: syncedProfile,
-                      uploadBody: .init(email: email)) {
+            vm.update(profile: syncedProfile,
+                      updateBody: .init(email: email)) {
                 manager.set(profile: syncedProfile,
                             email: email)
             } error: { error in print(error) }
@@ -99,27 +177,29 @@ struct ProfileSyncHendeler {
         return screens
     }
     
+    // MARK: onboardingScreens
+    /// - Parameter onboardingScreens
     func afterLogin(onboardingScreens: [OnboardingProgressble]) {
         if onboardingScreens.isEmpty { return router.navigateTo(.map) }
         else { return router.navigateTo(.onboarding(screens: onboardingScreens)) }
     }
     
+    // MARK: afterLoginAsRoot
+    /// - Parameter onboardingScreens
     func afterLoginAsRoot(onboardingScreens: [OnboardingProgressble]) {
         if onboardingScreens.isEmpty { return router.root = .map }
         else { return router.root = .onboarding(screens: onboardingScreens) }
     }
     
-    private func handleError(error: String, loginError: LoginError?) {
-        print(error)
-        goToLogin(message: loginError)
-    }
-    
-    private func handleError(error: String) {
-        print(error)
-        goToLogin(message: nil)
-    }
-    
-    func handleLoginTap(profile: Profile?, id: String?, name: String, email: String, birthdate: String, gender: String, didLogin: @escaping (Bool) -> () = { _ in }) {
+    // MARK: handleLoginTap - from tap
+    /// - Parameter Profile - local profile
+    /// - Parameter id
+    /// - Parameter email
+    /// - Parameter name
+    /// - Parameter birthdate
+    /// - Parameter gender
+    /// - Parameter didLogin - return if login successful
+    func handleLoginTap(profile: Profile?, id: String?, email: String, name: String, birthdate: String, gender: String, didLogin: @escaping (Bool) -> () = { _ in }) {
         preform(profile: profile,
                 id: id,
                 name: name,
@@ -131,6 +211,14 @@ struct ProfileSyncHendeler {
     }
     
     
+    // MARK: handleLogin - auto login
+    /// - Parameter Profile - local profile
+    /// - Parameter id
+    /// - Parameter email
+    /// - Parameter name
+    /// - Parameter birthdate
+    /// - Parameter gender
+    /// - Parameter didLogin - return if login successful
     func handleLogin(profile: Profile?, id: String?, name: String, email: String, birthdate: String, gender: String, didLogin: @escaping (Bool) -> () = { _ in }) {
         preform(profile: profile,
                 id: id,
@@ -143,53 +231,16 @@ struct ProfileSyncHendeler {
                 error: { error,_ in handleError(error: error) })
     }
     
-    private func preform(profile: Profile?, id: String?, name: String, email: String, birthdate: String, gender: String, didLogin: @escaping (Bool) -> (), navigteWith: @escaping ([OnboardingProgressble]) -> (), error: ((String, LoginError?) -> ())? = nil) {
-        guard let id, !id.isEmpty else {
-            removeAndPopToLogin(profile: profile)
-            return didLogin(false)
-        }
-        
-        vm.getUser(id: id) { result in
-            let serverProfileExist = result.exist
-            
-            if let profile, !serverProfileExist {
-                removeAndPopToLogin(profile: profile,
-                                    massege: .deleted)
-                return didLogin(false)
-            }
-            
-            vm.login(id: id) { user in
-                let syncedLocalProfile = syncedLocalProfile(profile: profile, id: id)
-                
-                let onboardingScreens = onboardingScreens(user: user,
-                                                          syncedProfile: syncedLocalProfile,
-                                                          email: email,
-                                                          name: name,
-                                                          birthdate: birthdate,
-                                                          gender: gender)
-                
-                didLogin(true)
-                navigteWith(onboardingScreens)
-            } error: { err in
-                error?(err, .failed)
-                return didLogin(false)
-            }
-        } error: { err in
-            error?(err, .failed)
-            return didLogin(false)
-        }
-    }
-    
+    // MARK: removeAndPopToLogin
+    /// - Parameter Profile - local profile
+    /// - Parameter message - local error
     func removeAndPopToLogin(profile: Profile?, massege: LoginError? = nil) {
         removeLocalProfile(profile: profile)
         goToLogin(message: massege)
     }
     
-    private func removeLocalProfile(profile: Profile?) {
-        guard let profile else { return }
-        manager.delete(profile: profile)
-    }
-    
+    // MARK: goToLogin
+    /// - Parameter message - local error
     func goToLogin(message: LoginError? = nil) {
         router.popToRoot(message: message)
     }

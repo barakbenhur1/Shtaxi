@@ -7,34 +7,38 @@
 
 import Foundation
 
-internal protocol Networkble: ObservableObject {
+// MARK: Networkble
+private protocol Networkble: ObservableObject {
     typealias UrlPathHolder = () -> (String)
     typealias UrlPathMaker = (String) -> UrlPathHolder
     
+    var responedQueue: DispatchQueue { get }
     var root: String { get }
     var path: UrlPathMaker { get }
-    var responedQueue: DispatchQueue { get }
 }
 
-internal enum HttpMethod: String {
-    case post = "POST", get = "GET"
-}
-
+// MARK: NetworkError
 internal enum NetworkError: Error {
     case badUrl
-    case invalidRequest
+    case invalidRequestBody
     case badResponse
     case badStatus
     case noData
     case failedToDecodeResponse
 }
+
+// MARK: HttpMethod
+internal enum HttpMethod: String {
+    case post = "POST", get = "GET"
+}
+
 extension NetworkError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .badUrl:
             return "There was an error creating the URL"
-        case .invalidRequest:
-            return "There was an error creating the request"
+        case .invalidRequestBody:
+            return "There was an error creating the request body"
         case .badResponse:
             return "Did not get a valid response"
         case .badStatus:
@@ -47,6 +51,7 @@ extension NetworkError: LocalizedError {
     }
 }
 
+// MARK: BaseUrl
 internal class BaseUrl: ObservableObject {
     static var value: String {
         get {
@@ -60,6 +65,7 @@ internal class BaseUrl: ObservableObject {
     }
 }
 
+// MARK: Request
 internal struct Request {
     private var base: String { get { return BaseUrl.value } }
     
@@ -67,46 +73,72 @@ internal struct Request {
     let url: String
     let parameters: [String: Any]
     
+    // MARK: Public API
     var build: () throws -> URLRequest { newRequest }
-
+    
+    
+    // MARK: Private
     private func newRequest() throws -> URLRequest {
-        var request: URLRequest = try {
-            switch method {
-            case .post:
-                let urlString = "\(base)\(url)"
-                guard let url = URL(string: urlString) else { throw NetworkError.badUrl }
-                guard let httpBody = parameters.httpBody() else { throw NetworkError.badUrl }
-                var request = URLRequest(url: url)
-                request.httpBody = httpBody
-                return request
-                
-            case .get:
-                var url = url
-                if let keysValues = parameters.requestFormatted() { url += "?\(keysValues)" }
-                let urlString = "\(base)\(url)"
-                guard let url = URL(string: urlString) else { throw NetworkError.badUrl }
-                let request = URLRequest(url: url)
-                return request
-            }
-        }()
-        
-        request.httpMethod = method.rawValue
-        return request.withHeaders(.init(value: "application/json", headerField: "Content-Type"),
-                                   .init(value: "application/json", headerField: "Accept"))
+        return try createRequestWithType()
+            .withHttpMethod(method.rawValue)
+            .withHeaders(.init(value: "application/json", headerField: "Content-Type"),
+                         .init(value: "application/json", headerField: "Accept"))
+    }
+    
+    // createRequestWithType -> throws
+    private func createRequestWithType() throws -> URLRequest {
+        switch method {
+        case .post:
+            guard let httpBody = parameters.httpBody() else { throw NetworkError.invalidRequestBody }
+            return try createRequest().withHttpBody(httpBody)
+        case .get:
+            return try createRequest()
+        }
+    }
+    
+    // createRequest -> throws
+    private func createRequest() throws -> URLRequest {
+        return URLRequest(url: try createUrl())
+    }
+    
+    // createUrl -> throws
+    private func createUrl() throws -> URL {
+        guard let url = URL(string: createUrlString()) else { throw NetworkError.badUrl }
+        return url
+    }
+    
+    // createUrlString
+    private func createUrlString() -> String {
+        switch method {
+        case .post:
+            return "\(base)\(url)"
+        case .get:
+            let prametrersFormatted = parameters.requestFormatted()
+            let keyValue = prametrersFormatted.isEmpty ? "" : "?\(prametrersFormatted)"
+            let urlString = "\(url)\(keyValue)"
+            return "\(base)\(urlString)"
+        }
     }
 }
 
+
+// MARK: Network
 class Network: Networkble {
+    // MARK: responedQueue
+    fileprivate let responedQueue: DispatchQueue = DispatchQueue.main
+    
+    // MARK: root - root url value
     internal var root: String {
-        guard type(of: self) == Network.self else { 
+        guard type(of: self) == Network.self else {
             let className = "\(self)".replacingOccurrences(of: "TaxiShare_MVP.", with: "")
             fatalError("must override root in \(className)")
         }
         return ""
     }
     
-    internal var path: UrlPathMaker {
-        return { url in 
+    // MARK: path - path url value
+    fileprivate var path: UrlPathMaker {
+        return { url in
             { [weak self] in
                 guard let self else { return "" }
                 return "\(root)/\(url)"
@@ -114,11 +146,18 @@ class Network: Networkble {
         }
     }
     
-    internal let responedQueue = DispatchQueue.main
-    
+    // MARK: init
     internal init() {}
     
-    private func send<T: Codable>(method: HttpMethod = .post, url: String, parameters: [String: Any] = [:], complition: @escaping (Response<T>) -> (), error: @escaping (Error) -> ()) {
+    // MARK: private api
+    
+    // MARK: produceUrl
+    private func produceUrl(_ route: String) -> String {
+        return path(route)()
+    }
+    
+    // MARK: send - to network
+    private func send<T: Codable>(method: HttpMethod, url: String, parameters: [String: Any], complition: @escaping (Response<T>) -> (), error: @escaping (Error) -> ()) {
         do {
             let request = try Request(method: method, url: url, parameters: parameters).build()
             
@@ -151,19 +190,19 @@ class Network: Networkble {
     }
 }
 
-
 extension Network {
-    internal func send<T: Codable>(url: UrlPathHolder, parameters: [String: Any] = [:], complition: @escaping (T) -> (), error: @escaping (String) -> ()) {
-        send(url: url(), parameters: parameters) { [weak self] result in
+    // MARK: public api
+    
+    // MARK: send - call send to network and unwrap (result || error)
+    internal func send<T: Codable>(method: HttpMethod, route: String, parameters: [String: Any] = [:], complition: @escaping (T) -> (), error: @escaping (String) -> ()) {
+        send(method: method,
+             url: produceUrl(route),
+             parameters: parameters) { [weak self] result in
             guard let self else { return }
-            responedQueue.async {
-                complition(result.value)
-            }
+            responedQueue.async { complition(result.value) }
         } error: { [weak self] err in
             guard let self else { return }
-            responedQueue.async {
-                error(err.localizedDescription)
-            }
+            responedQueue.async { error(err.localizedDescription) }
         }
     }
 }

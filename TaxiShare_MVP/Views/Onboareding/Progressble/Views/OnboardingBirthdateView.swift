@@ -66,8 +66,8 @@ struct OnboardingBirthdateView: OnboardingProgress {
         errorValue = ""
         guard let profile else { return complete(false) }
         guard let birthdate = holder.value else { return complete(false) }
-        vm.upload(profile: profile,
-                  uploadBody: .init(birthdate: birthdate)) {
+        vm.update(profile: profile,
+                  updateBody: .init(birthdate: birthdate)) {
             manager.set(profile: profile,
                         date: birthdate)
             complete(true)
