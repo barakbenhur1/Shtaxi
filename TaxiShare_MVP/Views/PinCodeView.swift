@@ -7,8 +7,10 @@
 
 import SwiftUI
 
-struct PinCodeView: ViewWithTransition, ProfileHandeler {
+struct PinCodeView: View, ProfileHandeler {
     @EnvironmentObject var manager: PersistenceController
+    @EnvironmentObject var vm: OnboardringViewModel
+    @EnvironmentObject private var profileSync: ProfileSyncHendeler
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     @EnvironmentObject var router: Router
@@ -17,13 +19,13 @@ struct PinCodeView: ViewWithTransition, ProfileHandeler {
     @State internal var externalActionLoading: Bool? = false
     @State private var changeNumber = false
     @State private var holder = Holder<any ProfileUpdater>()
-    
-    let transitionAnimation: Bool
+
     @State var phone: String
     @State var verificationID: String
     
     var body: some View {
         content()
+            .environmentObject(profileSync)
             .wrapWithBottun(buttonText: "אישור".localized(),
                             preformAction: preformAction,
                             loadingForExternalActions: $externalActionLoading,
@@ -37,7 +39,8 @@ struct PinCodeView: ViewWithTransition, ProfileHandeler {
     }
     
     @ViewBuilder private func smsPinCodeView() -> some View {
-        SmsPinCodeView(phone: phone,
+        SmsPinCodeView(vm: vm,
+                       phone: phone,
                        verificationID: verificationID,
                        onAppear: { view in holder.value = view },
                        didChnngeNumber: { changeNumber = true },
@@ -46,7 +49,8 @@ struct PinCodeView: ViewWithTransition, ProfileHandeler {
     }
     
     @ViewBuilder private func changePhone() -> some View {
-        PinCodeChangePhoneView(phone: phone,
+        PinCodeChangePhoneView(vm: vm,
+                               phone: phone,
                                verificationID: $verificationID,
                                didType: { isDone in buttonEnabled = isDone },
                                onAppear: { view in holder.value = view },
@@ -70,11 +74,11 @@ struct PinCodeView: ViewWithTransition, ProfileHandeler {
     }
     
     private func onUploadSuccess(screens: [OnboardingProgressble]) {
-        ProfileSyncHendeler.shared.afterLogin(onboardingScreens: screens)
+        profileSync.afterLogin(onboardingScreens: screens)
     }
     
     private func onFail() {
-        ProfileSyncHendeler.shared.removeAndPopToLogin(profile: profiles.last,
+        profileSync.removeAndPopToLogin(profile: profiles.last,
                                                        massege:.retry)
     }
 }

@@ -9,17 +9,17 @@ import SwiftUI
 import AuthenticationServices
 import GoogleSignInSwift
 
-struct OnboardingLoginView: View {
-    let didSignup: (_ id: String, _ name: String?, _ email: String?, _ birthdate: String?, _ gender: String?) -> ()
-    let didFillPhone: (_ number: String) -> ()
-    private let auth = Authentication()
+struct OnboardingLoginView<VM: OnboardringViewModel>: View {
+    @ObservedObject internal var vm: VM
+    internal let didSignup: (_ id: String, _ name: String?, _ email: String?, _ birthdate: String?, _ gender: String?) -> ()
+    internal let didFillPhone: (_ number: String) -> ()
     private let main = DispatchQueue.main
     
     @ViewBuilder fileprivate var googleSignInButton: some View {
         let button = Button(action: {
             hideKeyboard()
             Task {
-                auth.googleOauth { model in
+                vm.googleAuth { model in
                     guard let model else { return }
                     main.async {
                         didSignup(model.id,
@@ -52,7 +52,7 @@ struct OnboardingLoginView: View {
     @ViewBuilder fileprivate var facebookSignInButton: some View {
         let button = Button(action: {
             hideKeyboard()
-            auth.facebookAuth { model in
+            vm.facebookAuth { model in
                 main.async {
                     didSignup(model.id,
                               model.name,

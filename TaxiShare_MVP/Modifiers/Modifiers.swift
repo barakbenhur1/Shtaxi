@@ -12,10 +12,10 @@ struct ViewWithButton: ViewModifier {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var router: Router
     
-    @State private var loading = false
-    @State private var buttonConfig: TButtonConfig = .defulat(state: .disabled,
-                                                              dimantions: .full)
+    @StateObject var buttonConfigManager = TButtonConfigManager(buttonConfig: .defulat(state: .disabled,
+                                                                                       dimantions: .full))
     
+    @State private var loading = false
     let buttonText: String
     let preformAction: (_ success: @escaping (Bool) -> ()) -> ()
     @Binding var loadingForExternalActions: Bool?
@@ -23,7 +23,7 @@ struct ViewWithButton: ViewModifier {
     let onTapGesture: (() -> ())?
     
     func body(content: Content) -> some View {
-        let view = BaseViewWithBottomButton(buttonConfig: $buttonConfig,
+        let view = BaseViewWithBottomButton(buttonConfig: $buttonConfigManager.buttonConfig,
                                  loading: $loading,
                                  buttonText: buttonText,
                                  contant: content) {
@@ -52,7 +52,7 @@ struct ViewWithButton: ViewModifier {
     
     private func configButton() {
         withAnimation(.smooth) {
-            buttonConfig = .defulat(state: setButtonConfig ? .enabled : .disabled,
+            buttonConfigManager.buttonConfig = .defulat(state: setButtonConfig ? .enabled : .disabled,
                                     dimantions: .full)
         }
     }

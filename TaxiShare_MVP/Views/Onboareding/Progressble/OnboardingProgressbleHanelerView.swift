@@ -15,11 +15,10 @@ struct OnboardingProgressbleHandelerView<Content: OnboardingProgress>: ProfileUp
     @EnvironmentObject var manager: PersistenceController
     @Environment(\.managedObjectContext) private var viewContext
     
-    internal let vm: OnboardringViewModel? = nil
-    @Binding var value: Int
-    let total: Int
-    let content: Content?
-    let onAppear: (any ProfileUpdater) -> ()
+    @Binding internal var value: Int
+    internal let total: Int
+    internal let content: Content?
+    internal let onAppear: (any ProfileUpdater) -> ()
     
     var body: some View {
         if let content {

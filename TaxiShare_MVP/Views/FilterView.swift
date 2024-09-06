@@ -33,9 +33,7 @@ struct Filed: Identifiable {
     var values: [CGFloat]
 }
 
-struct FilterView: ViewWithTransition {
-    let transitionAnimation: Bool
-    
+struct FilterView: View {    
     private let fileds: [Filed] =
     [
         .init(type: .slider,
@@ -106,5 +104,5 @@ struct FilterView: ViewWithTransition {
 }
 
 #Preview {
-    FilterView(transitionAnimation: false)
+    FilterView()
 }

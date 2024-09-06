@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 // MARK: LoginError
 enum LoginError: Error {
@@ -28,10 +29,10 @@ extension LoginError: LocalizedError {
 }
 
 // MARK: ProfileSyncHendeler
-struct ProfileSyncHendeler {
+class ProfileSyncHendeler: ObservableObject {
     static let shared = ProfileSyncHendeler()
     
-    private let vm = OnboardringViewModel()
+    private let vm: OnboardringViewModel
     private let router: Router
     private let manager: PersistenceController
     
@@ -41,6 +42,7 @@ struct ProfileSyncHendeler {
     private init() {
         self.router = Router.shared
         self.manager = PersistenceController.shared
+        self.vm = OnboardringViewModel()
     }
     
     // MARK: syncedLocalProfile
@@ -85,7 +87,8 @@ struct ProfileSyncHendeler {
             return didLogin(false)
         }
         
-        vm.getUser(id: id) { result in
+        vm.getUser(id: id) { [weak self] result in
+            guard let self else { return didLogin(false) }
             let serverProfileExist = result.exist
             
             if let profile, !serverProfileExist {
@@ -94,7 +97,8 @@ struct ProfileSyncHendeler {
                 return didLogin(false)
             }
             
-            vm.login(id: id) { user in
+            vm.login(id: id) { [weak self] user in
+                guard let self else { return didLogin(false) }
                 let syncedLocalProfile = syncedLocalProfile(profile: profile, id: id)
                 
                 let onboardingScreens = onboardingScreens(user: user,
@@ -168,7 +172,8 @@ struct ProfileSyncHendeler {
         
         if user.email.isEmpty, !email.isEmpty && email.isValidEmail() {
             vm.update(profile: syncedProfile,
-                      updateBody: .init(email: email)) {
+                      updateBody: .init(email: email)) { [weak self] in
+                guard let self else { return }
                 manager.set(profile: syncedProfile,
                             email: email)
             } error: { error in print(error) }
@@ -228,7 +233,10 @@ struct ProfileSyncHendeler {
                 gender: gender,
                 didLogin: didLogin,
                 navigteWith: afterLoginAsRoot,
-                error: { error,_ in handleError(error: error) })
+                error: { [weak self] error,_ in
+            guard let self else { return }
+            handleError(error: error)
+        })
     }
     
     // MARK: removeAndPopToLogin

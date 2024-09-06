@@ -19,6 +19,7 @@
 		4FD3CFC92C888D9E00910867 /* UpdateBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD3CFC82C888D9E00910867 /* UpdateBody.swift */; };
 		4FD3CFCB2C889FF600910867 /* UserIdBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD3CFCA2C889FF600910867 /* UserIdBody.swift */; };
 		4FD3CFCD2C8996AB00910867 /* URLRequest+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD3CFCC2C8996AB00910867 /* URLRequest+EXT.swift */; };
+		4FF443062C8BBABC003E5CA7 /* TButtonConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF443052C8BBABC003E5CA7 /* TButtonConfigManager.swift */; };
 		4FF5B0CF2C851B6C00176585 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0CE2C851B6C00176585 /* Persistence.swift */; };
 		4FF5B0D22C851B6C00176585 /* TaxiShare_MVP.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0D02C851B6C00176585 /* TaxiShare_MVP.xcdatamodeld */; };
 		4FF5B0DC2C851B6C00176585 /* TaxiShare_MVPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0DB2C851B6C00176585 /* TaxiShare_MVPTests.swift */; };
@@ -51,13 +52,12 @@
 		4FF5B1B32C851BB400176585 /* TDateTextFiled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B13D2C851BB300176585 /* TDateTextFiled.swift */; };
 		4FF5B1B42C851BB400176585 /* TPinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B13E2C851BB300176585 /* TPinCodeView.swift */; };
 		4FF5B1B52C851BB400176585 /* TTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B13F2C851BB300176585 /* TTextFieldView.swift */; };
-		4FF5B1B62C851BB400176585 /* ViewWithTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1402C851BB300176585 /* ViewWithTransition.swift */; };
 		4FF5B1B72C851BB400176585 /* ProfileUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1412C851BB300176585 /* ProfileUpdater.swift */; };
 		4FF5B1B82C851BB400176585 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1432C851BB300176585 /* FilterView.swift */; };
 		4FF5B1B92C851BB400176585 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1442C851BB300176585 /* ImagePicker.swift */; };
 		4FF5B1BA2C851BB400176585 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1452C851BB300176585 /* LoginView.swift */; };
 		4FF5B1BB2C851BB400176585 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1462C851BB300176585 /* MapView.swift */; };
-		4FF5B1BC2C851BB400176585 /* MapViewVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1472C851BB300176585 /* MapViewVM.swift */; };
+		4FF5B1BC2C851BB400176585 /* MapViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1472C851BB300176585 /* MapViewViewModel.swift */; };
 		4FF5B1BD2C851BB400176585 /* PinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1482C851BB300176585 /* PinCodeView.swift */; };
 		4FF5B1BE2C851BB400176585 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1492C851BB300176585 /* RootView.swift */; };
 		4FF5B1BF2C851BB400176585 /* SideMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B14A2C851BB300176585 /* SideMenu.swift */; };
@@ -129,6 +129,7 @@
 		4FD3CFC82C888D9E00910867 /* UpdateBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBody.swift; sourceTree = "<group>"; };
 		4FD3CFCA2C889FF600910867 /* UserIdBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdBody.swift; sourceTree = "<group>"; };
 		4FD3CFCC2C8996AB00910867 /* URLRequest+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+EXT.swift"; sourceTree = "<group>"; };
+		4FF443052C8BBABC003E5CA7 /* TButtonConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TButtonConfigManager.swift; sourceTree = "<group>"; };
 		4FF5B0C22C851B6A00176585 /* TaxiShare_MVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaxiShare_MVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF5B0CE2C851B6C00176585 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		4FF5B0D12C851B6C00176585 /* TaxiShare_MVP.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TaxiShare_MVP.xcdatamodel; sourceTree = "<group>"; };
@@ -165,13 +166,12 @@
 		4FF5B13D2C851BB300176585 /* TDateTextFiled.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TDateTextFiled.swift; sourceTree = "<group>"; };
 		4FF5B13E2C851BB300176585 /* TPinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPinCodeView.swift; sourceTree = "<group>"; };
 		4FF5B13F2C851BB300176585 /* TTextFieldView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTextFieldView.swift; sourceTree = "<group>"; };
-		4FF5B1402C851BB300176585 /* ViewWithTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewWithTransition.swift; sourceTree = "<group>"; };
 		4FF5B1412C851BB300176585 /* ProfileUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUpdater.swift; sourceTree = "<group>"; };
 		4FF5B1432C851BB300176585 /* FilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		4FF5B1442C851BB300176585 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		4FF5B1452C851BB300176585 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		4FF5B1462C851BB300176585 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		4FF5B1472C851BB300176585 /* MapViewVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewVM.swift; sourceTree = "<group>"; };
+		4FF5B1472C851BB300176585 /* MapViewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewViewModel.swift; sourceTree = "<group>"; };
 		4FF5B1482C851BB300176585 /* PinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeView.swift; sourceTree = "<group>"; };
 		4FF5B1492C851BB300176585 /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		4FF5B14A2C851BB300176585 /* SideMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenu.swift; sourceTree = "<group>"; };
@@ -266,9 +266,9 @@
 		4F3C94432C851F5F00EBA6A2 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				4FF5B1472C851BB300176585 /* MapViewVM.swift */,
 				4F3C94402C851F5F00EBA6A2 /* Authentication.swift */,
 				4F3C94412C851F5F00EBA6A2 /* Network.swift */,
+				4FF5B1472C851BB300176585 /* MapViewViewModel.swift */,
 				4F3C94422C851F5F00EBA6A2 /* OnboardringViewModel.swift */,
 			);
 			path = ViewModels;
@@ -290,7 +290,6 @@
 		4FC702872C86459F00C85CE9 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				4FF5B1402C851BB300176585 /* ViewWithTransition.swift */,
 				4FF5B1412C851BB300176585 /* ProfileUpdater.swift */,
 				4FF5B13B2C851BB300176585 /* OnboardingProgress.swift */,
 				4FC162592C87C3C9003504EB /* ProfileHandeler.swift */,
@@ -458,9 +457,9 @@
 		4FF5B1332C851BB300176585 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4FF5B12F2C851BB300176585 /* OnboardingLoginView.swift */,
 				4FF5B12C2C851BB300176585 /* OnboardingBirthdateView.swift */,
 				4FF5B12E2C851BB300176585 /* OnboardingGenderView.swift */,
-				4FF5B12F2C851BB300176585 /* OnboardingLoginView.swift */,
 				4FF5B1302C851BB300176585 /* OnboardingNameView.swift */,
 				4FF5B1312C851BB300176585 /* OnboardingRulesView.swift */,
 			);
@@ -519,6 +518,7 @@
 				4FF5B14E2C851BB300176585 /* CryptoManager.swift */,
 				4FF5B14F2C851BB300176585 /* LocationManager.swift */,
 				4FF5B1502C851BB300176585 /* UserLoginManager.swift */,
+				4FF443052C8BBABC003E5CA7 /* TButtonConfigManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -762,7 +762,7 @@
 				4FF5B1D12C851BB400176585 /* RouterView.swift in Sources */,
 				4FF5B1C92C851BB400176585 /* Dictionary+EXT.swift in Sources */,
 				4FF5B1A72C851BB400176585 /* OnboardingGenderView.swift in Sources */,
-				4FF5B1BC2C851BB400176585 /* MapViewVM.swift in Sources */,
+				4FF5B1BC2C851BB400176585 /* MapViewViewModel.swift in Sources */,
 				4FF5B1B82C851BB400176585 /* FilterView.swift in Sources */,
 				4FF5B1AE2C851BB400176585 /* OnboardingProgressbleManegerView.swift in Sources */,
 				4FF5B1A42C851BB400176585 /* LoginPhoneView.swift in Sources */,
@@ -779,7 +779,6 @@
 				4FF5B17C2C851BB400176585 /* TButtonParams.swift in Sources */,
 				4FF5B1AD2C851BB400176585 /* OnboardingProgressbleHanelerView.swift in Sources */,
 				4FF5B1DE2C851BB400176585 /* UserExistModel.swift in Sources */,
-				4FF5B1B62C851BB400176585 /* ViewWithTransition.swift in Sources */,
 				4FF5B1C72C851BB400176585 /* CharacterSet+EXT.swift in Sources */,
 				4F3C94442C851F5F00EBA6A2 /* Authentication.swift in Sources */,
 				4FF5B1DC2C851BB400176585 /* ProfileModel.swift in Sources */,
@@ -791,6 +790,7 @@
 				4FF5B1AF2C851BB400176585 /* OnboardingProgressbleView.swift in Sources */,
 				4FF5B1CA2C851BB400176585 /* String+EXT.swift in Sources */,
 				4FF5B1B42C851BB400176585 /* TPinCodeView.swift in Sources */,
+				4FF443062C8BBABC003E5CA7 /* TButtonConfigManager.swift in Sources */,
 				4FF5B1C22C851BB400176585 /* CryptoManager.swift in Sources */,
 				4FF5B1A52C851BB400176585 /* OnboardingBirthdateView.swift in Sources */,
 				4FF5B1B12C851BB400176585 /* OnboardingProgress.swift in Sources */,

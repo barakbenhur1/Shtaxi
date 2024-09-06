@@ -7,12 +7,15 @@
 
 import SwiftUI
 
-struct RootView: ViewWithTransition {
-    let transitionAnimation: Bool = false
+struct RootView: View {
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var manager: PersistenceController
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
+    @StateObject private var profileSync = ProfileSyncHendeler.shared
+    @StateObject private var vm = OnboardringViewModel()
+    @StateObject private var mvm = MapViewViewModel()
+    
     @State private var showAlert = true
     
     var body: some View {
@@ -22,7 +25,7 @@ struct RootView: ViewWithTransition {
                 .task { initalScreen() }
             
         case .login(let message):
-            LoginView(transitionAnimation: true)
+            LoginView()
                 .customAlert("הודעה מערכת",
                              isPresented:  $showAlert,
                              actionText:"הבנתי",
@@ -33,21 +36,26 @@ struct RootView: ViewWithTransition {
                     }
                 }
                 .environmentObject(router)
+                .environmentObject(profileSync)
+                .environmentObject(vm)
                 .onAppear { showAlert = message != nil }
         case .onboarding(let screens):
-            OnboardingProgressbleContainerView(transitionAnimation: true,
-                                               screens: screens)
+            OnboardingProgressbleContainerView(screens: screens)
+            .environmentObject(vm)
             .environmentObject(router)
         case .map:
-            MapView(transitionAnimation: true)
+            MapView()
                 .environmentObject(router)
+                .environmentObject(vm)
+                .environmentObject(mvm)
+                .environmentObject(profileSync)
         }
     }
     
     private func initalScreen() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             let profile = profiles.last
-            ProfileSyncHendeler.shared.handleLogin(profile: profile,
+            profileSync.handleLogin(profile: profile,
                                                    id: profile?.userID,
                                                    name: "",
                                                    email: "",

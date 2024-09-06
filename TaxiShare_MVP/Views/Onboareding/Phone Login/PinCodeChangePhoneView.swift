@@ -8,11 +8,11 @@
 import SwiftUI
 import Combine
 
-struct PinCodeChangePhoneView: ProfileUpdater {
-    internal let vm = OnboardringViewModel()
-   
+struct PinCodeChangePhoneView<VM: OnboardringViewModel>: ProfileUpdater {
     @State private var holder = Holder<LoginPhoneView>()
     
+    @ObservedObject internal var vm: VM
+   
     @State var phone: String
     @Binding var verificationID: String
     let didType: (_ enable: Bool) -> ()

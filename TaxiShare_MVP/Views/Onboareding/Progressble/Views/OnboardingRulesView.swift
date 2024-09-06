@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct OnboardingRulesView: OnboardingProgress {    
+struct OnboardingRulesView<VM: OnboardringViewModel>: OnboardingProgress {
+    @ObservedObject internal var vm: VM
     internal let onAppear: (() -> ())?
     internal let noActionNeeded: (() -> ())? = nil
     internal let complition: ((_ enable: Bool) -> ())? = nil
     internal let otherAction: (() -> ())? = nil
-    internal let vm = OnboardringViewModel()
     
     @EnvironmentObject var manager: PersistenceController
     @Environment(\.managedObjectContext) private var viewContext

@@ -7,7 +7,10 @@
 
 import SwiftUI
 
-struct SmsPinCodeView: ProfileUpdater {
+struct SmsPinCodeView<VM: OnboardringViewModel>: ProfileUpdater {
+    @EnvironmentObject private var profileSync: ProfileSyncHendeler
+    
+    @ObservedObject internal var vm: VM
     let phone: String
     @State var verificationID: String
     let onAppear: (SmsPinCodeView) -> ()
@@ -15,7 +18,6 @@ struct SmsPinCodeView: ProfileUpdater {
     let didDone: (Bool) -> ()
     let didApprove: (_ id: String, _ name: String, _ email: String, _ didLogin: @escaping (_ uploadSuccess: @escaping ([OnboardingProgressble]) -> (), _ onFail: @escaping () -> ()) -> ()) -> ()
     
-    internal let vm = OnboardringViewModel()
     @State private var holder = Holder<String>()
     @State private var error: Bool = false
     @State private var errorValue: String? = nil {
@@ -112,7 +114,7 @@ struct SmsPinCodeView: ProfileUpdater {
                             manager.set(profile: profile,
                                         phone: phone)
                             
-                            let screens = ProfileSyncHendeler.shared.onboardingScreens(user: user,
+                            let screens = profileSync.onboardingScreens(user: user,
                                                                                        syncedProfile: profile,
                                                                                        email: email,
                                                                                        name: name,

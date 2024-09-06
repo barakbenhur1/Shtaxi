@@ -11,10 +11,10 @@ struct OnboardingProgressbleView<Contant: OnboardingProgress>: View {
     @EnvironmentObject private var manager: PersistenceController
     @Environment(\.managedObjectContext) private var viewContext
     
-    @Binding var value: Int
-    @State var texts: [String]
-    let total: Int
-    let contant: Contant
+    @Binding internal var value: Int
+    @State internal var texts: [String]
+    internal let total: Int
+    internal let contant: Contant
     
     init(value: Binding<Int>, total: Int, contant: Contant) {
         _value = value

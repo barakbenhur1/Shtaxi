@@ -8,11 +8,11 @@
 import SwiftUI
 import Combine
 
-struct OnboardingNameView: OnboardingProgress {
-    internal let vm = OnboardringViewModel()
+struct OnboardingNameView<VM: OnboardringViewModel>: OnboardingProgress {
     @State internal var holder = Holder<String>()
     
-    @State var text: String
+    @ObservedObject internal var vm: VM
+    @State internal var text: String
     internal let onAppear: (() -> ())? = nil
     internal let noActionNeeded: (() -> ())? = nil
     internal let complition: ((_ enable: Bool) -> ())?

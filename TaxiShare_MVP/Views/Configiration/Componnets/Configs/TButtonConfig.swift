@@ -41,7 +41,7 @@ extension TButtonConfig: RawRepresentable {
     var rawValue: TButtonConfigItem {
         switch self {
         case .defulat(let state, let dimantions):
-            return .init(state: state, font: Custom.shared.font.button, cornerRadius: 149, dimantions: dimantions)
+            return .init(state: state, font: state.font(), cornerRadius: 149, dimantions: dimantions)
         case .none:
             return .init(state: .none, font: Custom.shared.font.none, dimantions: .none)
         }

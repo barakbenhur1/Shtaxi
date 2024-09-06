@@ -7,7 +7,15 @@
 
 import SwiftUI
 
-struct OnboardingGenderView: OnboardingProgress {
+struct OnboardingGenderView<VM: OnboardringViewModel>: OnboardingProgress {
+    @State internal var holder = Holder<Int>()
+    
+    @ObservedObject internal var vm: VM
+    @State internal var selectedIndex: Int?
+    internal let noActionNeeded: (() -> ())? = nil
+    internal let complition: ((_ enable: Bool) -> ())?
+    internal let otherAction: (() -> ())?
+    
     private let buttons: [String] = {
         return [
             "זכר",
@@ -15,21 +23,7 @@ struct OnboardingGenderView: OnboardingProgress {
             "אחר",
         ]
     }()
-    
-    @State internal var holder = Holder<Int>()
-    
-    @State internal var selectedIndex: Int?
-    internal let noActionNeeded: (() -> ())? = nil
-    internal let complition: ((_ enable: Bool) -> ())?
-    internal let otherAction: (() -> ())?
-    internal let vm = OnboardringViewModel()
-    
-    init(selectedIndex: Int?, complition: ((_ enable : Bool) -> ())?, otherAction: @escaping () -> ()) {
-        self.selectedIndex = selectedIndex
-        self.complition = complition
-        self.otherAction = otherAction
-    }
-    
+  
     var body: some View {
         VStack {
             HStack {

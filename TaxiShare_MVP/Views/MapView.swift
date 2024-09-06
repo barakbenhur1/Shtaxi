@@ -8,9 +8,10 @@
 import SwiftUI
 import MapKit
 
-struct MapView: ViewWithTransition {
-    let transitionAnimation: Bool
-    
+struct MapView<VM: OnboardringViewModel, MapVM: MapViewViewModel>: View {
+    @EnvironmentObject private var viewModel: MapViewViewModel
+    @EnvironmentObject private var oVM: OnboardringViewModel
+    @EnvironmentObject private var profileSync: ProfileSyncHendeler
     @EnvironmentObject private var manager: PersistenceController
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     
@@ -26,9 +27,6 @@ struct MapView: ViewWithTransition {
     @State private var isShowAlert: Bool = false
     @State private var isShowDelete = false
     @State private var anotations: [SearchCompletions] = []
-    @State private var viewModel = MapViewVM()
-    @State private var oVM = OnboardringViewModel()
-    private let profileSunc = ProfileSyncHendeler.shared
     
     @State private var selection: Int?
     
@@ -198,10 +196,10 @@ struct MapView: ViewWithTransition {
                     //                    }
                     //                    .focused($startFocused)
                     
-                    Image("downArrow")
-                        .resizable()
-                        .frame(height: 40)
-                        .frame(width: 40)
+                    //                    Image("downArrow")
+                    //                        .resizable()
+                    //                        .frame(height: 40)
+                    //                        .frame(width: 40)
                     
                     //                    TextFiledView(label: "יעד", text: $endText) { value in
                     //                        guard value else { return }
@@ -227,12 +225,8 @@ struct MapView: ViewWithTransition {
             }
             
             SideMenu(isShowing: $isShowSideMenu,
-                     title: AnyView(Text("תפריט".localized())
-                        .multilineTextAlignment(.center)
-                        .foregroundStyle(Custom.shared.color.gray.opacity(0.6))
-                        .font(Custom.shared.font.title)),
+                     title: menuTitle(),
                      content: menuList())
-            .padding(.trailing, 140)
             .ignoresSafeArea()
         }
         .customAlert("מחיקת פרופיל",
@@ -248,129 +242,134 @@ struct MapView: ViewWithTransition {
             Button(action: {
                 anotations.append(viewModel.endPositionValue!)
                 taxiTimes.append(Date())
-                }, label: {
-                    Text("כן".localized())
-                })
-                
-                Button(action: {
-                    isShowAlert = false
-                }, label: {
-                    Text("לא".localized())
-                })
-            }, message: {
-                let text = {
-                    if anotations.contains(where: { item in
-                        return item.title == viewModel.endPositionValue?.title }) {
-                        return "קיימות נסיעות למקום זה\nהאם ברצונך ליצר אחת חדשה בכל זאת?"
-                    }
-                    else {
-                        return "לא קיימות נסיעות למקום זה\nהאם ברצונך ליצר אחת?"
-                    }
-                }()
-                Text(text)
+            }, label: {
+                Text("כן".localized())
             })
-            .sheet(isPresented: $viewModel.isShowSheet) {
-                VStack(alignment: .trailing) {
-                    Text("נוסעים")
-                        .font(.headline)
-                        .padding(.top, 10)
-                        .padding(.bottom, 10)
-                    HStack {
-                        Image(uiImage: profileImage())
-                            .resizable()
-                            .clipShape(Circle())
-                            .background(Custom.shared.color.white)
-                            .frame(width: 40)
-                            .frame(height: 40)
-                    }
-                    .padding(.bottom, 30)
-                    
-                    if let sheetValue = viewModel.sheetValue {
-                        Text("\("איסוף") \(viewModel.startPositionValue!.title)")
-                            .font(.title)
-                            .padding(.bottom, 20)
-                        Text("\("יעד:") \(anotations[sheetValue].title)")
-                            .font(.title)
-                            .padding(.bottom, 20)
-                        
-                        HStack(spacing: 10) {
-                            DatePicker(selection: $taxiTimes[sheetValue]) {
-                                
-                            }
-                            .environment(\.locale, Locale.init(identifier: "he"))
-                            Text("שעת יציאה:")
-                                .font(.title)
-                        }
-                        .padding(.bottom ,20)
-                        
-                        Button(action: {
-                            anotations[sheetValue].time = taxiTimes[sheetValue]
-                            anotations[sheetValue].confirmed = true
-                            viewModel.isShowSheet = false
-                        }, label: {
-                            Text("אישור".localized())
-                        })
-                        .font(.title2)
-                        .padding(.bottom ,30)
-                    }
+            
+            Button(action: {
+                isShowAlert = false
+            }, label: {
+                Text("לא".localized())
+            })
+        }, message: {
+            let text = {
+                if anotations.contains(where: { item in
+                    return item.title == viewModel.endPositionValue?.title }) {
+                    return "קיימות נסיעות למקום זה\nהאם ברצונך ליצר אחת חדשה בכל זאת?"
                 }
-                .padding(.leading, 20)
-                .padding(.trailing, 20)
-                .presentationDetents([.height(400)])
+                else {
+                    return "לא קיימות נסיעות למקום זה\nהאם ברצונך ליצר אחת?"
+                }
+            }()
+            Text(text)
+        })
+        .sheet(isPresented: $viewModel.isShowSheet) {
+            VStack(alignment: .trailing) {
+                Text("נוסעים")
+                    .font(.headline)
+                    .padding(.top, 10)
+                    .padding(.bottom, 10)
+                HStack {
+                    Image(uiImage: profileImage())
+                        .resizable()
+                        .clipShape(Circle())
+                        .background(Custom.shared.color.white)
+                        .frame(width: 40)
+                        .frame(height: 40)
+                }
+                .padding(.bottom, 30)
+                
+                if let sheetValue = viewModel.sheetValue {
+                    Text("\("איסוף") \(viewModel.startPositionValue!.title)")
+                        .font(.title)
+                        .padding(.bottom, 20)
+                    Text("\("יעד:") \(anotations[sheetValue].title)")
+                        .font(.title)
+                        .padding(.bottom, 20)
+                    
+                    HStack(spacing: 10) {
+                        DatePicker(selection: $taxiTimes[sheetValue]) {
+                            
+                        }
+                        .environment(\.locale, Locale.init(identifier: "he"))
+                        Text("שעת יציאה:")
+                            .font(.title)
+                    }
+                    .padding(.bottom ,20)
+                    
+                    Button(action: {
+                        anotations[sheetValue].time = taxiTimes[sheetValue]
+                        anotations[sheetValue].confirmed = true
+                        viewModel.isShowSheet = false
+                    }, label: {
+                        Text("אישור".localized())
+                    })
+                    .font(.title2)
+                    .padding(.bottom ,30)
+                }
             }
+            .padding(.leading, 20)
+            .padding(.trailing, 20)
+            .presentationDetents([.height(400)])
+        }
     }
     
-    @ViewBuilder private func menuList() -> AnyView {
-        AnyView(
-            List {
-                ForEach(1..<8, id: \.self) { i in
-                    menuItem(text: "אופצייה \(i)".localized(),
-                             config: .defulat(state: .regular(bold: false),
-                                              dimantions: .full)) {
-                        isShowSideMenu = false
-                    }
-                }
-                
-                menuItem(text: "התנתקות".localized(),
-                         config: .defulat(state: .regular(bold: true),
-                                          dimantions: .full)) {
+    @ViewBuilder private func menuTitle() -> some View {
+        Text("תפריט".localized())
+            .multilineTextAlignment(.center)
+            .font(Custom.shared.font.title)
+            .foregroundStyle(Custom.shared.color.gray.opacity(0.6))
+    }
+    
+    @ViewBuilder private func menuList() -> some View {
+        List {
+            ForEach(1..<8, id: \.self) { i in
+                menuItem(text: "אופצייה \(i)".localized(),
+                         config: .init(buttonConfig: .defulat(state: .regular(bold: false),
+                                          dimantions: .full))) {
                     isShowSideMenu = false
-                    if let profile = profiles.last, let id = profile.userID {
-                        oVM.logout(id: id) {
-                            profileSunc.removeAndPopToLogin(profile: profile)
-                        } error: { error in
-                            profileSunc.removeAndPopToLogin(profile: profile)
-                            print(error)
-                        }
-                    }
-                    else { router.popToRoot() }
                 }
-                                          .padding(.top, 5)
-                
-                VStack {
-                    separator()
-                    
-                    menuItem(text: "מחיקת פרופיל".localized(),
-                             config: .defulat(state: .critical,
-                                              dimantions: .full)) {
-                        isShowSideMenu = false
-                        isShowDelete = true
-                    }
-                                              .padding(.top, 10)
-                                              .padding(.bottom, 10)
-                }
-                .padding(.top, 5)
             }
-        )
+            
+            menuItem(text: "התנתקות".localized(),
+                     config: .init(buttonConfig: .defulat(state: .regular(bold: true),
+                                      dimantions: .full))) {
+                isShowSideMenu = false
+                if let profile = profiles.last, let id = profile.userID {
+                    oVM.logout(id: id) {
+                        profileSync.removeAndPopToLogin(profile: profile)
+                    } error: { error in
+                        profileSync.removeAndPopToLogin(profile: profile)
+                        print(error)
+                    }
+                }
+                else { router.popToRoot() }
+            }
+                                      .padding(.top, 5)
+            
+            VStack {
+                separator()
+                
+                menuItem(text: "מחיקת פרופיל".localized(),
+                         config: .init(buttonConfig: .defulat(state: .critical,
+                                          dimantions: .full))) {
+                    isShowSideMenu = false
+                    isShowDelete = true
+                }
+                                          .padding(.top, 10)
+                                          .padding(.bottom, 10)
+            }
+            .padding(.top, 5)
+        }
     }
     
     private func deleteProfile() {
         guard let profile = profiles.last else { return  router.popToRoot() }
         guard let id = profile.userID else { return  router.popToRoot() }
         oVM.delete(id: id) {
-            profileSunc.removeAndPopToLogin(profile: profile)
+            profileSync.removeAndPopToLogin(profile: profile)
         } error: { error in
-            profileSunc.removeAndPopToLogin(profile: profile)
+            profileSync.removeAndPopToLogin(profile: profile)
             print(error)
         }
     }
@@ -402,9 +401,9 @@ struct MapView: ViewWithTransition {
         .frame(maxWidth: .infinity)
     }
     
-    @ViewBuilder private func menuItem(text: String, config: TButtonConfig, didTap: @escaping () -> ()) -> some View {
+    @ViewBuilder private func menuItem(text: String, config: TButtonConfigManager, didTap: @escaping () -> ()) -> some View {
         TButton(text: text,
-                config: config) {
+                config: config.buttonConfig) {
             didTap()
         }
                 .listRowSeparator(.hidden)
@@ -430,6 +429,6 @@ struct MapView: ViewWithTransition {
 //                }
 
 #Preview {
-    MapView(transitionAnimation: false)
+    MapView()
         .environmentObject(Router.shared)
 }

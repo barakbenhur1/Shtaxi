@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 // MARK: ComplitionHandeler
 private class ComplitionHandeler: ObservableObject {
@@ -26,11 +27,13 @@ private class ParameterHndeler: ObservableObject {
     }
 }
 
+// MARK: OnboardringViewModel
 class OnboardringViewModel: Network {
-    private let auth = Authentication()
-    private var handeler = ComplitionHandeler()
-    private var pHandeler = ParameterHndeler()
     override internal var root: String { return "login" }
+    
+    @StateObject private var handeler = ComplitionHandeler()
+    @StateObject private var pHandeler = ParameterHndeler()
+    @StateObject private var auth = Authentication.shared
     
     // MARK: public api
     
@@ -56,6 +59,20 @@ class OnboardringViewModel: Network {
         auth.phoneAuth(phone: phone,
                        auth: validComplition,
                        error: error)
+    }
+    
+    // MARK: googleAuth
+    /// - Parameter complition
+    func googleAuth(complition: @escaping (GoogleAuthModel?) -> ())  {
+        let validComplition = handeler.makeValid(complition)
+        auth.googleOauth(complition: validComplition)
+    }
+    
+    // MARK: facebookAuth
+    /// - Parameter complition
+    func facebookAuth(complition: @escaping (FacebookAuthModel) -> ()) {
+        let validComplition = handeler.makeValid(complition)
+        auth.facebookAuth(facebookAuthModel: validComplition)
     }
     
     // MARK: login

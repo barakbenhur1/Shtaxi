@@ -11,8 +11,10 @@ import Firebase
 import FacebookLogin
 import GoogleSignIn
 
-struct Authentication {
-    private let queue = DispatchQueue.main
+class Authentication: ObservableObject {
+    static let shared = Authentication()
+
+    private init() {}
     
     private func checkStatus() -> GoogleAuthModel? {
         if GIDSignIn.sharedInstance.currentUser != nil {
@@ -38,6 +40,8 @@ struct Authentication {
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
         
+        let queue = DispatchQueue.main
+        
         queue.async {
             //get rootView
             let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene
@@ -45,7 +49,8 @@ struct Authentication {
             else { fatalError("There is no root view controller!") }
             
             //google sign in authentication response
-            GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { result, error in
+            GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [weak self] result, error in
+                guard let self else { return complition(nil) }
                 guard let user = result?.user else { return complition(nil) }
                 guard let idToken = user.idToken?.tokenString else { return complition(nil) }
                 

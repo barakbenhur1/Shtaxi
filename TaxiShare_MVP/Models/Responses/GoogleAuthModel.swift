@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GoogleAuthModel {
+struct GoogleAuthModel: Codable {
     let id: String
     var givenName: String = ""
     var profilePicUrl: String = ""

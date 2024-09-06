@@ -7,10 +7,11 @@
 
 import SwiftUI
 
-struct OnboardingBirthdateView: OnboardingProgress {
-    internal let vm = OnboardringViewModel()
-    
+struct OnboardingBirthdateView<VM: OnboardringViewModel>: OnboardingProgress {    
     @State private var holder = Holder<String>()
+    
+    @ObservedObject internal var vm: VM
+    
     @State private var error: Bool = false
     @State private var errorValue: String = "" { didSet { error = !errorValue.isEmpty } }
    

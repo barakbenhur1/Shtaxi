@@ -9,11 +9,11 @@ import SwiftUI
 
 struct OnboardingProgressbleManagerView: ProfileUpdater {
     @EnvironmentObject private var manager: PersistenceController
+    @EnvironmentObject private var vm: OnboardringViewModel
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     
     @State private var holder = Holder<any ProfileUpdater>()
-    internal let vm = OnboardringViewModel()
     let buttonText: String = ""
     let screens: [OnboardingProgressble]
     @Binding var progreesSatge: Int
@@ -33,7 +33,8 @@ struct OnboardingProgressbleManagerView: ProfileUpdater {
             case .name(let value):
                 OnboardingProgressbleHandelerView<OnboardingNameView>(value: $progreesSatge,
                                                                        total: screens.count,
-                                                                       content: .init(text: value,
+                                                                      content: .init(vm: vm, 
+                                                                                     text: value,
                                                                                       complition: setButtonConfig),
                                                                       onAppear: setScreen)
                 .environmentObject(manager)
@@ -41,7 +42,8 @@ struct OnboardingProgressbleManagerView: ProfileUpdater {
             case .birthdate(let value):
                 OnboardingProgressbleHandelerView<OnboardingBirthdateView>(value: $progreesSatge,
                                                                             total: screens.count,
-                                                                            content: .init(date: value,
+                                                                           content: .init(vm: vm, 
+                                                                                          date: value,
                                                                                            complition: setButtonConfig),
                                                                            onAppear: setScreen)
                 .environmentObject(manager)
@@ -49,7 +51,8 @@ struct OnboardingProgressbleManagerView: ProfileUpdater {
             case .gender(let value):
                 OnboardingProgressbleHandelerView<OnboardingGenderView>(value: $progreesSatge,
                                                                          total: screens.count,
-                                                                         content: .init(selectedIndex: value,
+                                                                        content: .init(vm: vm,
+                                                                                       selectedIndex: value,
                                                                                         complition: setButtonConfig,
                                                                                         otherAction: otherAction),
                                                                         onAppear: setScreen)
@@ -58,7 +61,8 @@ struct OnboardingProgressbleManagerView: ProfileUpdater {
             case .rules:
                 OnboardingProgressbleHandelerView<OnboardingRulesView>(value: $progreesSatge,
                                                                         total: screens.count,
-                                                                        content: .init(onAppear: noActionNeeded),
+                                                                       content: .init(vm: vm, 
+                                                                                      onAppear: noActionNeeded),
                                                                        onAppear: setScreen)
                 .environmentObject(manager)
                 .environment(\.managedObjectContext, viewContext)

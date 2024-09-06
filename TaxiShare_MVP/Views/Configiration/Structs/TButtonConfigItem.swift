@@ -14,7 +14,7 @@ enum TButtonState: Hashable {
     func font() -> Font {
         switch self {
         case .regular(let bold):
-            return bold ? Custom.shared.font.textHugeBold : Custom.shared.font.textHuge
+            return bold ? Custom.shared.font.textMediumBold : Custom.shared.font.textMedium
         case .enabled:
             return Custom.shared.font.button
         case .disabled:
@@ -22,7 +22,7 @@ enum TButtonState: Hashable {
         case .selectebale(let selected):
             return selected ? Custom.shared.font.textMediumBold: Custom.shared.font.textMedium
         case .critical:
-            return Custom.shared.font.textHugeBold
+            return Custom.shared.font.textBigBold
         case .none:
             return Custom.shared.font.none
         }

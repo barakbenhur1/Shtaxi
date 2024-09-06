@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RouterView<Content: ViewWithTransition>: View {
+struct RouterView<Content: View>: View {
     @EnvironmentObject private var manager: PersistenceController
     @Environment(\.managedObjectContext) private var viewContext
     

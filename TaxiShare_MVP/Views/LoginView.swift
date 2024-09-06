@@ -9,8 +9,10 @@ import SwiftUI
 import CoreData
 import GoogleSignIn
 
-struct LoginView: ViewWithTransition, ProfileHandeler {
+struct LoginView: View, ProfileHandeler {
     @EnvironmentObject var router: Router
+    @EnvironmentObject var vm: OnboardringViewModel
+    @EnvironmentObject private var profileSync: ProfileSyncHendeler
     @EnvironmentObject var manager: PersistenceController
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
@@ -18,10 +20,7 @@ struct LoginView: ViewWithTransition, ProfileHandeler {
     @State internal var buttonEnabled: Bool = false
     @State internal var externalActionLoading: Bool? = false
     
-    private let vm = OnboardringViewModel()
     @State private var holder = Holder<String>()
-    
-    let transitionAnimation: Bool
     
     var body: some View {
         onboardingLoginView()
@@ -32,7 +31,8 @@ struct LoginView: ViewWithTransition, ProfileHandeler {
     }
     
     @ViewBuilder private func onboardingLoginView() -> some View {
-        OnboardingLoginView(didSignup: didSignup,
+        OnboardingLoginView(vm: vm,
+                            didSignup: didSignup,
                             didFillPhone: didFillPhone)
     }
     
@@ -51,12 +51,12 @@ struct LoginView: ViewWithTransition, ProfileHandeler {
     
     private func didSignup(_ id: String, _ name: String?, _ email: String?, _ birthdate: String?, _ gender: String?) {
         externalActionLoading = true
-        ProfileSyncHendeler.shared.handleLoginTap(profile: profiles.last,
+        profileSync.handleLoginTap(profile: profiles.last,
                                                   id: id,
                                                   email: email ?? "",
                                                   name: name ?? "",
                                                   birthdate: birthdate ?? "",
-                                                  gender: gender ?? "") { _ in   externalActionLoading = false }
+                                                  gender: gender ?? "") { _ in externalActionLoading = false }
     }
     
     func didFillPhone(number: String) {

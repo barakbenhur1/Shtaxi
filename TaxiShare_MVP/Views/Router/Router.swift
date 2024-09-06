@@ -7,12 +7,6 @@
 
 import SwiftUI
 
-private class TransactionManager {
-    static let shared = TransactionManager()
-    var value: Bool = false { didSet { UINavigationBar.setAnimationsEnabled(value) } }
-    init() {}
-}
-
 class Router: ObservableObject {
     static let shared = Router()
     // Contains the possible destinations in our Router
@@ -29,42 +23,50 @@ class Router: ObservableObject {
     }
     
     // Used to programatically control our navigation stack
-    @Published var path: NavigationPath = NavigationPath()
-    @Published var root: Root = .splash
-    private var transition = TransactionManager.shared
+    @StateObject private var vm = OnboardringViewModel()
+    @StateObject private var mapVM = MapViewViewModel()
+    @StateObject private var profileSync = ProfileSyncHendeler.shared
     
+    @Published var root: Root = .splash
+    @Published var path: NavigationPath = NavigationPath()
+   
     private init() {}
     
     // Builds the views
     @ViewBuilder func view(for route: Route) -> some View {
         switch route {
         case .login:
-            LoginView(transitionAnimation: transition.value)
+            LoginView()
+                .environmentObject(vm)
                 .navigationBarBackButtonHidden()
             
         case .pinCode(let phone, let verificationID):
-            PinCodeView(transitionAnimation: transition.value,
-                        phone: phone,
+            PinCodeView(phone: phone,
                         verificationID: verificationID)
+            .environmentObject(vm)
+            .environmentObject(profileSync)
             .navigationBarBackButtonHidden()
             
         case .onboarding(let screens):
-            OnboardingProgressbleContainerView(transitionAnimation: transition.value,
-                                                screens: screens)
+            OnboardingProgressbleContainerView(screens: screens)
+            .environmentObject(vm)
             .navigationBarBackButtonHidden()
             
         case .map:
-            MapView(transitionAnimation: transition.value)
+            MapView()
+                .environmentObject(vm)
+                .environmentObject(mapVM)
+                .environmentObject(profileSync)
                 .navigationBarBackButtonHidden()
             
         case .filter:
-            FilterView(transitionAnimation: transition.value)
+            FilterView()
+//                .environmentObject(OnboardringViewModel())
         }
     }
     
     // Used by views to navigate to another view
     func navigateTo(_ appRoute: Route, animate: Bool = true) {
-        transition.value = animate
         path.append(appRoute)
     }
     

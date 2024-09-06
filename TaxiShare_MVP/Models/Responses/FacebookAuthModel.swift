@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FacebookAuthModel {
+struct FacebookAuthModel: Codable {
     var id = ""
     var fist_name: String = ""
     var middle_name: String = ""

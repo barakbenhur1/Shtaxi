@@ -7,29 +7,26 @@
 
 import SwiftUI
 
-struct OnboardingProgressbleContainerView: ViewWithTransition, ProfileHandeler {
-    @EnvironmentObject private var manager: PersistenceController
-    @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
+struct OnboardingProgressbleContainerView: View, ProfileHandeler {
+    @EnvironmentObject private var vm: OnboardringViewModel
     @EnvironmentObject var router: Router
+    @EnvironmentObject private var manager: PersistenceController
+    @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     
     @State internal var holder = Holder<any ProfileUpdater>()
     @State internal var buttonEnabled: Bool = false
     @State internal var externalActionLoading: Bool? = false
     @State private var progreesSatge: Int = 0
-    @State private var buttonConfig: TButtonConfig = .defulat(state: .disabled,
-                                                              dimantions: .full)
-    internal let vm = OnboardringViewModel()
     
-    let transitionAnimation: Bool
     let screens: [OnboardingProgressble]
     
     var body: some View {
         if progreesSatge < screens.count {
             let buttonText = progreesSatge < screens.count - 1 ? "אישור".localized() : "שנצא לדרך?".localized()
             progreesView()
+                .environmentObject(vm)
                 .wrapWithBottun(buttonText: buttonText,
-                                preformAction: preformAction, 
+                                preformAction: preformAction,
                                 loadingForExternalActions: $externalActionLoading,
                                 setButtonConfig: $buttonEnabled,
                                 onTapGesture: { hideKeyboard() })

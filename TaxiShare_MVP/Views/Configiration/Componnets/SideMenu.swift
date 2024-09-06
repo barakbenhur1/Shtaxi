@@ -7,40 +7,50 @@
 
 import SwiftUI
 
-struct SideMenu: View {
+struct SideMenu<Title: View, Content: View>: View {
     @Binding var isShowing: Bool
-    var title: AnyView? = nil
-    let content: AnyView
+    var title: Title? = nil
+    let content: Content
     let edge: Edge = .leading
+    let spaceFromEdge: CGFloat = 140
     
     var body: some View {
         ZStack(alignment: .bottom) {
             if (isShowing) {
-                Custom.shared.color.black
+                Custom.shared.color.gray
                     .opacity(0.3)
                     .ignoresSafeArea()
                     .onTapGesture {
                         isShowing.toggle()
                     }
-                VStack() {
+                let view = VStack() {
                     if let title {
                         title
                             .padding(.bottom, 10)
                     }
                     content
                 }
-                .padding(.top, 80)
-                .transition(.move(edge: edge))
-                .background(
-                    Custom.shared.color.white
-                )
+                    .padding(.top, 80)
+                    .transition(.move(edge: edge))
+                    .background(Custom.shared.color.white)
+                
+                switch edge {
+                case .leading:
+                    view.padding(.trailing, spaceFromEdge)
+                case .trailing:
+                    view.padding(.leading, spaceFromEdge)
+                case .top:
+                    view.padding(.bottom, spaceFromEdge)
+                case .bottom:
+                    view.padding(.top, spaceFromEdge)
+                }
             }
         }
         .frame(maxWidth: .infinity,
                maxHeight: .infinity,
                alignment: .bottom)
         .ignoresSafeArea()
-        .animation(.easeInOut, 
+        .animation(.easeInOut,
                    value: isShowing)
     }
 }
