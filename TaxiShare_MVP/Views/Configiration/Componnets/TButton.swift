@@ -40,20 +40,25 @@ struct TButtonStyle: ButtonStyle {
             .multilineTextAlignment(.center)
             .font(config.font)
             .foregroundStyle(
-                withAnimation {
+                withAnimation(.easeInOut) {
                     configuration.isPressed ? config.forgroundColor.opacity(0.8) : config.forgroundColor
                 }
             )
             .background(
-                withAnimation {
+                withAnimation(.easeInOut) {
                     configuration.isPressed ? config.backroundColor.opacity(0.8) : config.backroundColor
                 }
             )
             .clipShape(RoundedRectangle(cornerRadius: config.cornerRadius))
+            .overlay(
+                withAnimation(.smooth) {
+                    RoundedRectangle(cornerRadius: config.cornerRadius)
+                        .stroke(config.border.color,
+                                lineWidth: config.border.width)
+                }
+            )
         
         switch config {
-        case .none:
-            label
         case .selectebale(let selected, _, _):
             if selected {
                 ZStack(alignment: .leading) {
@@ -66,19 +71,9 @@ struct TButtonStyle: ButtonStyle {
                         .padding(.bottom, 14)
                         .padding(.leading, 38)
                 }
-                .overlay(
-                    RoundedRectangle(cornerRadius: config.cornerRadius)
-                        .stroke(config.border.color,
-                                lineWidth: config.border.width)
-                )
             }
             else {
                 label
-                    .overlay(
-                        RoundedRectangle(cornerRadius: config.cornerRadius)
-                            .stroke(config.border.color,
-                                    lineWidth: config.border.width)
-                    )
             }
         default:
             label
