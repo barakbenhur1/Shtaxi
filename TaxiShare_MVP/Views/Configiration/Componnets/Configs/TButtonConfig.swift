@@ -74,9 +74,13 @@ extension TButtonConfig: RawRepresentable {
                            border: .init(width: 0,
                                          color: .clear)):
                     
-                    self = .regular(bold: rawValue.font == .textMediumBold,
-                                    dimantions: dimantions,
-                                    enabled: state)
+                    if rawValue.font == .textMedium || rawValue.font == .textMediumBold {
+                        self = .regular(bold: rawValue.font == .textMediumBold,
+                                        dimantions: dimantions,
+                                        enabled: state)
+                    }
+                    else { self = .none }
+                    
                     return
                     
                 case .init(dimantions: dimantions,
@@ -101,9 +105,12 @@ extension TButtonConfig: RawRepresentable {
                            border: .init(width: 1,
                                          color: state ? rawValue.font == .textMediumBold ? .tBlue : .darkText : .darkText)):
                     
-                    self = .selectebale(selected: rawValue.font == .textMediumBold,
-                                        dimantions: dimantions,
-                                        enabled: state)
+                    if rawValue.font == .textMedium || rawValue.font == .textMediumBold {
+                        self = .selectebale(selected: rawValue.font == .textMediumBold,
+                                            dimantions: dimantions,
+                                            enabled: state)
+                    }
+                    else { self = .none }
                     return
                     
                 case .init(dimantions: dimantions,
