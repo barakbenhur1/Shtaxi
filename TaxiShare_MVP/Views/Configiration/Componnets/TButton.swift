@@ -46,8 +46,7 @@ struct TButtonStyle: ButtonStyle {
             )
             .background(
                 withAnimation {
-                    configuration.isPressed ? config.backroundColor.opacity(0.8) :
-                    config.backroundColor
+                    configuration.isPressed ? config.backroundColor.opacity(0.8) : config.backroundColor
                 }
             )
             .clipShape(RoundedRectangle(cornerRadius: config.cornerRadius))
@@ -69,16 +68,16 @@ struct TButtonStyle: ButtonStyle {
                 }
                 .overlay(
                     RoundedRectangle(cornerRadius: config.cornerRadius)
-                        .stroke(Color.tBlue,
-                                lineWidth: 1)
+                        .stroke(config.border.color,
+                                lineWidth: config.border.width)
                 )
             }
             else {
                 label
                     .overlay(
                         RoundedRectangle(cornerRadius: config.cornerRadius)
-                            .stroke(Color.darkText,
-                                    lineWidth: 1)
+                            .stroke(config.border.color,
+                                    lineWidth: config.border.width)
                     )
             }
         default:
