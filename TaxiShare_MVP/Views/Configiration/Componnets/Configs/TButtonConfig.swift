@@ -28,7 +28,6 @@ internal struct TButtonConfigRawValue: Hashable {
     let cornerRadius: CGFloat
     let enabled: Bool
     let border: Border
-    var extraOption: Bool = false
 }
 
 // MARK: TButtonConfig
@@ -60,74 +59,96 @@ extension TButtonConfig: RawRepresentable {
     init?(rawValue: TButtonConfigRawValue) {
         let states: [Bool] = [false, true]
         let dimantions: [TButtonDimantions] = [.full, .hagging, .none]
-        let extraOptions: [Bool] = [false, true]
         
         self = .none
         
         for state in states {
             for dimantion in dimantions {
-                for extraOption in extraOptions {
-                    switch rawValue {
-                    case .init(dimantions: dimantion,
-                               font: extraOption ? .textMediumBold : .textMedium,
-                               forgroundColor: enabled ? .black : .darkText,
-                               backroundColor: .clear,
-                               cornerRadius: 0,
-                               enabled: enabled,
-                               border: .init(width: 0,
-                                             color: .clear),
-                               extraOption: extraOption):
-                        
-                        self = .regular(bold: extraOption,
+                switch rawValue {
+                case .init(dimantions: dimantion,
+                           font: .textMediumBold,
+                           forgroundColor: state ? .black : .darkText,
+                           backroundColor: .clear,
+                           cornerRadius: 0,
+                           enabled: state,
+                           border: .init(width: 0,
+                                         color: .clear)):
+                    
+                    self = .regular(bold: true,
+                                    dimantions: dimantion,
+                                    enabled: state)
+                    return
+                    
+                case .init(dimantions: dimantion,
+                           font: .textMedium,
+                           forgroundColor: state ? .black : .darkText,
+                           backroundColor: .clear,
+                           cornerRadius: 0,
+                           enabled: state,
+                           border: .init(width: 0,
+                                         color: .clear)):
+                    
+                    self = .regular(bold: false,
+                                    dimantions: dimantion,
+                                    enabled: state)
+                    
+                case .init(dimantions: dimantion,
+                           font: .button,
+                           forgroundColor: state ?.lightText : .darkText,
+                           backroundColor: state ? .tBlue : .tGray,
+                           cornerRadius: 149,
+                           enabled: state,
+                           border: .init(width: 0,
+                                         color: .clear)):
+                    
+                    self = .designed(dimantions: dimantion,
+                                     enabled: state)
+                    return
+                    
+                case .init(dimantions: dimantion,
+                           font: .textMediumBold,
+                           forgroundColor: state ? .tBlue : .darkText,
+                           backroundColor: .white,
+                           cornerRadius: 149,
+                           enabled: state,
+                           border: .init(width: 1,
+                                         color: state ? .tBlue : .darkText)):
+                    
+                    self = .selectebale(selected: true,
                                         dimantions: dimantion,
                                         enabled: state)
-                        return
-                        
-                    case .init(dimantions: dimantion,
-                               font: .button,
-                               forgroundColor: enabled ?.lightText : .darkText,
-                               backroundColor: enabled ? .tBlue : .tGray,
-                               cornerRadius: 149,
-                               enabled: enabled,
-                               border: .init(width: 0,
-                                             color: .clear)):
-                        
-                        self = .designed(dimantions: dimantion,
-                                         enabled: state)
-                        return
-                        
-                    case .init(dimantions: dimantion,
-                               font: extraOption ? .textMediumBold: .textMedium,
-                               forgroundColor: enabled ? .inputFiled : .darkText,
-                               backroundColor: .white,
-                               cornerRadius: 149,
-                               enabled: enabled,
-                               border: .init(width: 0,
-                                             color: .clear),
-                               extraOption: extraOption):
-                        
-                        self = .selectebale(selected: extraOption,
-                                            dimantions: dimantion,
-                                            enabled: enabled)
-                        return
-                        
-                    case .init(dimantions: dimantion,
-                               font: .textCritical,
-                               forgroundColor: enabled ? .red : .darkText,
-                               backroundColor: .clear,
-                               cornerRadius: 0,
-                               enabled: enabled,
-                               border: .init(width: 0,
-                                             color: .clear)):
-                        
-                        self = .critical(dimantions: dimantion,
-                                         enabled: enabled)
-                        return
-                        
-                    default:
-                        self = .none
-                        return
-                    }
+                    return
+                    
+                case .init(dimantions: dimantion,
+                           font: .textMedium,
+                           forgroundColor: state ? .inputFiled : .darkText,
+                           backroundColor: .white,
+                           cornerRadius: 149,
+                           enabled: state,
+                           border: .init(width: 1,
+                                         color: .darkText)):
+                    
+                    self = .selectebale(selected: false,
+                                        dimantions: dimantion,
+                                        enabled: state)
+                    return
+                    
+                case .init(dimantions: dimantion,
+                           font: .textCritical,
+                           forgroundColor: state ? .red : .darkText,
+                           backroundColor: .clear,
+                           cornerRadius: 0,
+                           enabled: state,
+                           border: .init(width: 0,
+                                         color: .clear)):
+                    
+                    self = .critical(dimantions: dimantion,
+                                     enabled: state)
+                    return
+                    
+                default:
+                    self = .none
+                    return
                 }
             }
         }
@@ -153,8 +174,7 @@ extension TButtonConfig: RawRepresentable {
                          cornerRadius: 0,
                          enabled: enabled,
                          border: .init(width: 0,
-                                       color: .clear)
-                         ,extraOption: bold)
+                                       color: .clear))
             
         case .designed(let dimantions, let enabled):
             return .init(dimantions: dimantions,
@@ -174,8 +194,7 @@ extension TButtonConfig: RawRepresentable {
                          cornerRadius: 149,
                          enabled: enabled,
                          border: .init(width: 1,
-                                       color: enabled ? selected ? .tBlue : .darkText : .darkText)
-                         ,extraOption: selected)
+                                       color: enabled ? selected ? .tBlue : .darkText : .darkText))
             
         case .critical(let dimantions, let enabled):
             return .init(dimantions: dimantions,
