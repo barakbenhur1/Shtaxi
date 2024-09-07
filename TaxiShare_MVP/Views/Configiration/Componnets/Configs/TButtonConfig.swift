@@ -42,7 +42,14 @@ enum TButtonConfig: Hashable {
                      enabled: Bool),
          regular(bold: Bool,
                  dimantions: TButtonDimantions,
-                 enabled: Bool)
+                 enabled: Bool),
+         custom(dimantions: TButtonDimantions,
+                font: Font,
+                forgroundColor: Color,
+                backroundColor: Color,
+                cornerRadius: CGFloat,
+                enabled: Bool,
+                border: Border)
 }
 
 extension TButtonConfig: RawRepresentable {
@@ -57,81 +64,107 @@ extension TButtonConfig: RawRepresentable {
     var border: Border { return rawValue.border }
     
     init?(rawValue: TButtonConfigRawValue) {
-        let states: [Bool] = [false, true]
-        let dimantionsArry: [TButtonDimantions] = [.full, .hagging, .none]
-        
         self = .none
-        
-        for state in states {
-            for dimantions in dimantionsArry {
-                switch rawValue {
-                case .init(dimantions: dimantions,
-                           font: rawValue.font,
-                           forgroundColor: state ? .black : .darkText,
-                           backroundColor: .clear,
-                           cornerRadius: 0,
-                           enabled: state,
-                           border: .init(width: 0,
-                                         color: .clear)):
-                    
-                    if rawValue.font == .textMedium || rawValue.font == .textMediumBold {
-                        self = .regular(bold: rawValue.font == .textMediumBold,
-                                        dimantions: dimantions,
-                                        enabled: state)
-                    }
-                    else { self = .none }
-                    
-                    return
-                    
-                case .init(dimantions: dimantions,
-                           font: .button,
-                           forgroundColor: state ?.lightText : .darkText,
-                           backroundColor: state ? .tBlue : .tGray,
-                           cornerRadius: 149,
-                           enabled: state,
-                           border: .init(width: 0,
-                                         color: .clear)):
-                    
-                    self = .designed(dimantions: dimantions,
-                                     enabled: state)
-                    return
-                    
-                case .init(dimantions: dimantions,
-                           font: rawValue.font,
-                           forgroundColor: state ? .inputFiled : .darkText,
-                           backroundColor: .white,
-                           cornerRadius: 149,
-                           enabled: state,
-                           border: .init(width: 1,
-                                         color: state ? rawValue.font == .textMediumBold ? .tBlue : .darkText : .darkText)):
-                    
-                    if rawValue.font == .textMedium || rawValue.font == .textMediumBold {
-                        self = .selectebale(selected: rawValue.font == .textMediumBold,
-                                            dimantions: dimantions,
-                                            enabled: state)
-                    }
-                    else { self = .none }
-                    return
-                    
-                case .init(dimantions: dimantions,
-                           font: .textCritical,
-                           forgroundColor: state ? .red : .darkText,
-                           backroundColor: .clear,
-                           cornerRadius: 0,
-                           enabled: state,
-                           border: .init(width: 0,
-                                         color: .clear)):
-                    
-                    self = .critical(dimantions: dimantions,
-                                     enabled: state)
-                    return
-                    
-                default:
-                    self = .none
-                    
-                    return
-                }
+        switch rawValue {
+        case .init(dimantions: rawValue.dimantions,
+                   font: rawValue.font,
+                   forgroundColor: rawValue.enabled ? .black : .darkText,
+                   backroundColor: .clear,
+                   cornerRadius: 0,
+                   enabled: rawValue.enabled,
+                   border: .init(width: 0,
+                                 color: .clear)):
+            
+            if rawValue.font == .textMedium || rawValue.font == .textMediumBold {
+                self = .regular(bold: rawValue.font == .textMediumBold,
+                                dimantions: rawValue.dimantions,
+                                enabled: rawValue.enabled)
             }
+            else {
+                self = .custom(dimantions: rawValue.dimantions,
+                               font: rawValue.font,
+                               forgroundColor: rawValue.forgroundColor,
+                               backroundColor: rawValue.backroundColor,
+                               cornerRadius: rawValue.cornerRadius,
+                               enabled: rawValue.enabled,
+                               border: rawValue.border)
+            }
+            
+            return
+            
+        case .init(dimantions: rawValue.dimantions,
+                   font: .button,
+                   forgroundColor: rawValue.enabled ?.lightText : .darkText,
+                   backroundColor: rawValue.enabled ? .tBlue : .tGray,
+                   cornerRadius: 149,
+                   enabled: rawValue.enabled,
+                   border: .init(width: 0,
+                                 color: .clear)):
+            
+            self = .designed(dimantions: rawValue.dimantions,
+                             enabled: rawValue.enabled)
+            return
+            
+        case .init(dimantions: rawValue.dimantions,
+                   font: rawValue.font,
+                   forgroundColor: rawValue.enabled ? .inputFiled : .darkText,
+                   backroundColor: .white,
+                   cornerRadius: 149,
+                   enabled: rawValue.enabled,
+                   border: .init(width: 1,
+                                 color: rawValue.enabled ? rawValue.font == .textMediumBold ? .tBlue : .darkText : .darkText)):
+            
+            if rawValue.font == .textMedium || rawValue.font == .textMediumBold {
+                self = .selectebale(selected: rawValue.font == .textMediumBold,
+                                    dimantions: rawValue.dimantions,
+                                    enabled: rawValue.enabled)
+            }
+            else { 
+                self = .custom(dimantions: rawValue.dimantions,
+                               font: rawValue.font,
+                               forgroundColor: rawValue.forgroundColor,
+                               backroundColor: rawValue.backroundColor,
+                               cornerRadius: rawValue.cornerRadius,
+                               enabled: rawValue.enabled,
+                               border: rawValue.border)
+            }
+            return
+            
+        case .init(dimantions: rawValue.dimantions,
+                   font: .textCritical,
+                   forgroundColor: rawValue.enabled ? .red : .darkText,
+                   backroundColor: .clear,
+                   cornerRadius: 0,
+                   enabled: rawValue.enabled,
+                   border: .init(width: 0,
+                                 color: .clear)):
+            
+            self = .critical(dimantions: rawValue.dimantions,
+                             enabled: rawValue.enabled)
+            return
+            
+        case .init(dimantions: rawValue.dimantions,
+                   font: rawValue.font,
+                   forgroundColor: rawValue.forgroundColor,
+                   backroundColor: rawValue.backroundColor,
+                   cornerRadius: rawValue.cornerRadius,
+                   enabled: rawValue.enabled,
+                   border: rawValue.border):
+            
+            self = .custom(dimantions: rawValue.dimantions,
+                           font: rawValue.font,
+                           forgroundColor: rawValue.forgroundColor,
+                           backroundColor: rawValue.backroundColor,
+                           cornerRadius: rawValue.cornerRadius,
+                           enabled: rawValue.enabled,
+                           border: rawValue.border)
+            
+            return
+            
+        default:
+            self = .none
+            
+            return
         }
     }
     
@@ -186,6 +219,15 @@ extension TButtonConfig: RawRepresentable {
                          enabled: enabled,
                          border: .init(width: 0,
                                        color: .clear))
+            
+        case .custom(let dimantions, let font, let forgroundColor, let backroundColor, let cornerRadius, let enabled, let border):
+            return .init(dimantions: dimantions,
+                         font: font,
+                         forgroundColor: forgroundColor,
+                         backroundColor: backroundColor,
+                         cornerRadius: cornerRadius,
+                         enabled: enabled,
+                         border: border)
         }
     }
 }
