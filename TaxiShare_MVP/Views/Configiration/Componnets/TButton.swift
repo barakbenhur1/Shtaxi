@@ -17,6 +17,8 @@ struct TButton: View {
             didTap()
         }, label: {
             let text = Text(text)
+                .multilineTextAlignment(.center)
+                .font(config.font)
             
             switch config.dimantions {
             case .none, .hagging:
@@ -37,8 +39,6 @@ struct TButtonStyle: ButtonStyle {
         let label = configuration.label
             .padding(.top, 17)
             .padding(.bottom, 17)
-            .multilineTextAlignment(.center)
-            .font(config.font)
             .foregroundStyle(
                 withAnimation(.easeInOut) {
                     configuration.isPressed ? config.forgroundColor.opacity(0.8) : config.forgroundColor
