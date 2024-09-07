@@ -69,7 +69,7 @@ extension TButtonConfig: RawRepresentable {
                 for extraOption in extraOptions {
                     switch rawValue {
                     case .init(dimantions: dimantion,
-                               font: .none,
+                               font: extraOption ? .textMediumBold : .textMedium,
                                forgroundColor: enabled ? .black : .darkText,
                                backroundColor: .clear,
                                cornerRadius: 0,
@@ -77,6 +77,7 @@ extension TButtonConfig: RawRepresentable {
                                border: .init(width: 0,
                                              color: .clear),
                                extraOption: extraOption):
+                        
                         self = .regular(bold: extraOption,
                                         dimantions: dimantion,
                                         enabled: state)
@@ -96,7 +97,7 @@ extension TButtonConfig: RawRepresentable {
                         return
                         
                     case .init(dimantions: dimantion,
-                               font: .textMedium,
+                               font: extraOption ? .textMediumBold: .textMedium,
                                forgroundColor: enabled ? .inputFiled : .darkText,
                                backroundColor: .white,
                                cornerRadius: 149,
