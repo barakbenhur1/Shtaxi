@@ -80,7 +80,15 @@ extension TButtonConfig: RawRepresentable {
                                 dimantions: rawValue.dimantions,
                                 enabled: rawValue.enabled)
             }
-            else { self = .none }
+            else {
+                self = .custom(dimantions: rawValue.dimantions,
+                               font: rawValue.font,
+                               forgroundColor: rawValue.forgroundColor,
+                               backroundColor: rawValue.backroundColor,
+                               cornerRadius: rawValue.cornerRadius,
+                               enabled: rawValue.enabled,
+                               border: rawValue.border)
+            }
             
             return
             
@@ -111,7 +119,15 @@ extension TButtonConfig: RawRepresentable {
                                     dimantions: rawValue.dimantions,
                                     enabled: rawValue.enabled)
             }
-            else { self = .none }
+            else {
+                self = .custom(dimantions: rawValue.dimantions,
+                               font: rawValue.font,
+                               forgroundColor: rawValue.forgroundColor,
+                               backroundColor: rawValue.backroundColor,
+                               cornerRadius: rawValue.cornerRadius,
+                               enabled: rawValue.enabled,
+                               border: rawValue.border)
+            }
             
             return
             
