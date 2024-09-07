@@ -16,13 +16,13 @@ struct OnboardingProgressbleContainerView: View, ProfileHandeler {
     @State internal var holder = Holder<any ProfileUpdater>()
     @State internal var buttonEnabled: Bool = false
     @State internal var externalActionLoading: Bool? = false
-    @State private var progreesSatge: Int = 0
+    @State private var progressSatge: Int = 0
     
     let screens: [OnboardingProgressble]
     
     var body: some View {
-        if progreesSatge < screens.count {
-            let buttonText = progreesSatge < screens.count - 1 ? "אישור".localized() : "שנצא לדרך?".localized()
+        if progressSatge < screens.count {
+            let buttonText = progressSatge < screens.count - 1 ? "אישור".localized() : "שנצא לדרך?".localized()
             progreesView()
                 .environmentObject(vm)
                 .wrapWithBottun(buttonText: buttonText,
@@ -35,7 +35,7 @@ struct OnboardingProgressbleContainerView: View, ProfileHandeler {
     
     @ViewBuilder private func progreesView() -> OnboardingProgressbleManagerView {
         OnboardingProgressbleManagerView(screens: screens,
-                                         progreesSatge: $progreesSatge,
+                                         progreesSatge: $progressSatge,
                                          onAppear: { view in holder.value = view } ,
                                          noActionNeeded: { buttonEnabled = true },
                                          setButtonConfig: { isDone in buttonEnabled = isDone },
@@ -52,15 +52,15 @@ struct OnboardingProgressbleContainerView: View, ProfileHandeler {
         }
     }
     
+    private func approveProgress() {
+        guard progressSatge < screens.count - 1 else { return router.navigateTo(.map) }
+        progressSatge += 1
+        buttonEnabled = false
+    }
+    
     private func setExtenalLoading() {
         externalActionLoading = true
         preformAction { _ in externalActionLoading = false }
-    }
-    
-    private func approveProgress() {
-        guard progreesSatge < screens.count - 1 else { return router.navigateTo(.map) }
-        progreesSatge += 1
-        buttonEnabled = false
     }
 }
 

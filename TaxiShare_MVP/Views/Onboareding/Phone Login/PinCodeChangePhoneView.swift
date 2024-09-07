@@ -25,8 +25,8 @@ struct PinCodeChangePhoneView<VM: OnboardringViewModel>: ProfileUpdater {
                 didDone(nil)
             } label: {
                 Text("⇐")
-                    .font(Custom.shared.font.textHugeBold)
-                    .foregroundStyle(Custom.shared.color.black)
+                    .font(.textHugeBold)
+                    .foregroundStyle(.black)
             }
             
             LoginPhoneView(text: phone,
@@ -51,12 +51,11 @@ struct PinCodeChangePhoneView<VM: OnboardringViewModel>: ProfileUpdater {
         vm.phoneAuth(phone: phone) { id in
             verificationID = id
             complete(true)
-            didDone(phone)
+            return didDone(phone)
         } error: { err in
+            if let err { print(err) }
             complete(false)
-            didDone(phone)
-            guard let err else { return }
-            print(err)
+            return didDone(phone)
         }
     }
 }

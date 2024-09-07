@@ -12,8 +12,8 @@ struct ViewWithButton: ViewModifier {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var router: Router
     
-    @StateObject var buttonConfigManager = TButtonConfigManager(buttonConfig: .defulat(state: .disabled,
-                                                                                       dimantions: .full))
+    @StateObject var buttonConfigManager = TButtonConfigManager(buttonConfig: .designed(dimantions: .full,
+                                                                                        enabled: false))
     
     @State private var loading = false
     let buttonText: String
@@ -52,8 +52,8 @@ struct ViewWithButton: ViewModifier {
     
     private func configButton() {
         withAnimation(.smooth) {
-            buttonConfigManager.buttonConfig = .defulat(state: setButtonConfig ? .enabled : .disabled,
-                                    dimantions: .full)
+            buttonConfigManager.buttonConfig = .designed(dimantions: .full,
+                                                         enabled: setButtonConfig)
         }
     }
 }

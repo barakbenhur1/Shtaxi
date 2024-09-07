@@ -16,7 +16,6 @@ struct SmsPinCodeView<VM: OnboardringViewModel>: ProfileUpdater {
     let onAppear: (SmsPinCodeView) -> ()
     let didChnngeNumber: () -> ()
     let didDone: (Bool) -> ()
-    let didApprove: (_ id: String, _ name: String, _ email: String, _ didLogin: @escaping (_ uploadSuccess: @escaping ([OnboardingProgressble]) -> (), _ onFail: @escaping () -> ()) -> ()) -> ()
     
     @State private var holder = Holder<String>()
     @State private var error: Bool = false
@@ -36,7 +35,7 @@ struct SmsPinCodeView<VM: OnboardringViewModel>: ProfileUpdater {
             HStack {
                 Spacer()
                 RightText(text: "הכנסת קוד",
-                          font: Custom.shared.font.title)
+                          font: .title)
             }
             .padding(.bottom, 4)
             
@@ -45,15 +44,15 @@ struct SmsPinCodeView<VM: OnboardringViewModel>: ProfileUpdater {
                     didChnngeNumber()
                 }, label: {
                     Text("טעות במספר?".localized())
-                        .font(Custom.shared.font.button)
+                        .font(.button)
                 })
                 
                 Spacer()
                 RightText(text: phone,
-                          font: Custom.shared.font.textMediumBold)
+                          font: .textMediumBold)
                 
                 RightText(text: "שלחנו קוד ל ",
-                          font: Custom.shared.font.textMedium)
+                          font: .textMedium)
             }
             
             VStack {
@@ -66,8 +65,8 @@ struct SmsPinCodeView<VM: OnboardringViewModel>: ProfileUpdater {
                 
                 if let errorValue {
                     Text(errorValue)
-                        .foregroundStyle(Custom.shared.color.red)
-                        .font(Custom.shared.font.textSmall)
+                        .foregroundStyle(.red)
+                        .font(.textSmall)
                         .padding(.bottom, -5)
                 }
             }
@@ -75,8 +74,8 @@ struct SmsPinCodeView<VM: OnboardringViewModel>: ProfileUpdater {
             
             Text("Lorem ipsum dolor sit amet consectetur. Pulvinar sed in dui auctor imperdiet posuere bibendum. Diam sit sed semper.")
                 .multilineTextAlignment(.center)
-                .font(Custom.shared.font.textSmall)
-                .foregroundStyle(Custom.shared.color.infoText)
+                .font(.textSmall)
+                .foregroundStyle(Color.infoText)
                 .padding(.bottom, 4)
             
             Button(action: {
@@ -90,8 +89,8 @@ struct SmsPinCodeView<VM: OnboardringViewModel>: ProfileUpdater {
                 }
             }, label: {
                 Text("שליחה חוזרת")
-                    .font(Custom.shared.font.textMedium)
-                    .foregroundStyle(Custom.shared.color.tBlue)
+                    .font(.textMedium)
+                    .foregroundStyle(Color.tBlue)
                     .frame(height: 26)
             })
         }
@@ -106,37 +105,18 @@ struct SmsPinCodeView<VM: OnboardringViewModel>: ProfileUpdater {
         do {
             vm.verifayPinCode(verificationID: verificationID,
                               code: pinCode) { id, name, email in
-                vm.login(id: id) { user in
-                    let profile = manager.new(id: user.id)
-                    didApprove(id, name, email) { uploadSuccess, onFail in
-                        vm.update(profile: profile,
-                                  updateBody: .init(phone: phone)) {
-                            manager.set(profile: profile,
-                                        phone: phone)
-                            
-                            let screens = profileSync.onboardingScreens(user: user,
-                                                                                       syncedProfile: profile,
-                                                                                       email: email,
-                                                                                       name: name,
-                                                                                       birthdate: "",
-                                                                                       gender: "")
-                            
-                            uploadSuccess(screens)
-                            complete(true)
-                        } error: { err in
-                            print(err)
-                            onFail()
-                            complete(false)
-                        }
-                    }
-                } error: { error in
-                    print(error)
-                    complete(false)
-                }
+                profileSync.handleLoginTap(profile: profile,
+                                           id: id,
+                                           email: email,
+                                           phone: phone,
+                                           name: name,
+                                           birthdate: "",
+                                           gender: "",
+                                           didLogin: complete)
             } error: { err in
                 if let err { print(err) }
                 errorValue = err
-                complete(false)
+                return complete(false)
             }
         }
     }

@@ -14,8 +14,9 @@ struct TSelectableButton: View {
     init(text: String, selected: Bool, isSelected: @escaping () -> Void) {
         _params = Binding(get: {
             return .init(title: text,
-                                config: .defulat(state: .selectebale(selected: selected),
-                                                 dimantions: .full))
+                         config: .selectebale(selected: selected,
+                                              dimantions: .full,
+                                              enabled: true))
         }, set: {_ in })
         self.isSelected = isSelected
     }

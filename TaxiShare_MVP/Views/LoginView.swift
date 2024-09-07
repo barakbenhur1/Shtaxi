@@ -40,12 +40,11 @@ struct LoginView: View, ProfileHandeler {
         guard let phone = holder.value else { return complete(false) }
         vm.phoneAuth(phone: phone) { verificationID in
             complete(true)
-            router.navigateTo(.pinCode(phone: phone,
-                                       verificationID: verificationID))
+            return router.navigateTo(.pinCode(phone: phone,
+                                              verificationID: verificationID))
         } error: { err in
-            complete(false)
-            guard let err else { return }
-            print(err)
+            if let err { print(err) }
+            return complete(false)
         }
     }
     

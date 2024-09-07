@@ -81,7 +81,7 @@ class ProfileSyncHendeler: ObservableObject {
     /// - Parameter birthdate
     /// - Parameter gender
     /// - Parameter didLogin - return if login successful
-    private func preform(profile: Profile?, id: String?, name: String, email: String, birthdate: String, gender: String, didLogin: @escaping (Bool) -> (), navigteWith: @escaping ([OnboardingProgressble]) -> (), error: ((String, LoginError?) -> ())? = nil) {
+    private func preform(profile: Profile?, id: String?, phone: String = "", name: String = "", email: String = "", birthdate: String = "", gender: String = "", didLogin: @escaping (Bool) -> (), navigteWith: @escaping ([OnboardingProgressble]) -> (), error: ((String, LoginError?) -> ())? = nil) {
         guard let id, !id.isEmpty else {
             removeAndPopToLogin(profile: profile)
             return didLogin(false)
@@ -103,13 +103,35 @@ class ProfileSyncHendeler: ObservableObject {
                 
                 let onboardingScreens = onboardingScreens(user: user,
                                                           syncedProfile: syncedLocalProfile,
-                                                          email: email,
                                                           name: name,
                                                           birthdate: birthdate,
                                                           gender: gender)
                 
+                if user.email.isEmpty && !email.isEmpty && email.isValidEmail() {
+                    vm.update(profile: syncedLocalProfile,
+                              updateBody: .init(email: email)) { [weak self] in
+                        guard let self else { return }
+                        manager.set(profile: syncedLocalProfile,
+                                    email: email)
+                    } error: { error in print(error) }
+                }
+                
+                if user.phone.isEmpty && !phone.isEmpty && phone.isValidPhone() {
+                    vm.update(profile: syncedLocalProfile,
+                              updateBody: .init(phone: phone)) { [weak self] in
+                        guard let self else { return }
+                        manager.set(profile: syncedLocalProfile,
+                                    phone: phone)
+                    } error: { [weak self] error in
+                        print(error)
+                        guard let self else { return }
+                        removeAndPopToLogin(profile: syncedLocalProfile,
+                                            massege:.retry)
+                    }
+                }
+                
                 didLogin(true)
-                navigteWith(onboardingScreens)
+                return navigteWith(onboardingScreens)
             } error: { err in
                 error?(err, .failed)
                 return didLogin(false)
@@ -129,7 +151,7 @@ class ProfileSyncHendeler: ObservableObject {
     /// - Parameter name
     /// - Parameter birthdate
     /// - Parameter gender
-    func onboardingScreens(user: ProfileModel, syncedProfile: Profile, email: String, name: String, birthdate: String, gender: String) -> [OnboardingProgressble] {
+    func onboardingScreens(user: ProfileModel, syncedProfile: Profile, name: String, birthdate: String, gender: String) -> [OnboardingProgressble] {
         var screens: [OnboardingProgressble] = []
         
         if user.name.isEmpty {
@@ -165,20 +187,6 @@ class ProfileSyncHendeler: ObservableObject {
                         rules: user.rules)
         }
         
-        if !user.phone.isEmpty {
-            manager.set(profile: syncedProfile,
-                        phone: user.phone)
-        }
-        
-        if user.email.isEmpty, !email.isEmpty && email.isValidEmail() {
-            vm.update(profile: syncedProfile,
-                      updateBody: .init(email: email)) { [weak self] in
-                guard let self else { return }
-                manager.set(profile: syncedProfile,
-                            email: email)
-            } error: { error in print(error) }
-        }
-        
         return screens
     }
     
@@ -204,39 +212,29 @@ class ProfileSyncHendeler: ObservableObject {
     /// - Parameter birthdate
     /// - Parameter gender
     /// - Parameter didLogin - return if login successful
-    func handleLoginTap(profile: Profile?, id: String?, email: String, name: String, birthdate: String, gender: String, didLogin: @escaping (Bool) -> () = { _ in }) {
+    func handleLoginTap(profile: Profile?, id: String?, email: String = "", phone: String = "", name: String = "", birthdate: String = "", gender: String = "", didLogin: @escaping (Bool) -> () = { _ in }) {
         preform(profile: profile,
                 id: id,
+                phone: phone,
                 name: name,
                 email: email,
                 birthdate: birthdate,
                 gender: gender,
-                didLogin: didLogin, navigteWith: afterLogin,
+                didLogin: didLogin, 
+                navigteWith: afterLogin,
                 error: handleError)
     }
     
     
     // MARK: handleLogin - auto login
     /// - Parameter Profile - local profile
-    /// - Parameter id
-    /// - Parameter email
-    /// - Parameter name
-    /// - Parameter birthdate
-    /// - Parameter gender
     /// - Parameter didLogin - return if login successful
-    func handleLogin(profile: Profile?, id: String?, name: String, email: String, birthdate: String, gender: String, didLogin: @escaping (Bool) -> () = { _ in }) {
+    func handleLogin(profile: Profile?, didLogin: @escaping (Bool) -> () = { _ in }) {
         preform(profile: profile,
-                id: id,
-                name: name,
-                email: email,
-                birthdate: birthdate,
-                gender: gender,
+                id: profile?.userID,
                 didLogin: didLogin,
                 navigteWith: afterLoginAsRoot,
-                error: { [weak self] error,_ in
-            guard let self else { return }
-            handleError(error: error)
-        })
+                error: handleError)
     }
     
     // MARK: removeAndPopToLogin

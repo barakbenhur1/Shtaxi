@@ -56,7 +56,7 @@ struct SingUpView: View {
                         .resizable()
                         .frame(height: 300)
                         .frame(width: 300)
-                        .background(Custom.shared.color.gray)
+                        .background(.gray)
                         .clipShape(Circle())
                         .onTapGesture {
                             showImagePicker.toggle()
@@ -112,7 +112,7 @@ struct SingUpView: View {
                     } label: {
                         Text(gender ?? "בחר מין")
                             .font(.title)
-                            .foregroundStyle(gender == nil ? Custom.shared.color.gray.opacity(0.6) : Custom.shared.color.black)
+                            .foregroundStyle(gender == nil ? .gray.opacity(0.6) : .black)
                     }
                     .padding(.top, 4)
                     .padding(.bottom, 4)

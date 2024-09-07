@@ -29,13 +29,13 @@ struct OnboardingNameView<VM: OnboardringViewModel>: OnboardingProgress {
             HStack {
                 Spacer()
                 RightText(text: "מה השם שלך?",
-                          font: Custom.shared.font.title)
+                          font: .title)
             }
             .padding(.bottom, 20)
             
             TTextFieldView(label: "הכנסת שם פרטי",
                            text: $text,
-                           textColor: Custom.shared.color.black,
+                           textColor: .black,
                            keyboardType: .default,
                            textAlignment: .trailing) { _ in }
                 .onReceive(Just(text)) { _ in
@@ -45,16 +45,14 @@ struct OnboardingNameView<VM: OnboardringViewModel>: OnboardingProgress {
                 .focused($focusedField, equals: .name)
                 .padding(.trailing, 24)
             
-            ZStack {
-                Custom.shared.color.black
-            }
+            ZStack { Color.black }
             .frame(height: 1)
             .padding(.bottom, 20)
             
             Text("Lorem ipsum dolor sit amet consectetur. Pulvinar sed in dui auctor imperdiet posuere bibendum. Diam sit sed semper.")
                 .multilineTextAlignment(.center)
-                .font(Custom.shared.font.textSmall)
-                .foregroundStyle(Custom.shared.color.infoText)
+                .font(.textSmall)
+                .foregroundStyle(Color.infoText)
         }
         .onAppear {
             focusedField = .name
@@ -68,10 +66,10 @@ struct OnboardingNameView<VM: OnboardringViewModel>: OnboardingProgress {
                   updateBody: .init(name: name)) {
             manager.set(profile: profile,
                         name: name)
-            complete(true)
+            return complete(true)
         } error: { error in
             print(error)
-            complete(false)
+            return complete(false)
         }
     }
 }

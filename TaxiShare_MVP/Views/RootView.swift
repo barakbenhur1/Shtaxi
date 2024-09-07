@@ -55,12 +55,7 @@ struct RootView: View {
     private func initalScreen() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
             let profile = profiles.last
-            profileSync.handleLogin(profile: profile,
-                                                   id: profile?.userID,
-                                                   name: "",
-                                                   email: "",
-                                                   birthdate: "",
-                                                   gender: "") { _ in }
+            profileSync.handleLogin(profile: profile) { _ in }
         }
     }
 }

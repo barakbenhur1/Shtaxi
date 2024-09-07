@@ -17,7 +17,7 @@ struct SideMenu<Title: View, Content: View>: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             if (isShowing) {
-                Custom.shared.color.gray
+                Color.black
                     .opacity(0.3)
                     .ignoresSafeArea()
                     .onTapGesture {
@@ -32,7 +32,7 @@ struct SideMenu<Title: View, Content: View>: View {
                 }
                     .padding(.top, 80)
                     .transition(.move(edge: edge))
-                    .background(Custom.shared.color.white)
+                    .background(.white)
                 
                 switch edge {
                 case .leading:

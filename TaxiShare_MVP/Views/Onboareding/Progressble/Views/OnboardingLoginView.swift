@@ -44,7 +44,7 @@ struct OnboardingLoginView<VM: OnboardringViewModel>: View {
         })
             .buttonStyle(LoginButtonStyle())
             .font(.title2.weight(.medium))
-            .foregroundStyle(Custom.shared.color.black)
+            .foregroundStyle(.black)
         
         makeLoginButton(view: button)
     }
@@ -76,7 +76,7 @@ struct OnboardingLoginView<VM: OnboardringViewModel>: View {
         })
             .buttonStyle(LoginButtonStyle())
             .font(.title2.weight(.medium))
-            .foregroundStyle(Custom.shared.color.black)
+            .foregroundStyle(.black)
         
         makeLoginButton(view: button)
     }
@@ -103,7 +103,7 @@ struct OnboardingLoginView<VM: OnboardringViewModel>: View {
             .signInWithAppleButtonStyle(.white)
             .overlay(
                 Capsule()
-                    .stroke(Custom.shared.color.darkText ,
+                    .stroke(Color.darkText ,
                             lineWidth: 1)
             )
         
@@ -118,7 +118,7 @@ struct OnboardingLoginView<VM: OnboardringViewModel>: View {
             HStack {
                 Spacer()
                 RightText(text: "יצירת חשבון".localized(),
-                          font: Custom.shared.font.title)
+                          font: .title)
             }
             .padding(.bottom)
             
@@ -153,8 +153,8 @@ struct OnboardingLoginView<VM: OnboardringViewModel>: View {
     @ViewBuilder private func or() -> some View {
         Text("או".localized())
             .frame(width: 52)
-            .font(Custom.shared.font.textMedium)
-            .foregroundStyle(Custom.shared.color.infoText)
+            .font(.textMedium)
+            .foregroundStyle(Color.infoText)
     }
     
     @ViewBuilder private func line() -> some View {
@@ -174,7 +174,7 @@ private struct LoginButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .background {
-                configuration.isPressed ? Custom.shared.color.gray.opacity(0.8) :
+                configuration.isPressed ? .gray.opacity(0.8) :
                 Color.clear
             }
             .contentShape(Capsule())
@@ -182,7 +182,7 @@ private struct LoginButtonStyle: ButtonStyle {
             .frame(maxHeight: .infinity)
             .overlay(
                 Capsule()
-                    .stroke(Custom.shared.color.darkText,
+                    .stroke(Color.darkText,
                             lineWidth: 1)
                     .allowsHitTesting(false)
             )

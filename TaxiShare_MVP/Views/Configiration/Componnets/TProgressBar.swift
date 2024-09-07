@@ -21,13 +21,13 @@ struct TProgressBar: View {
                     .frame(width: 24)
                 
                 Text("\("שלבים") \(value + 1)/\(total)")
-                    .font(Custom.shared.font.textMedium)
+                    .font(.textMedium)
                     .multilineTextAlignment(.center)
                 
                 Spacer()
                 
                 Text(text)
-                    .font(Custom.shared.font.button)
+                    .font(.button)
                     .multilineTextAlignment(.center)
             }
             
@@ -53,7 +53,7 @@ struct TProgressBarView: View {
                 
                 RoundedRectangle(cornerRadius: 79)
                     .fill(
-                        LinearGradient(gradient: Gradient(colors: [Custom.shared.color.progressStart, Custom.shared.color.progressEnd]),
+                        LinearGradient(gradient: Gradient(colors: [.progressStart, .progressEnd]),
                                        startPoint: .leading,
                                        endPoint: .trailing)
                     )

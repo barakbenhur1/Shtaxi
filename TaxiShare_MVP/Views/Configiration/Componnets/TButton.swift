@@ -18,22 +18,16 @@ struct TButton: View {
         }, label: {
             let text = Text(text)
             
-            switch config {
-            case .none:
+            switch config.dimantions {
+            case .none, .hagging:
                 text
-            case .defulat(_, let dimantions):
-                switch dimantions {
-                case .none, .hagging:
-                    text
-                case .full:
-                    text
-                        .frame(maxWidth: .infinity)
-                }
+            case .full:
+                text
+                    .frame(maxWidth: .infinity)
             }
-            
         })
         .buttonStyle(TButtonStyle(config: config))
-        .disabled(config.rawValue.state.isDisabled())
+        .disabled(!config.enabled)
     }
 }
 
@@ -44,62 +38,58 @@ struct TButtonStyle: ButtonStyle {
             .padding(.top, 17)
             .padding(.bottom, 17)
             .multilineTextAlignment(.center)
-            .font(config.rawValue.font)
+            .font(config.font)
             .foregroundStyle(
                 withAnimation {
-                    configuration.isPressed ? config.rawValue.state.getForgroundColor().opacity(0.8) : config.rawValue.state.getForgroundColor()
+                    configuration.isPressed ? config.forgroundColor.opacity(0.8) : config.forgroundColor
                 }
             )
             .background(
                 withAnimation {
-                    configuration.isPressed ? config.rawValue.state.getBackroundColor().opacity(0.8) :
-                    config.rawValue.state.getBackroundColor()
+                    configuration.isPressed ? config.backroundColor.opacity(0.8) :
+                    config.backroundColor
                 }
             )
-            .clipShape(RoundedRectangle(cornerRadius: config.rawValue.cornerRadius))
+            .clipShape(RoundedRectangle(cornerRadius: config.cornerRadius))
         
         switch config {
         case .none:
             label
-        case .defulat(let state, _):
-            switch state {
-            case .selectebale(let selected):
-                if selected {
-                    ZStack(alignment: .leading) {
-                        label
-                        Image("check_blue")
-                            .resizable()
-                            .frame(height: 24)
-                            .frame(width: 24)
-                            .padding(.top, 14)
-                            .padding(.bottom, 14)
-                            .padding(.leading, 38)
-                    }
+        case .selectebale(let selected, _, _):
+            if selected {
+                ZStack(alignment: .leading) {
+                    label
+                    Image("check_blue")
+                        .resizable()
+                        .frame(height: 24)
+                        .frame(width: 24)
+                        .padding(.top, 14)
+                        .padding(.bottom, 14)
+                        .padding(.leading, 38)
+                }
+                .overlay(
+                    RoundedRectangle(cornerRadius: config.cornerRadius)
+                        .stroke(Color.tBlue,
+                                lineWidth: 1)
+                )
+            }
+            else {
+                label
                     .overlay(
-                        RoundedRectangle(cornerRadius: config.rawValue.cornerRadius)
-                            .stroke(Custom.shared.color.tBlue,
+                        RoundedRectangle(cornerRadius: config.cornerRadius)
+                            .stroke(Color.darkText,
                                     lineWidth: 1)
                     )
-                }
-                else {
-                    label
-                        .overlay(
-                            RoundedRectangle(cornerRadius: config.rawValue.cornerRadius)
-                                .stroke(Custom.shared.color.darkText,
-                                        lineWidth: 1)
-                        )
-                }
-            default:
-                label
             }
+        default:
+            label
         }
     }
 }
 
 #Preview {
     TButton(text: "אישור".localized(),
-            config: .defulat(state: .selectebale(selected: true),
-                             dimantions: .full)) {
-        
-    }
+            config: .selectebale(selected: true,
+                                 dimantions: .full,
+                                 enabled: true)) {}
 }

@@ -23,7 +23,7 @@ struct Logo3DView: View {
             result += letterString
         }
         
-        result.font = Custom.shared.font.textHugeBold
+        result.font = .textHugeBold
         return result
     }
     

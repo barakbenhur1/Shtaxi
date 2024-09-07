@@ -113,7 +113,7 @@ struct MapView<VM: OnboardringViewModel, MapVM: MapViewViewModel>: View {
                         }
                     }
                     .tag(anotations.firstIndex(of: result)!)
-                    .tint(result.confirmed ? Custom.shared.color.red : Custom.shared.color.white.opacity(0.6))
+                    .tint(result.confirmed ? .red : .white.opacity(0.6))
                 }
             }
             .onChange(of: selection) {
@@ -139,24 +139,21 @@ struct MapView<VM: OnboardringViewModel, MapVM: MapViewViewModel>: View {
                 VStack {
                     Text("Shtaxi".localized())
                         .font(.title)
-                        .foregroundStyle(Custom.shared.color.white)
+                        .foregroundStyle(.white)
                         .padding(.bottom, 8)
-                    
                     HStack {
-                        navigtionButton(label: {
+                        navigtionButton {
                             navigationButtonText("תפריט",
                                                  bold: true)
-                        }) {
+                        } action: {
                             isShowSideMenu.toggle()
                         }
                         
                         Spacer()
                         
-                        navigtionButton(label: {
-                            //                            Image("filter")
-                            //                                .resizable()
+                        navigtionButton {
                             navigationButtonText("פילטור")
-                        }) {
+                        } action: {
                             isShowSideMenu = false
                             router.navigateTo(.filter)
                         }
@@ -168,7 +165,7 @@ struct MapView<VM: OnboardringViewModel, MapVM: MapViewViewModel>: View {
                 .padding(.top, 58)
                 .padding(.bottom, 20)
             }
-            .background(Custom.shared.color.tYellow.opacity(0.98))
+            .background(Color.tYellow.opacity(0.98))
             .clipShape(UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 10, bottomTrailing: 10)))
             .ignoresSafeArea()
             
@@ -273,7 +270,7 @@ struct MapView<VM: OnboardringViewModel, MapVM: MapViewViewModel>: View {
                     Image(uiImage: profileImage())
                         .resizable()
                         .clipShape(Circle())
-                        .background(Custom.shared.color.white)
+                        .background(.white)
                         .frame(width: 40)
                         .frame(height: 40)
                 }
@@ -317,42 +314,39 @@ struct MapView<VM: OnboardringViewModel, MapVM: MapViewViewModel>: View {
     @ViewBuilder private func menuTitle() -> some View {
         Text("תפריט".localized())
             .multilineTextAlignment(.center)
-            .font(Custom.shared.font.title)
-            .foregroundStyle(Custom.shared.color.gray.opacity(0.6))
+            .font(.title)
+            .foregroundStyle(.gray.opacity(0.6))
     }
     
     @ViewBuilder private func menuList() -> some View {
         List {
             ForEach(1..<8, id: \.self) { i in
                 menuItem(text: "אופצייה \(i)".localized(),
-                         config: .init(buttonConfig: .defulat(state: .regular(bold: false),
-                                          dimantions: .full))) {
-                    isShowSideMenu = false
-                }
+                         config: .init(buttonConfig: .regular(bold: false,
+                                                              dimantions: .full,
+                                                              enabled: true))) { isShowSideMenu = false }
             }
             
             menuItem(text: "התנתקות".localized(),
-                     config: .init(buttonConfig: .defulat(state: .regular(bold: true),
-                                      dimantions: .full))) {
+                     config: .init(buttonConfig: .regular(bold: true,
+                                                          dimantions: .full,
+                                                          enabled: true))) {
                 isShowSideMenu = false
                 if let profile = profiles.last, let id = profile.userID {
                     oVM.logout(id: id) {
                         profileSync.removeAndPopToLogin(profile: profile)
-                    } error: { error in
-                        profileSync.removeAndPopToLogin(profile: profile)
-                        print(error)
-                    }
+                    } error: { error in print(error) }
                 }
                 else { router.popToRoot() }
             }
-                                      .padding(.top, 5)
+                                                          .padding(.top, 5)
             
             VStack {
                 separator()
                 
                 menuItem(text: "מחיקת פרופיל".localized(),
-                         config: .init(buttonConfig: .defulat(state: .critical,
-                                          dimantions: .full))) {
+                         config: .init(buttonConfig: .critical(dimantions: .full,
+                                                               enabled: true))) {
                     isShowSideMenu = false
                     isShowDelete = true
                 }
@@ -378,7 +372,7 @@ struct MapView<VM: OnboardringViewModel, MapVM: MapViewViewModel>: View {
         Text(text)
             .padding(.all, 8)
             .font( bold ? .caption2.bold() : .caption2)
-            .foregroundStyle(Custom.shared.color.black)
+            .foregroundStyle(.black)
     }
     
     @ViewBuilder private func navigtionButton(@ViewBuilder label: () -> some View, action: @escaping () -> ()) -> some View {
@@ -389,14 +383,12 @@ struct MapView<VM: OnboardringViewModel, MapVM: MapViewViewModel>: View {
         })
         .frame(width: 50)
         .frame(height: 50)
-        .background(Custom.shared.color.white)
+        .background(.white)
         .clipShape(Circle())
     }
     
     @ViewBuilder private func separator() -> some View {
-        ZStack {
-            Custom.shared.color.gray.opacity(0.3)
-        }
+        ZStack { Color.gray.opacity(0.3) }
         .frame(height: 1)
         .frame(maxWidth: .infinity)
     }

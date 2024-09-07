@@ -24,7 +24,7 @@ struct LoginPhoneView: View {
             HStack {
                 Spacer()
                 RightText(text: "כניסה עם הנייד".localized(),
-                          font: Custom.shared.font.title)
+                          font: .title)
             }
             
             HStack {
@@ -33,10 +33,11 @@ struct LoginPhoneView: View {
                     .frame(height: 28)
                     .frame(width: 28)
                     .padding(.all)
+                    .onTapGesture { focusedField = .field }
                 
                 TTextFieldView(label: "הכנסת טלפון נייד".localized(),
                                text: $text,
-                               textColor: Custom.shared.color.black,
+                               textColor: .black,
                                keyboardType: .numberPad,
                                textAlignment: .trailing) { _ in }
                     .onReceive(Just(text)) { _ in
@@ -44,20 +45,20 @@ struct LoginPhoneView: View {
                         text.limitText(11)
                         didType(text)
                     }
+                    .onTapGesture { focusedField = .field }
                     .focused($focusedField,
                              equals: .field)
             }
             .padding(.trailing, 24)
-            ZStack {
-                Custom.shared.color.black
-            }
+            ZStack { Color.black }
             .frame(height: 1)
             .padding(.bottom)
+            .onTapGesture { focusedField = .field }
             
             Text("Lorem ipsum dolor sit amet consectetur. Pulvinar sed in dui auctor imperdiet posuere bibendum. Diam sit sed semper.".localized())
                 .multilineTextAlignment(.center)
-                .font(Custom.shared.font.textSmall)
-                .foregroundStyle(Custom.shared.color.infoText)
+                .font(.textSmall)
+                .foregroundStyle(Color.infoText)
             
             Spacer()
         }

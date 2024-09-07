@@ -61,7 +61,7 @@ struct CustomAlertView<T: Any, M: View>: View {
                         /// Title
                         Text(titleKey)
                             .font(.title2).bold()
-                            .foregroundStyle(Custom.shared.color.yellow)
+                            .foregroundStyle(.yellow)
                             .padding(8)
 
                         /// Message
@@ -113,7 +113,7 @@ struct CustomAlertView<T: Any, M: View>: View {
         } label: {
             Text(cancelButtonTextKey)
                 .font(.headline)
-                .foregroundStyle(Custom.shared.color.yellow)
+                .foregroundStyle(.yellow)
                 .padding()
                 .lineLimit(1)
                 .frame(maxWidth: .infinity)
@@ -139,7 +139,7 @@ struct CustomAlertView<T: Any, M: View>: View {
                 .padding()
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
-                .background(Custom.shared.color.yellow)
+                .background(.yellow)
                 .clipShape(RoundedRectangle(cornerRadius: 30.0))
         }
     }

@@ -48,6 +48,13 @@ extension String {
         return emailPredicate.evaluate(with: self)
     }
     
+    func isValidPhone() -> Bool {
+        let PHONE_REGEX = "^\\d{3}-\\d{7}$"
+        let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
+        let result = phoneTest.evaluate(with: self)
+        return result
+    }
+    
     func localized() -> String {
         return NSLocalizedString(self, comment: "")
     }

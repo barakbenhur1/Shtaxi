@@ -20,6 +20,7 @@
 		4FD3CFCB2C889FF600910867 /* UserIdBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD3CFCA2C889FF600910867 /* UserIdBody.swift */; };
 		4FD3CFCD2C8996AB00910867 /* URLRequest+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD3CFCC2C8996AB00910867 /* URLRequest+EXT.swift */; };
 		4FF443062C8BBABC003E5CA7 /* TButtonConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF443052C8BBABC003E5CA7 /* TButtonConfigManager.swift */; };
+		4FF443082C8BC35E003E5CA7 /* Font+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF443072C8BC35E003E5CA7 /* Font+EXT.swift */; };
 		4FF5B0CF2C851B6C00176585 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0CE2C851B6C00176585 /* Persistence.swift */; };
 		4FF5B0D22C851B6C00176585 /* TaxiShare_MVP.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0D02C851B6C00176585 /* TaxiShare_MVP.xcdatamodeld */; };
 		4FF5B0DC2C851B6C00176585 /* TaxiShare_MVPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0DB2C851B6C00176585 /* TaxiShare_MVPTests.swift */; };
@@ -31,7 +32,6 @@
 		4FF5B1782C851BB400176585 /* TProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0F92C851BB200176585 /* TProgressBar.swift */; };
 		4FF5B1792C851BB400176585 /* TSelectableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0FA2C851BB200176585 /* TSelectableButton.swift */; };
 		4FF5B17A2C851BB400176585 /* Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0FC2C851BB200176585 /* Custom.swift */; };
-		4FF5B17B2C851BB400176585 /* TButtonConfigItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0FE2C851BB200176585 /* TButtonConfigItem.swift */; };
 		4FF5B17C2C851BB400176585 /* TButtonParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0FF2C851BB200176585 /* TButtonParams.swift */; };
 		4FF5B17D2C851BB400176585 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4FF5B1022C851BB300176585 /* Localizable.xcstrings */; };
 		4FF5B17E2C851BB400176585 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1032C851BB300176585 /* LocationService.swift */; };
@@ -130,6 +130,7 @@
 		4FD3CFCA2C889FF600910867 /* UserIdBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdBody.swift; sourceTree = "<group>"; };
 		4FD3CFCC2C8996AB00910867 /* URLRequest+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+EXT.swift"; sourceTree = "<group>"; };
 		4FF443052C8BBABC003E5CA7 /* TButtonConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TButtonConfigManager.swift; sourceTree = "<group>"; };
+		4FF443072C8BC35E003E5CA7 /* Font+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+EXT.swift"; sourceTree = "<group>"; };
 		4FF5B0C22C851B6A00176585 /* TaxiShare_MVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaxiShare_MVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF5B0CE2C851B6C00176585 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		4FF5B0D12C851B6C00176585 /* TaxiShare_MVP.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TaxiShare_MVP.xcdatamodel; sourceTree = "<group>"; };
@@ -145,7 +146,6 @@
 		4FF5B0F92C851BB200176585 /* TProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TProgressBar.swift; sourceTree = "<group>"; };
 		4FF5B0FA2C851BB200176585 /* TSelectableButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSelectableButton.swift; sourceTree = "<group>"; };
 		4FF5B0FC2C851BB200176585 /* Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Custom.swift; sourceTree = "<group>"; };
-		4FF5B0FE2C851BB200176585 /* TButtonConfigItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TButtonConfigItem.swift; sourceTree = "<group>"; };
 		4FF5B0FF2C851BB200176585 /* TButtonParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TButtonParams.swift; sourceTree = "<group>"; };
 		4FF5B1022C851BB300176585 /* Localizable.xcstrings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		4FF5B1032C851BB300176585 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -422,7 +422,6 @@
 		4FF5B1002C851BB200176585 /* Structs */ = {
 			isa = PBXGroup;
 			children = (
-				4FF5B0FE2C851BB200176585 /* TButtonConfigItem.swift */,
 				4FF5B0FF2C851BB200176585 /* TButtonParams.swift */,
 			);
 			path = Structs;
@@ -532,6 +531,7 @@
 				4FF5B1572C851BB300176585 /* String+EXT.swift */,
 				4FF5B1582C851BB300176585 /* View+EXT.swift */,
 				4FD3CFCC2C8996AB00910867 /* URLRequest+EXT.swift */,
+				4FF443072C8BC35E003E5CA7 /* Font+EXT.swift */,
 			);
 			path = Extansions;
 			sourceTree = "<group>";
@@ -758,7 +758,6 @@
 				4F3C94462C851F5F00EBA6A2 /* OnboardringViewModel.swift in Sources */,
 				4FD3CFCB2C889FF600910867 /* UserIdBody.swift in Sources */,
 				4FF5B1BA2C851BB400176585 /* LoginView.swift in Sources */,
-				4FF5B17B2C851BB400176585 /* TButtonConfigItem.swift in Sources */,
 				4FF5B1D12C851BB400176585 /* RouterView.swift in Sources */,
 				4FF5B1C92C851BB400176585 /* Dictionary+EXT.swift in Sources */,
 				4FF5B1A72C851BB400176585 /* OnboardingGenderView.swift in Sources */,
@@ -767,6 +766,7 @@
 				4FF5B1AE2C851BB400176585 /* OnboardingProgressbleManegerView.swift in Sources */,
 				4FF5B1A42C851BB400176585 /* LoginPhoneView.swift in Sources */,
 				4FC702842C85524200C85CE9 /* CustomAlertView.swift in Sources */,
+				4FF443082C8BC35E003E5CA7 /* Font+EXT.swift in Sources */,
 				4FF5B0CF2C851B6C00176585 /* Persistence.swift in Sources */,
 				4FC1625A2C87C3C9003504EB /* ProfileHandeler.swift in Sources */,
 				4FF5B1C02C851BB400176585 /* SingUpView.swift in Sources */,

@@ -23,12 +23,12 @@ struct OnboardingRulesView<VM: OnboardringViewModel>: OnboardingProgress {
             HStack {
                 Spacer()
                 RightText(text: "ברוך הבא לשטקסי!",
-                          font: Custom.shared.font.title)
+                          font: .title)
             }
             HStack {
                 Spacer()
                 RightText(text: "כמה נקודות חשובות על האפליקציה שלנו",
-                          font: Custom.shared.font.textMedium)
+                          font: .textMedium)
             }
             .padding(.bottom, 44)
             
@@ -63,15 +63,15 @@ struct OnboardingRulesView<VM: OnboardringViewModel>: OnboardingProgress {
             HStack {
                 Spacer()
                 RightText(text: title,
-                          font: Custom.shared.font.textMediumBold)
-                .foregroundStyle(Custom.shared.color.darkText)
+                          font: .textMediumBold)
+                .foregroundStyle(Color.darkText)
             }
             
             HStack {
                 Spacer()
                 RightText(text: text,
-                          font: Custom.shared.font.textMedium)
-                .foregroundStyle(Custom.shared.color.infoText)
+                          font: .textMedium)
+                .foregroundStyle(Color.infoText)
             }
         }
     }
@@ -82,9 +82,10 @@ struct OnboardingRulesView<VM: OnboardringViewModel>: OnboardingProgress {
                   updateBody: .init(rules: true)) {
             manager.set(profile: profile,
                         rules: true)
-            complete(true)
+            return complete(true)
         } error: { error in
             print(error)
+            return complete(false)
         }
     }
 }

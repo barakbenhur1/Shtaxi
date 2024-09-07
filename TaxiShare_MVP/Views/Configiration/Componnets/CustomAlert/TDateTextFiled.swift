@@ -84,8 +84,8 @@ struct TDateTextFiled: View {
     
     @ViewBuilder private func separetor() -> some View {
         Text("/")
-            .font(Custom.shared.font.textMedium)
-            .foregroundStyle(Custom.shared.color.inputFiled)
+            .font(.textMedium)
+            .foregroundStyle(Color.inputFiled)
     }
 }
 
@@ -100,16 +100,14 @@ struct TDateComponnet: View {
         VStack {
             TTextFieldView(label: label,
                            text: $text,
-                           textColor: error ? Custom.shared.color.red : Custom.shared.color.black,
+                           textColor: error ? .red : .black,
                            keyboardType: .numberPad,
                            textAlignment: .center) { _ in }
                 .onReceive(Just(text)) { _ in
                     text.limitText(limit)
                     didType(text)
                 }
-            ZStack {
-                error ? Custom.shared.color.red : Custom.shared.color.black
-            }
+            ZStack { error ? Color.red : Color.black }
             .frame(height: 1)
         }
     }

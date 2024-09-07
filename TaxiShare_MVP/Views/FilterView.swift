@@ -78,7 +78,7 @@ struct FilterView: View {
                                 } label: {
                                     Text(Gender(rawValue: values[index])!.string)
                                         .font(.title2)
-                                        .foregroundStyle(Custom.shared.color.black)
+                                        .foregroundStyle(.black)
                                         .frame(maxWidth: .infinity)
                                 }
                                 .padding(.top, 4)

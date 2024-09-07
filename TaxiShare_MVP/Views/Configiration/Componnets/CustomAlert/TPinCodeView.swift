@@ -72,7 +72,7 @@ struct PinCodeItemView: View {
         VStack {
             TTextFieldView(label: "*",
                            text: $text,
-                           textColor: error ? Custom.shared.color.red : Custom.shared.color.black,
+                           textColor: error ? .red : .black,
                            keyboardType: .numberPad,
                            textAlignment: .center,
                            isFocused: { value in
@@ -84,9 +84,7 @@ struct PinCodeItemView: View {
                 didType(text)
             }
             
-            ZStack {
-                error ? Custom.shared.color.red : Custom.shared.color.black
-            }
+            ZStack { error ? Color.red : Color.black }
             .frame(height: 1)
         }
     }

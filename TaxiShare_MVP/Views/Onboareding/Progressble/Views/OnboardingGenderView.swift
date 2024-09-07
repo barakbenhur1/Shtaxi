@@ -29,7 +29,7 @@ struct OnboardingGenderView<VM: OnboardringViewModel>: OnboardingProgress {
             HStack {
                 Spacer()
                 RightText(text: "מה המגדר שלך?",
-                          font: Custom.shared.font.title)
+                          font: .title)
             }
             .padding(.bottom, 20)
             
@@ -54,15 +54,15 @@ struct OnboardingGenderView<VM: OnboardringViewModel>: OnboardingProgress {
                 otherAction?()
             }, label: {
                 Text("לא רוצה להגדיר כרגע".localized())
-                    .foregroundStyle(Custom.shared.color.tBlue)
-                    .font(Custom.shared.font.textMedium)
+                    .foregroundStyle(Color.tBlue)
+                    .font(.textMedium)
             })
             .padding(.bottom, 20)
             
             Text("Lorem ipsum dolor sit amet consectetur. Pulvinar sed in dui auctor imperdiet posuere bibendum. Diam sit sed semper.")
                 .multilineTextAlignment(.center)
-                .font(Custom.shared.font.textSmall)
-                .foregroundStyle(Custom.shared.color.infoText)
+                .font(.textSmall)
+                .foregroundStyle(Color.infoText)
         }
     }
     
@@ -72,9 +72,10 @@ struct OnboardingGenderView<VM: OnboardringViewModel>: OnboardingProgress {
                   updateBody: .init(gender: holder.value)) {
             manager.set(profile: profile,
                         gender: holder.value)
-            complete(true)
+            return complete(true)
         } error: { error in
             print(error)
+            return complete(false)
         }
     }
 }

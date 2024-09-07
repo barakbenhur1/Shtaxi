@@ -27,7 +27,7 @@ struct OnboardingBirthdateView<VM: OnboardringViewModel>: OnboardingProgress {
             HStack {
                 Spacer()
                 RightText(text: "מה תאריך הלידה שלך?",
-                          font: Custom.shared.font.title)
+                          font: .title)
             }
             .padding(.bottom, 20)
             
@@ -49,8 +49,8 @@ struct OnboardingBirthdateView<VM: OnboardringViewModel>: OnboardingProgress {
                 
                 if !errorValue.isEmpty {
                     Text(errorValue)
-                        .foregroundStyle(Custom.shared.color.red)
-                        .font(Custom.shared.font.textSmall)
+                        .foregroundStyle(.red)
+                        .font(.textSmall)
                         .padding(.bottom, -5)
                 }
             }
@@ -58,8 +58,8 @@ struct OnboardingBirthdateView<VM: OnboardringViewModel>: OnboardingProgress {
             
             Text("כדי להתאים את הנסיעות הנכונות עבורך אנחנו צריכים להבין מה תאריך הלידה שלך. בפרופיל נציג את הגיל שלך.")
                 .multilineTextAlignment(.center)
-                .font(Custom.shared.font.textSmall)
-                .foregroundStyle(Custom.shared.color.infoText)
+                .font(.textSmall)
+                .foregroundStyle(Color.infoText)
         }
     }
     
@@ -71,9 +71,10 @@ struct OnboardingBirthdateView<VM: OnboardringViewModel>: OnboardingProgress {
                   updateBody: .init(birthdate: birthdate)) {
             manager.set(profile: profile,
                         date: birthdate)
-            complete(true)
+            return complete(true)
         } error: { error in
             print(error)
+            return complete(false)
         }
     }
 }

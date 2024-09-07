@@ -44,8 +44,7 @@ struct PinCodeView: View, ProfileHandeler {
                        verificationID: verificationID,
                        onAppear: { view in holder.value = view },
                        didChnngeNumber: { changeNumber = true },
-                       didDone: { isDone in buttonEnabled = isDone },
-                       didApprove: didApprove)
+                       didDone: { isDone in buttonEnabled = isDone })
     }
     
     @ViewBuilder private func changePhone() -> some View {
@@ -64,22 +63,8 @@ struct PinCodeView: View, ProfileHandeler {
     
     func preformAction(complete: @escaping (Bool) -> ()) {
         holder.value?.preformAction(manager: manager,
-                                    profile: nil) { valid in
-            complete(valid)
-        }
-    }
-    
-    private func didApprove(_ id: String, _ name: String, _ email: String, _ didLogin: @escaping (_ uploadSuccess: @escaping ([OnboardingProgressble]) -> (), _ didFail: @escaping () -> ()) -> ()) {
-        didLogin(onUploadSuccess, onFail)
-    }
-    
-    private func onUploadSuccess(screens: [OnboardingProgressble]) {
-        profileSync.afterLogin(onboardingScreens: screens)
-    }
-    
-    private func onFail() {
-        profileSync.removeAndPopToLogin(profile: profiles.last,
-                                                       massege:.retry)
+                                    profile: nil,
+                                    complete: complete)
     }
 }
 
