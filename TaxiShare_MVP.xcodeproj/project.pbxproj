@@ -45,7 +45,6 @@
 		4FF5B1772C851BB400176585 /* TLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0F82C851BB200176585 /* TLogo.swift */; };
 		4FF5B1782C851BB400176585 /* TProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0F92C851BB200176585 /* TProgressBar.swift */; };
 		4FF5B1792C851BB400176585 /* TSelectableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0FA2C851BB200176585 /* TSelectableButton.swift */; };
-		4FF5B17A2C851BB400176585 /* Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0FC2C851BB200176585 /* Custom.swift */; };
 		4FF5B17C2C851BB400176585 /* TButtonParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0FF2C851BB200176585 /* TButtonParams.swift */; };
 		4FF5B17D2C851BB400176585 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4FF5B1022C851BB300176585 /* Localizable.xcstrings */; };
 		4FF5B17E2C851BB400176585 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1032C851BB300176585 /* LocationService.swift */; };
@@ -171,7 +170,6 @@
 		4FF5B0F82C851BB200176585 /* TLogo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TLogo.swift; sourceTree = "<group>"; };
 		4FF5B0F92C851BB200176585 /* TProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TProgressBar.swift; sourceTree = "<group>"; };
 		4FF5B0FA2C851BB200176585 /* TSelectableButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSelectableButton.swift; sourceTree = "<group>"; };
-		4FF5B0FC2C851BB200176585 /* Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Custom.swift; sourceTree = "<group>"; };
 		4FF5B0FF2C851BB200176585 /* TButtonParams.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TButtonParams.swift; sourceTree = "<group>"; };
 		4FF5B1022C851BB300176585 /* Localizable.xcstrings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		4FF5B1032C851BB300176585 /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -390,6 +388,7 @@
 			isa = PBXGroup;
 			children = (
 				4FF5B16B2C851BB400176585 /* Hendelers */,
+				4FF5B1622C851BB300176585 /* Routing */,
 				4FF443332C8E1998003E5CA7 /* App */,
 			);
 			path = "App Controller";
@@ -523,14 +522,6 @@
 			path = Componnets;
 			sourceTree = "<group>";
 		};
-		4FF5B0FD2C851BB200176585 /* Custom */ = {
-			isa = PBXGroup;
-			children = (
-				4FF5B0FC2C851BB200176585 /* Custom.swift */,
-			);
-			path = Custom;
-			sourceTree = "<group>";
-		};
 		4FF5B1002C851BB200176585 /* Structs */ = {
 			isa = PBXGroup;
 			children = (
@@ -542,9 +533,8 @@
 		4FF5B1012C851BB200176585 /* Configiration */ = {
 			isa = PBXGroup;
 			children = (
-				4FF5B0FB2C851BB200176585 /* Componnets */,
-				4FF5B0FD2C851BB200176585 /* Custom */,
 				4FF5B1002C851BB200176585 /* Structs */,
+				4FF5B0FB2C851BB200176585 /* Componnets */,
 			);
 			path = Configiration;
 			sourceTree = "<group>";
@@ -614,7 +604,6 @@
 				4FF5B1422C851BB300176585 /* Wireframe */,
 				4FF5B13A2C851BB300176585 /* Onboareding */,
 				4FF4432F2C8E178A003E5CA7 /* Controllers */,
-				4FF5B1622C851BB300176585 /* Routing */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -854,7 +843,6 @@
 				4FF443202C8E0CA7003E5CA7 /* MapUseCases.swift in Sources */,
 				4FF5B1BB2C851BB400176585 /* MapView.swift in Sources */,
 				4FF5B1DD2C851BB400176585 /* Response.swift in Sources */,
-				4FF5B17A2C851BB400176585 /* Custom.swift in Sources */,
 				4FF5B1792C851BB400176585 /* TSelectableButton.swift in Sources */,
 				4FF5B1CC2C851BB400176585 /* AppDelegate.swift in Sources */,
 				4FF5B1B72C851BB400176585 /* ProfileUpdater.swift in Sources */,

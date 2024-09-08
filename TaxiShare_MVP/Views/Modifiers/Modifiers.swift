@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct ViewWithButton: ViewModifier {
-    @EnvironmentObject private var manager: CoreDataManager
-    
     @StateObject var buttonConfigManager = TButtonConfigManager(buttonConfig: .designed(dimantions: .full,
                                                                                         enabled: false))
     
@@ -28,8 +26,6 @@ struct ViewWithButton: ViewModifier {
             loading = true
             preformAction { _ in loading = false }
         }
-            .environmentObject(manager)
-            .environment(\.managedObjectContext, manager.managedObjectContext)
             .onChange(of: loadingForExternalActions, setLoading)
             .onChange(of: setButtonConfig, configButton)
         

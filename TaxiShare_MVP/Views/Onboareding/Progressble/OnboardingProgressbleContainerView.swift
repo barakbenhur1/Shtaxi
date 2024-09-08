@@ -26,6 +26,7 @@ struct OnboardingProgressbleContainerView: View, ProfileHandeler {
             let buttonText = progressSatge < screens.count - 1 ? "אישור".localized() : "שנצא לדרך?".localized()
             progreesView()
                 .environmentObject(vm)
+                .environment(\.managedObjectContext, manager.managedObjectContext)
                 .wrapWithBottun(buttonText: buttonText,
                                 preformAction: preformAction,
                                 loadingForExternalActions: $externalActionLoading,

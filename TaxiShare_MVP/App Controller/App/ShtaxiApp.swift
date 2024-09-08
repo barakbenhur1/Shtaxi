@@ -15,7 +15,10 @@ import FirebaseAuth
 @main
 struct ShtaxiApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
+    @StateObject var router = Router.shared
     @StateObject private var manager = CoreDataManager()
+    @StateObject private var profileSync = ProfileSyncHendeler.shared
     
     var body: some Scene {
         WindowGroup {
@@ -31,6 +34,8 @@ struct ShtaxiApp: App {
                                                            annotation: UIApplication.OpenURLOptionsKey.annotation)
                 }
             }
+            .environmentObject(router)
+            .environmentObject(profileSync)
             .environmentObject(manager)
             .environment(\.managedObjectContext, manager.managedObjectContext)
         }

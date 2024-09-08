@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct RootView: View {
+    @EnvironmentObject private var profileSync: ProfileSyncHendeler
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var manager: CoreDataManager
-    @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
-    @StateObject private var profileSync = ProfileSyncHendeler.shared
+    
     @StateObject private var vm = OnboardingViewModel()
     @StateObject private var mvm = MapViewViewModel()
     
+    @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
+    
     @State private var showAlert = true
+    
+    private let main = DispatchQueue.main
     
     var body: some View {
         switch router.root {
@@ -27,7 +30,7 @@ struct RootView: View {
         case .login(let message):
             LoginView()
                 .customAlert("הודעה מערכת",
-                             isPresented:  $showAlert,
+                             isPresented: $showAlert,
                              actionText:"הבנתי",
                              action: { router.root = .login(message: nil) }
                 ) {
@@ -38,24 +41,27 @@ struct RootView: View {
                 .environmentObject(router)
                 .environmentObject(profileSync)
                 .environmentObject(vm)
+                .environment(\.managedObjectContext, manager.managedObjectContext)
                 .onAppear { showAlert = message != nil }
         case .onboarding(let screens):
             OnboardingProgressbleContainerView(screens: screens)
-            .environmentObject(vm)
-            .environmentObject(router)
-            .environmentObject(profileSync)
+                .environmentObject(vm)
+                .environmentObject(router)
+                .environmentObject(profileSync)
+                .environment(\.managedObjectContext, manager.managedObjectContext)
         case .map:
             MapView()
                 .environmentObject(router)
                 .environmentObject(vm)
                 .environmentObject(mvm)
                 .environmentObject(profileSync)
+                .environment(\.managedObjectContext, manager.managedObjectContext)
         }
     }
     
     private func initalScreen() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-            profileSync.handleLogin(profile: profiles.last, 
+        main.asyncAfter(deadline: .now() + 4) {
+            profileSync.handleLogin(profile: profiles.last,
                                     didLogin: { _ in })
         }
     }
