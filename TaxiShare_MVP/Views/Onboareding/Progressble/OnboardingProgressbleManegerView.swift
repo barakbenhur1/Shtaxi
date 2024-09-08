@@ -11,7 +11,6 @@ struct OnboardingProgressbleManagerView: ProfileUpdater {
     @EnvironmentObject private var manager: CoreDataManager
     @EnvironmentObject private var vm: OnboardingViewModel
     @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     
     @State private var holder = Holder<any ProfileUpdater>()
     let buttonText: String = ""

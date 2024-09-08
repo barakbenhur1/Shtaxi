@@ -13,8 +13,7 @@ struct LoginView: View, ProfileHandeler {
     @EnvironmentObject var router: Router
     @EnvironmentObject var vm: OnboardingViewModel
     @EnvironmentObject private var profileSync: ProfileSyncHendeler
-    @EnvironmentObject var manager: CoreDataManager
-    @Environment(\.managedObjectContext) private var viewContext
+   
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     
     @State internal var buttonEnabled: Bool = false

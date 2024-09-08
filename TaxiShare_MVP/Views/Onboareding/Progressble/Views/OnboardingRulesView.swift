@@ -9,14 +9,11 @@ import SwiftUI
 
 struct OnboardingRulesView<VM: OnboardingViewModel>: OnboardingProgress {
     @ObservedObject internal var vm: VM
+   
     internal let onAppear: (() -> ())?
     internal let noActionNeeded: (() -> ())? = nil
     internal let complition: ((_ enable: Bool) -> ())? = nil
     internal let otherAction: (() -> ())? = nil
-    
-    @EnvironmentObject var manager: CoreDataManager
-    @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     
     var body: some View {
         VStack {

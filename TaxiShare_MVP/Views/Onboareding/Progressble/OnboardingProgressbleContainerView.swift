@@ -12,6 +12,7 @@ struct OnboardingProgressbleContainerView: View, ProfileHandeler {
     @EnvironmentObject private var vm: OnboardingViewModel
     @EnvironmentObject var router: Router
     @EnvironmentObject private var manager: CoreDataManager
+    
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     
     @State internal var holder = Holder<any ProfileUpdater>()

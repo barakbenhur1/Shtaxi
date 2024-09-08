@@ -12,10 +12,10 @@ struct RootView: View {
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var manager: CoreDataManager
     
+    @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
+    
     @StateObject private var vm = OnboardingViewModel()
     @StateObject private var mvm = MapViewViewModel()
-    
-    @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     
     @State private var showAlert = true
     
@@ -32,17 +32,17 @@ struct RootView: View {
                 .customAlert("הודעה מערכת",
                              isPresented: $showAlert,
                              actionText:"הבנתי",
-                             action: { router.root = .login(message: nil) }
-                ) {
-                    if let message {
-                        Text(message)
-                    }
+                             action: cleanLogin)
+            {
+                if let message {
+                    Text(message)
                 }
-                .environmentObject(router)
-                .environmentObject(profileSync)
-                .environmentObject(vm)
-                .environment(\.managedObjectContext, manager.managedObjectContext)
-                .onAppear { showAlert = message != nil }
+            }
+            .environmentObject(router)
+            .environmentObject(profileSync)
+            .environmentObject(vm)
+            .environment(\.managedObjectContext, manager.managedObjectContext)
+            .onAppear { showAlert = message != nil }
         case .onboarding(let screens):
             OnboardingProgressbleContainerView(screens: screens)
                 .environmentObject(vm)
@@ -57,6 +57,10 @@ struct RootView: View {
                 .environmentObject(profileSync)
                 .environment(\.managedObjectContext, manager.managedObjectContext)
         }
+    }
+    
+    private func cleanLogin() {
+        router.root = .login(message: nil)
     }
     
     private func initalScreen() {

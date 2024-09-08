@@ -11,8 +11,6 @@ struct PinCodeView: View, ProfileHandeler {
     @EnvironmentObject var manager: CoreDataManager
     @EnvironmentObject var vm: OnboardingViewModel
     @EnvironmentObject private var profileSync: ProfileSyncHendeler
-    @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     @EnvironmentObject var router: Router
     
     @State internal var buttonEnabled: Bool = false

@@ -13,10 +13,11 @@ struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
     @EnvironmentObject private var viewModel: MapViewViewModel
     @EnvironmentObject private var oVM: OnboardingViewModel
     @EnvironmentObject private var profileSync: ProfileSyncHendeler
-    @EnvironmentObject private var manager: CoreDataManager
+//    @EnvironmentObject private var manager: CoreDataManager
+  
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     
-    @StateObject var locationManager = LocationManager()
+    @StateObject private var locationManager = LocationManager()
     
     @State private var locationService = LocationService(completer: .init())
     @State private var postion: MapCameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275), span: MKCoordinateSpan(latitudeDelta: 0.006, longitudeDelta: 0.006)))
@@ -227,11 +228,10 @@ struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
         }
         .customAlert("מחיקת פרופיל",
                      isPresented:  $isShowDelete,
-                     
                      actionText: "כן, מחק",
                      cancelButtonText: "לא",
-                     action: { deleteProfile() }
-        ) {
+                     action: deleteProfile)
+        {
             Text("האם אתה בטוח?".localized())
         }
         .alert("בקשה לנסיעה".localized(), isPresented: $isShowAlert, actions: {
