@@ -41,17 +41,17 @@ struct TypingAnimationView: View {
             .font(.caption2.bold().italic().monospaced())
             .font(.title)
         
-        if value == -1 {
+        if isStandAlone {
             text
                 .onAppear { animateText() }
         }
         else {
             text
-                .onChange(of: value, animateTextAsPartOfChain)
+                .onChange(of: value, animateTextAsPartOfAnimationChain)
         }
     }
     
-    func animateTextAsPartOfChain() {
+    func animateTextAsPartOfAnimationChain() {
         guard value == animationStage else { return }
         animatedText = String(repeating: " ", count: textToType.count)
         animateText()

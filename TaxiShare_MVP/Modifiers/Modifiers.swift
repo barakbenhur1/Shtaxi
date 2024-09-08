@@ -9,8 +9,6 @@ import SwiftUI
 
 struct ViewWithButton: ViewModifier {
     @EnvironmentObject private var manager: PersistenceController
-    @Environment(\.managedObjectContext) private var viewContext
-    @EnvironmentObject var router: Router
     
     @StateObject var buttonConfigManager = TButtonConfigManager(buttonConfig: .designed(dimantions: .full,
                                                                                         enabled: false))

@@ -10,7 +10,6 @@ import SwiftUI
 struct BaseViewWithBottomButton<Contant: View>: View {
     @EnvironmentObject var router: Router
     @EnvironmentObject private var manager: PersistenceController
-    @Environment(\.managedObjectContext) private var viewContext
     
     @Binding var buttonConfig: TButtonConfig
     @Binding var loading: Bool
