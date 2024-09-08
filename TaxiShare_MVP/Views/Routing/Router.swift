@@ -22,7 +22,7 @@ class Router: ObservableObject {
         case splash, login(message: String?), onboarding(screens: [OnboardingProgressble]), map
     }
     
-    @StateObject private var vm = OnboardringViewModel()
+    @StateObject private var vm = OnboardingViewModel()
     @StateObject private var mapVM = MapViewViewModel()
     @StateObject private var profileSync = ProfileSyncHendeler.shared
     
@@ -61,7 +61,7 @@ class Router: ObservableObject {
             
         case .filter:
             FilterView()
-//                .environmentObject(OnboardringViewModel())
+//                .environmentObject(OnboardingViewModel())
         }
     }
     

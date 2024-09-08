@@ -1,5 +1,5 @@
 //
-//  OnboardringVIewModel.swift
+//  OnboardingViewModel.swift
 //  TaxiShare_MVP
 //
 //  Created by Barak Ben Hur on 03/08/2024.
@@ -25,15 +25,15 @@ private class ParameterHndeler: ObservableObject {
     }
 }
 
-// MARK: OnboardringViewModel
-class OnboardringViewModel: Network {
+// MARK: OnboardingViewModel
+class OnboardringDataSource: Network, OnboardingRepository {
     override internal var root: String { return "login" }
     
     @StateObject private var handeler = ComplitionHandeler()
     @StateObject private var pHandeler = ParameterHndeler()
     @StateObject private var auth = Authentication.shared
     
-    private func logoutProviders() {
+    internal func logoutProviders() {
         auth.logout()
     }
     

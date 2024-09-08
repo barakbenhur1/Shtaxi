@@ -9,7 +9,7 @@ import SwiftUI
 import AuthenticationServices
 import GoogleSignInSwift
 
-struct OnboardingLoginView<VM: OnboardringViewModel>: View {
+struct OnboardingLoginView<VM: OnboardingViewModel>: View {
     @ObservedObject internal var vm: VM
     internal let didSignup: (_ id: String, _ name: String?, _ email: String?, _ birthdate: String?, _ gender: String?) -> ()
     internal let didFillPhone: (_ number: String) -> ()

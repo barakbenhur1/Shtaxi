@@ -11,9 +11,9 @@ import GoogleSignIn
 
 struct LoginView: View, ProfileHandeler {
     @EnvironmentObject var router: Router
-    @EnvironmentObject var vm: OnboardringViewModel
+    @EnvironmentObject var vm: OnboardingViewModel
     @EnvironmentObject private var profileSync: ProfileSyncHendeler
-    @EnvironmentObject var manager: PersistenceController
+    @EnvironmentObject var manager: CoreDataManager
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     

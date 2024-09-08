@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RouterView<Content: View>: View {
-    @EnvironmentObject private var manager: PersistenceController
+    @EnvironmentObject private var manager: CoreDataManager
     @Environment(\.managedObjectContext) private var viewContext
     
     @StateObject var router = Router.shared
@@ -25,7 +25,7 @@ struct RouterView<Content: View>: View {
                 .navigationDestination(for: Router.Route.self) { route in
                     router.view(for: route)
                         .environmentObject(manager)
-                        .environment(\.managedObjectContext, manager.container.viewContext)
+                        .environment(\.managedObjectContext, manager.managedObjectContext)
                 }
         }
         .environmentObject(router)

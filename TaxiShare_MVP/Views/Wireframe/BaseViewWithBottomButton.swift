@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BaseViewWithBottomButton<Contant: View>: View {
     @EnvironmentObject var router: Router
-    @EnvironmentObject private var manager: PersistenceController
+    @EnvironmentObject private var manager: CoreDataManager
     
     @Binding var buttonConfig: TButtonConfig
     @Binding var loading: Bool
@@ -23,7 +23,7 @@ struct BaseViewWithBottomButton<Contant: View>: View {
                 contant
                     .environmentObject(router)
                     .environmentObject(manager)
-                    .environment(\.managedObjectContext, manager.container.viewContext)
+                    .environment(\.managedObjectContext, manager.managedObjectContext)
                 Spacer()
                 TButton(text: buttonText,
                         config: buttonConfig) {

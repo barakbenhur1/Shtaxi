@@ -8,12 +8,12 @@
 import SwiftUI
 import MapKit
 
-struct MapView<VM: OnboardringViewModel, MapVM: MapViewViewModel>: View {
+struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
     @EnvironmentObject var router: Router
     @EnvironmentObject private var viewModel: MapViewViewModel
-    @EnvironmentObject private var oVM: OnboardringViewModel
+    @EnvironmentObject private var oVM: OnboardingViewModel
     @EnvironmentObject private var profileSync: ProfileSyncHendeler
-    @EnvironmentObject private var manager: PersistenceController
+    @EnvironmentObject private var manager: CoreDataManager
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     
     @StateObject var locationManager = LocationManager()

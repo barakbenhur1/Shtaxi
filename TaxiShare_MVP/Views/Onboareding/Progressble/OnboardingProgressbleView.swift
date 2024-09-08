@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OnboardingProgressbleView<Contant: OnboardingProgress>: View {
-    @EnvironmentObject private var manager: PersistenceController
+    @EnvironmentObject private var manager: CoreDataManager
     @Environment(\.managedObjectContext) private var viewContext
     
     @Binding internal var value: Int

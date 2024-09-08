@@ -15,16 +15,7 @@ import FirebaseAuth
 @main
 struct ShtaxiApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject private var manager = PersistenceController.shared
-    
-//    init() {
-//        for family in UIFont.familyNames {
-//            print("Family: \(family)")
-//            for name in UIFont.fontNames(forFamilyName: family) {
-//                print("   - \(name)")
-//            }
-//        }
-//    }
+    @StateObject private var manager = CoreDataManager()
     
     var body: some Scene {
         WindowGroup {
@@ -41,10 +32,7 @@ struct ShtaxiApp: App {
                 }
             }
             .environmentObject(manager)
-            .environment(\.managedObjectContext, manager.container.viewContext)
+            .environment(\.managedObjectContext, manager.managedObjectContext)
         }
-        //        .onChange(of: scenePhase) {
-        //            manager.save()
-        //        }
     }
 }

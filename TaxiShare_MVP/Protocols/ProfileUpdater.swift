@@ -8,5 +8,5 @@
 import SwiftUI
 
 protocol ProfileUpdater: View {
-    func preformAction(manager: PersistenceController, profile: Profile?, complete: @escaping (_ valid: Bool) -> ())
+    func preformAction(manager: CoreDataManager, profile: Profile?, complete: @escaping (_ valid: Bool) -> ())
 }

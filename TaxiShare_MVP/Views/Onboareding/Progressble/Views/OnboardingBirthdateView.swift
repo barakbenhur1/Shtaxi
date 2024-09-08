@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct OnboardingBirthdateView<VM: OnboardringViewModel>: OnboardingProgress {    
+struct OnboardingBirthdateView<VM: OnboardingViewModel>: OnboardingProgress {    
     @State private var holder = Holder<String>()
     
     @ObservedObject internal var vm: VM
@@ -63,7 +63,7 @@ struct OnboardingBirthdateView<VM: OnboardringViewModel>: OnboardingProgress {
         }
     }
     
-    func preformAction(manager: PersistenceController, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
+    func preformAction(manager: CoreDataManager, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
         errorValue = ""
         guard let profile else { return complete(false) }
         guard let birthdate = holder.value else { return complete(false) }

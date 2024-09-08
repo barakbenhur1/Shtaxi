@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct PinCodeChangePhoneView<VM: OnboardringViewModel>: ProfileUpdater {
+struct PinCodeChangePhoneView<VM: OnboardingViewModel>: ProfileUpdater {
     @State private var holder = Holder<LoginPhoneView>()
     
     @ObservedObject internal var vm: VM
@@ -43,7 +43,7 @@ struct PinCodeChangePhoneView<VM: OnboardringViewModel>: ProfileUpdater {
         didType(phone.count == 11)
     }
     
-    func preformAction(manager: PersistenceController, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
+    func preformAction(manager: CoreDataManager, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
         guard let phone = holder.value?.text else {
             complete(false)
             return didDone(phone)

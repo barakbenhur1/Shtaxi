@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SmsPinCodeView<VM: OnboardringViewModel>: ProfileUpdater {
+struct SmsPinCodeView<VM: OnboardingViewModel>: ProfileUpdater {
     @EnvironmentObject private var profileSync: ProfileSyncHendeler
     
     @ObservedObject internal var vm: VM
@@ -99,7 +99,7 @@ struct SmsPinCodeView<VM: OnboardringViewModel>: ProfileUpdater {
         }
     }
     
-    func preformAction(manager: PersistenceController, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
+    func preformAction(manager: CoreDataManager, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
         errorValue = nil
         guard let pinCode = holder.value else { return }
         do {

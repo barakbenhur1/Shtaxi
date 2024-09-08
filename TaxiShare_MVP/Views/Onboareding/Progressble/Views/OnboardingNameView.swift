@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct OnboardingNameView<VM: OnboardringViewModel>: OnboardingProgress {
+struct OnboardingNameView<VM: OnboardingViewModel>: OnboardingProgress {
     @State internal var holder = Holder<String>()
     
     @ObservedObject internal var vm: VM
@@ -59,7 +59,7 @@ struct OnboardingNameView<VM: OnboardringViewModel>: OnboardingProgress {
         }
     }
     
-    func preformAction(manager: PersistenceController, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
+    func preformAction(manager: CoreDataManager, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
         guard let profile else { return complete(false) }
         guard let name = holder.value else { return complete(false) }
         vm.update(profile: profile,

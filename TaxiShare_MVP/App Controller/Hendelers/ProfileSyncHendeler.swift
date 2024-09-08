@@ -32,17 +32,17 @@ extension LoginError: LocalizedError {
 class ProfileSyncHendeler: ObservableObject {
     static let shared = ProfileSyncHendeler()
     
-    private let vm: OnboardringViewModel
+    private let vm: OnboardingViewModel
     private let router: Router
-    private let manager: PersistenceController
+    private let manager: CoreDataManager
     
     // MARK: private
     
     // MARK: init
     private init() {
         self.router = Router.shared
-        self.manager = PersistenceController.shared
-        self.vm = OnboardringViewModel()
+        self.manager = CoreDataManager()
+        self.vm = OnboardingViewModel()
     }
     
     // MARK: syncedLocalProfile

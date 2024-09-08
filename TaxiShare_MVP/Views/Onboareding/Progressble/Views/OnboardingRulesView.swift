@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct OnboardingRulesView<VM: OnboardringViewModel>: OnboardingProgress {
+struct OnboardingRulesView<VM: OnboardingViewModel>: OnboardingProgress {
     @ObservedObject internal var vm: VM
     internal let onAppear: (() -> ())?
     internal let noActionNeeded: (() -> ())? = nil
     internal let complition: ((_ enable: Bool) -> ())? = nil
     internal let otherAction: (() -> ())? = nil
     
-    @EnvironmentObject var manager: PersistenceController
+    @EnvironmentObject var manager: CoreDataManager
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     
@@ -76,7 +76,7 @@ struct OnboardingRulesView<VM: OnboardringViewModel>: OnboardingProgress {
         }
     }
     
-    func preformAction(manager: PersistenceController, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
+    func preformAction(manager: CoreDataManager, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
         guard let profile else { return complete(false) }
         vm.update(profile: profile,
                   updateBody: .init(rules: true)) {

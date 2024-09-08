@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct PinCodeView: View, ProfileHandeler {
-    @EnvironmentObject var manager: PersistenceController
-    @EnvironmentObject var vm: OnboardringViewModel
+    @EnvironmentObject var manager: CoreDataManager
+    @EnvironmentObject var vm: OnboardingViewModel
     @EnvironmentObject private var profileSync: ProfileSyncHendeler
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>

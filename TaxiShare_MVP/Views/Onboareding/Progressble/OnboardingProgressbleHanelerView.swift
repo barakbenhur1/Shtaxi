@@ -12,7 +12,7 @@ enum OnboardingProgressble: Codable, Hashable {
 }
 
 struct OnboardingProgressbleHandelerView<Content: OnboardingProgress>: ProfileUpdater {
-    @EnvironmentObject var manager: PersistenceController
+    @EnvironmentObject var manager: CoreDataManager
     @Environment(\.managedObjectContext) private var viewContext
     
     @Binding internal var value: Int
@@ -31,7 +31,7 @@ struct OnboardingProgressbleHandelerView<Content: OnboardingProgress>: ProfileUp
         }
     }
     
-    func preformAction(manager: PersistenceController, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
+    func preformAction(manager: CoreDataManager, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
         content?.preformAction(manager: manager,
                                profile: profile, 
                                complete: complete)

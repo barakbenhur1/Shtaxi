@@ -9,11 +9,11 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject private var router: Router
-    @EnvironmentObject private var manager: PersistenceController
+    @EnvironmentObject private var manager: CoreDataManager
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     @StateObject private var profileSync = ProfileSyncHendeler.shared
-    @StateObject private var vm = OnboardringViewModel()
+    @StateObject private var vm = OnboardingViewModel()
     @StateObject private var mvm = MapViewViewModel()
     
     @State private var showAlert = true

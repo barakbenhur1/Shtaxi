@@ -7,7 +7,7 @@
 
 import CoreData
 
-class PersistenceController: NSObject, ObservableObject {
+class PersistenceController: NSObject, CoreDataRepository, ObservableObject {
     static let shared = PersistenceController()
     let container: NSPersistentContainer
     
@@ -34,6 +34,8 @@ class PersistenceController: NSObject, ObservableObject {
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
+    
+    var managedObjectContext: NSManagedObjectContext { return container.viewContext }
     
     func replace(profile: Profile, with id: String) -> Profile {
         delete(profile: profile)

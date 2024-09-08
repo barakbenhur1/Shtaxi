@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct OnboardingProgressbleManagerView: ProfileUpdater {
-    @EnvironmentObject private var manager: PersistenceController
-    @EnvironmentObject private var vm: OnboardringViewModel
+    @EnvironmentObject private var manager: CoreDataManager
+    @EnvironmentObject private var vm: OnboardingViewModel
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     
@@ -73,7 +73,7 @@ struct OnboardingProgressbleManagerView: ProfileUpdater {
         }
     }
     
-    func preformAction(manager: PersistenceController, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
+    func preformAction(manager: CoreDataManager, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
         holder.value?.preformAction(manager: manager,
                                     profile: profile,
                                     complete: complete)
