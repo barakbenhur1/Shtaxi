@@ -21,6 +21,8 @@
 		4FD3CFCD2C8996AB00910867 /* URLRequest+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD3CFCC2C8996AB00910867 /* URLRequest+EXT.swift */; };
 		4FF443062C8BBABC003E5CA7 /* TButtonConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF443052C8BBABC003E5CA7 /* TButtonConfigManager.swift */; };
 		4FF443082C8BC35E003E5CA7 /* Font+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF443072C8BC35E003E5CA7 /* Font+EXT.swift */; };
+		4FF4430A2C8DA911003E5CA7 /* PhoneAuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF443092C8DA911003E5CA7 /* PhoneAuthModel.swift */; };
+		4FF4430F2C8DF1DA003E5CA7 /* TypingAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF4430E2C8DF1DA003E5CA7 /* TypingAnimationView.swift */; };
 		4FF5B0CF2C851B6C00176585 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0CE2C851B6C00176585 /* Persistence.swift */; };
 		4FF5B0D22C851B6C00176585 /* TaxiShare_MVP.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0D02C851B6C00176585 /* TaxiShare_MVP.xcdatamodeld */; };
 		4FF5B0DC2C851B6C00176585 /* TaxiShare_MVPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B0DB2C851B6C00176585 /* TaxiShare_MVPTests.swift */; };
@@ -131,6 +133,8 @@
 		4FD3CFCC2C8996AB00910867 /* URLRequest+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+EXT.swift"; sourceTree = "<group>"; };
 		4FF443052C8BBABC003E5CA7 /* TButtonConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TButtonConfigManager.swift; sourceTree = "<group>"; };
 		4FF443072C8BC35E003E5CA7 /* Font+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+EXT.swift"; sourceTree = "<group>"; };
+		4FF443092C8DA911003E5CA7 /* PhoneAuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneAuthModel.swift; sourceTree = "<group>"; };
+		4FF4430E2C8DF1DA003E5CA7 /* TypingAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingAnimationView.swift; sourceTree = "<group>"; };
 		4FF5B0C22C851B6A00176585 /* TaxiShare_MVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaxiShare_MVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF5B0CE2C851B6C00176585 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		4FF5B0D12C851B6C00176585 /* TaxiShare_MVP.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TaxiShare_MVP.xcdatamodel; sourceTree = "<group>"; };
@@ -306,6 +310,7 @@
 				4FF5B16E2C851BB400176585 /* GoogleAuthModel.swift */,
 				4FF5B1712C851BB400176585 /* UserExistModel.swift */,
 				4FF5B1702C851BB400176585 /* Response.swift */,
+				4FF443092C8DA911003E5CA7 /* PhoneAuthModel.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -317,6 +322,14 @@
 				4FD3CFCA2C889FF600910867 /* UserIdBody.swift */,
 			);
 			path = Body;
+			sourceTree = "<group>";
+		};
+		4FF4430B2C8DD630003E5CA7 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				4FF4430E2C8DF1DA003E5CA7 /* TypingAnimationView.swift */,
+			);
+			path = Animations;
 			sourceTree = "<group>";
 		};
 		4FF5B0B92C851B6A00176585 = {
@@ -396,6 +409,7 @@
 		4FF5B0FB2C851BB200176585 /* Componnets */ = {
 			isa = PBXGroup;
 			children = (
+				4FF4430B2C8DD630003E5CA7 /* Animations */,
 				4F36D1A72C89C6E30025E91A /* Logo */,
 				4F36D1A82C89C7430025E91A /* Logo3DScreen */,
 				4FF5B0F62C851BB200176585 /* Configs */,
@@ -756,6 +770,7 @@
 				4FF5B1B72C851BB400176585 /* ProfileUpdater.swift in Sources */,
 				4FF5B1D22C851BB400176585 /* ShtaxiApp.swift in Sources */,
 				4F3C94462C851F5F00EBA6A2 /* OnboardringViewModel.swift in Sources */,
+				4FF4430F2C8DF1DA003E5CA7 /* TypingAnimationView.swift in Sources */,
 				4FD3CFCB2C889FF600910867 /* UserIdBody.swift in Sources */,
 				4FF5B1BA2C851BB400176585 /* LoginView.swift in Sources */,
 				4FF5B1D12C851BB400176585 /* RouterView.swift in Sources */,
@@ -765,6 +780,7 @@
 				4FF5B1B82C851BB400176585 /* FilterView.swift in Sources */,
 				4FF5B1AE2C851BB400176585 /* OnboardingProgressbleManegerView.swift in Sources */,
 				4FF5B1A42C851BB400176585 /* LoginPhoneView.swift in Sources */,
+				4FF4430A2C8DA911003E5CA7 /* PhoneAuthModel.swift in Sources */,
 				4FC702842C85524200C85CE9 /* CustomAlertView.swift in Sources */,
 				4FF443082C8BC35E003E5CA7 /* Font+EXT.swift in Sources */,
 				4FF5B0CF2C851B6C00176585 /* Persistence.swift in Sources */,

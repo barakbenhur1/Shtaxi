@@ -43,6 +43,7 @@ struct RootView: View {
             OnboardingProgressbleContainerView(screens: screens)
             .environmentObject(vm)
             .environmentObject(router)
+            .environmentObject(profileSync)
         case .map:
             MapView()
                 .environmentObject(router)
@@ -54,8 +55,8 @@ struct RootView: View {
     
     private func initalScreen() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-            let profile = profiles.last
-            profileSync.handleLogin(profile: profile) { _ in }
+            profileSync.handleLogin(profile: profiles.last, 
+                                    didLogin: { _ in })
         }
     }
 }

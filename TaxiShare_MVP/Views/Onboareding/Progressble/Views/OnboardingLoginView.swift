@@ -20,14 +20,13 @@ struct OnboardingLoginView<VM: OnboardringViewModel>: View {
             hideKeyboard()
             Task {
                 vm.googleAuth { model in
-                    guard let model else { return }
                     main.async {
                         didSignup(model.id,
                                   model.givenName,
                                   model.email, "",
                                   nil)
                     }
-                }
+                } error: { error in print(error) }
             }
         }, label: {
             ZStack(alignment: .center) {
@@ -60,7 +59,7 @@ struct OnboardingLoginView<VM: OnboardringViewModel>: View {
                               model.birthday,
                               model.gender)
                 }
-            }
+            } error: { error in print(error) }
         }, label: {
             ZStack(alignment: .center) {
                 Image("facebook")
@@ -84,6 +83,7 @@ struct OnboardingLoginView<VM: OnboardringViewModel>: View {
     @ViewBuilder fileprivate var appleSignInButton: some View {
         let button = SignInWithAppleButton(.signUp) { request in
             hideKeyboard()
+            vm.appleAuth()
             request.requestedScopes = [.fullName, .email]
         } onCompletion: { result in
             switch result {

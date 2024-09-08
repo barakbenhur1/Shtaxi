@@ -104,12 +104,12 @@ struct SmsPinCodeView<VM: OnboardringViewModel>: ProfileUpdater {
         guard let pinCode = holder.value else { return }
         do {
             vm.verifayPinCode(verificationID: verificationID,
-                              code: pinCode) { id, name, email in
+                              code: pinCode) { model in
                 profileSync.handleLoginTap(profile: profile,
-                                           id: id,
-                                           email: email,
+                                           id: model.id,
+                                           email: model.email,
                                            phone: phone,
-                                           name: name,
+                                           name: model.name,
                                            birthdate: "",
                                            gender: "",
                                            didLogin: complete)

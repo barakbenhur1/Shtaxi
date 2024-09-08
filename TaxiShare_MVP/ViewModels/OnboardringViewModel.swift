@@ -12,8 +12,6 @@ import SwiftUI
 private class ComplitionHandeler: ObservableObject {
     func makeValid<T: Codable>(_ complition: @escaping () -> ()) -> (T) -> () { return { _ in complition() } }
     func makeValid<T: Codable>(_ complition: @escaping (T) -> ()) -> (T) -> () { return complition }
-    func makeValid<T: Codable>(_ complition: @escaping (_ value: T, _ value2: T, _ value3: T) -> ()) -> (T, T, T) -> () { return complition }
-//    func makeValid<T: Codable>(_ complition: @escaping (_ value: T...) -> ()) -> (_ value: T...) -> () { return complition }
 }
 
 // MARK: ParameterHndeler
@@ -35,14 +33,37 @@ class OnboardringViewModel: Network {
     @StateObject private var pHandeler = ParameterHndeler()
     @StateObject private var auth = Authentication.shared
     
-    // MARK: public api
+    private func logoutProviders() {
+        auth.logout()
+    }
+    
+    // MARK: googleAuth
+    /// - Parameter complition
+    func googleAuth(complition: @escaping (GoogleAuthModel) -> (), error: @escaping (String) -> ())  {
+        let validComplition = handeler.makeValid(complition)
+        auth.googleAuth(complition: validComplition,
+                        error: error)
+    }
+    
+    // MARK: facebookAuth
+    /// - Parameter complition
+    func facebookAuth(complition: @escaping (FacebookAuthModel) -> (), error: @escaping (String) -> ()) {
+        let validComplition = handeler.makeValid(complition)
+        auth.facebookAuth(complition: validComplition,
+                          error: error)
+    }
+    
+    // MARK: appleAuth
+    func appleAuth()  {
+        logoutProviders()
+    }
     
     // MARK: verifayPinCode
     /// - Parameter verificationID - sms verification id
     /// - Parameter code - sms code
     /// - Parameter complition
     /// - Parameter error
-    func verifayPinCode(verificationID: String, code: String, complition: @escaping (_ id: String, _ name: String, _ email: String) -> (), error: @escaping (String?) -> ()) {
+    func verifayPinCode(verificationID: String, code: String, complition: @escaping (PhoneAuthModel) -> (), error: @escaping (String?) -> ()) {
         let validComplition = handeler.makeValid(complition)
         auth.phoneVerify(verificationID: verificationID,
                          verificationCode: code,
@@ -61,18 +82,36 @@ class OnboardringViewModel: Network {
                        error: error)
     }
     
-    // MARK: googleAuth
+    // MARK: delete
+    /// - Parameter id - user id
     /// - Parameter complition
-    func googleAuth(complition: @escaping (GoogleAuthModel?) -> ())  {
-        let validComplition = handeler.makeValid(complition)
-        auth.googleOauth(complition: validComplition)
+    /// - Parameter error
+    func delete(id: String, complition: @escaping () -> (), error: @escaping (String) -> ()) {
+        let userIdBody = UserIdBody(id: id)
+        let parameters = pHandeler.toDict(values: userIdBody)
+        let validComplition = handeler.makeValid(complition) as (EmptyModel) -> ()
+        logoutProviders()
+        send(method: .post,
+             route: "delete",
+             parameters: parameters,
+             complition: validComplition,
+             error: error)
     }
     
-    // MARK: facebookAuth
+    // MARK: logout
+    /// - Parameter id - user id
     /// - Parameter complition
-    func facebookAuth(complition: @escaping (FacebookAuthModel) -> ()) {
-        let validComplition = handeler.makeValid(complition)
-        auth.facebookAuth(facebookAuthModel: validComplition)
+    /// - Parameter error
+    func logout(id: String, complition: @escaping () -> (), error: @escaping (String) -> ()) {
+        let userIdBody = UserIdBody(id: id)
+        let parameters = pHandeler.toDict(values: userIdBody)
+        let validComplition = handeler.makeValid(complition) as (EmptyModel) -> ()
+        logoutProviders()
+        send(method: .post,
+             route: "logout",
+             parameters: parameters,
+             complition: validComplition,
+             error: error)
     }
     
     // MARK: login
@@ -100,36 +139,6 @@ class OnboardringViewModel: Network {
         let parameters = pHandeler.toDict(values: userIdBody)
         send(method: .post,
              route: "get",
-             parameters: parameters,
-             complition: validComplition,
-             error: error)
-    }
-    
-    // MARK: logout
-    /// - Parameter id - user id
-    /// - Parameter complition
-    /// - Parameter error
-    func logout(id: String, complition: @escaping () -> (), error: @escaping (String) -> ()) {
-        let userIdBody = UserIdBody(id: id)
-        let parameters = pHandeler.toDict(values: userIdBody)
-        let validComplition = handeler.makeValid(complition) as (EmptyModel) -> ()
-        send(method: .post,
-             route: "logout",
-             parameters: parameters,
-             complition: validComplition,
-             error: error)
-    }
-    
-    // MARK: delete
-    /// - Parameter id - user id
-    /// - Parameter complition
-    /// - Parameter error
-    func delete(id: String, complition: @escaping () -> (), error: @escaping (String) -> ()) {
-        let userIdBody = UserIdBody(id: id)
-        let parameters = pHandeler.toDict(values: userIdBody)
-        let validComplition = handeler.makeValid(complition) as (EmptyModel) -> ()
-        send(method: .post,
-             route: "delete",
              parameters: parameters,
              complition: validComplition,
              error: error)

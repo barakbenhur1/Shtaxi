@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct OnboardingProgressbleContainerView: View, ProfileHandeler {
+    @EnvironmentObject private var profileSync: ProfileSyncHendeler
     @EnvironmentObject private var vm: OnboardringViewModel
     @EnvironmentObject var router: Router
     @EnvironmentObject private var manager: PersistenceController
@@ -53,7 +54,12 @@ struct OnboardingProgressbleContainerView: View, ProfileHandeler {
     }
     
     private func approveProgress() {
-        guard progressSatge < screens.count - 1 else { return router.navigateTo(.map) }
+        guard progressSatge < screens.count - 1 else {
+            guard let profile = profiles.last else { return }
+            profileSync.handele(profile: profile,
+                                logedin: true)
+            return router.navigateTo(.map)
+        }
         progressSatge += 1
         buttonEnabled = false
     }

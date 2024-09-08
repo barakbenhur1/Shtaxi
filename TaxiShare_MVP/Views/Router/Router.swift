@@ -22,7 +22,6 @@ class Router: ObservableObject {
         case splash, login(message: String?), onboarding(screens: [OnboardingProgressble]), map
     }
     
-    // Used to programatically control our navigation stack
     @StateObject private var vm = OnboardringViewModel()
     @StateObject private var mapVM = MapViewViewModel()
     @StateObject private var profileSync = ProfileSyncHendeler.shared
@@ -49,8 +48,9 @@ class Router: ObservableObject {
             
         case .onboarding(let screens):
             OnboardingProgressbleContainerView(screens: screens)
-            .environmentObject(vm)
-            .navigationBarBackButtonHidden()
+                .environmentObject(profileSync)
+                .environmentObject(vm)
+                .navigationBarBackButtonHidden()
             
         case .map:
             MapView()

@@ -13,7 +13,7 @@ import GoogleSignIn
 
 class Authentication: ObservableObject {
     static let shared = Authentication()
-
+    
     private init() {}
     
     private func checkStatus() -> GoogleAuthModel? {
@@ -32,9 +32,10 @@ class Authentication: ObservableObject {
         return nil
     }
     
-    func googleOauth(complition: @escaping (GoogleAuthModel?) -> ())  {
+    func googleAuth(complition: @escaping (GoogleAuthModel) -> (), error: @escaping (String) -> ())  {
+        logout()
         // google sign in
-        guard let clientID = FirebaseApp.app()?.options.clientID else { return complition(nil) }
+        guard let clientID = FirebaseApp.app()?.options.clientID else { return error("no client id") }
         
         // Create Google Sign In configuration object.
         let config = GIDConfiguration(clientID: clientID)
@@ -49,45 +50,43 @@ class Authentication: ObservableObject {
             else { fatalError("There is no root view controller!") }
             
             //google sign in authentication response
-            GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [weak self] result, error in
-                guard let self else { return complition(nil) }
-                guard let user = result?.user else { return complition(nil) }
-                guard let idToken = user.idToken?.tokenString else { return complition(nil) }
+            GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [weak self] result, err in
+                guard err == nil else { return error(err!.localizedDescription) }
+                guard let self else { return error("faild") }
+                guard let user = result?.user else { return error("faild to get user") }
+                guard let idToken = user.idToken?.tokenString else { return error("faild to get token") }
                 
                 //Firebase auth
                 let credential = GoogleAuthProvider.credential(withIDToken: idToken,
                                                                accessToken: user.accessToken.tokenString)
                 Auth.auth().signIn(with: credential)
-                complition(checkStatus())
+                guard let model = checkStatus() else { return error("faild to get result") }
+                complition(model)
             }
         }
     }
     
-    func facebookAuth(facebookAuthModel: @escaping (FacebookAuthModel) -> ()) {
+    func facebookAuth(complition: @escaping (FacebookAuthModel) -> (), error: @escaping (String) -> ()) {
+        logout()
         let fbLoginManager = LoginManager()
-        
         //get rootView
         let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         guard let rootViewController = scene?.windows.first?.rootViewController
-        else {
-            fatalError("There is no root view controller!")
-        }
+        else { fatalError("There is no root view controller!") }
         
-        fbLoginManager.logIn(permissions:  ["public_profile", "email"], from: rootViewController) { result, error in
-            guard let tokenString = AccessToken.current?.tokenString else {
-                print("Failed to get access token")
-                return
-            }
+        fbLoginManager.logIn(permissions:  ["public_profile", "email"], from: rootViewController) { result, err in
+            guard err == nil else { return error(err!.localizedDescription) }
+            guard let tokenString = result?.token?.tokenString else { return error("no token") }
             
             let credential = FacebookAuthProvider.credential(withAccessToken: tokenString)
             
-            Auth.auth().signIn(with: credential) { authResult, error in
-                guard error == nil else { return }
-                guard let id = authResult?.user.uid.encrypt() else { return }
-                facebookAuthModel(FacebookAuthModel(id: id,
-                                                    birthday: "",
-                                                    gender: "",
-                                                    email: authResult?.user.email ?? ""))
+            Auth.auth().signIn(with: credential) { authResult, err in
+                guard err == nil else { return error(err!.localizedDescription) }
+                guard let id = authResult?.user.uid.encrypt() else { return error("no id") }
+                complition(FacebookAuthModel(id: id,
+                                             birthday: "",
+                                             gender: "",
+                                             email: authResult?.user.email ?? ""))
             }
         }
     }
@@ -102,23 +101,24 @@ class Authentication: ObservableObject {
             }
     }
     
-    func phoneVerify(verificationID: String, verificationCode: String, phoneAuthModel: @escaping (_ id: String, _ name: String, _ email: String) -> (), error: @escaping (String?) -> ()) {
-        let credential = PhoneAuthProvider.provider().credential(
-            withVerificationID: verificationID,
-            verificationCode: verificationCode
-        )
-        
+    func phoneVerify(verificationID: String, verificationCode: String, phoneAuthModel: @escaping (PhoneAuthModel) -> (), error: @escaping (String?) -> ()) {
+        logout()
+        let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationID,
+                                                                 verificationCode: verificationCode)
         Auth.auth().signIn(with: credential) { result, err in
             guard err == nil else { return error("קוד שגוי") }
             guard let result else { return error("no result") }
             guard let id = result.user.uid.encrypt() else { return }
-            phoneAuthModel(id, result.user.displayName ?? "", result.user.email ?? "")
+            phoneAuthModel(.init(id: id,
+                                 name: result.user.displayName ?? "",
+                                 email: result.user.email ?? ""))
         }
     }
     
-    func logout() async throws {
+    func logout() {
         GIDSignIn.sharedInstance.signOut()
-        try Auth.auth().signOut()
+        LoginManager().logOut()
+        try? Auth.auth().signOut()
     }
 }
 

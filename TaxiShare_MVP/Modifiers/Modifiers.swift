@@ -24,16 +24,16 @@ struct ViewWithButton: ViewModifier {
     
     func body(content: Content) -> some View {
         let view = BaseViewWithBottomButton(buttonConfig: $buttonConfigManager.buttonConfig,
-                                 loading: $loading,
-                                 buttonText: buttonText,
-                                 contant: content) {
+                                            loading: $loading,
+                                            buttonText: buttonText,
+                                            contant: content) {
             loading = true
             preformAction { _ in loading = false }
         }
-                                 .environmentObject(manager)
-                                 .environment(\.managedObjectContext, manager.container.viewContext)
-                                 .onChange(of: loadingForExternalActions, setLoading)
-                                 .onChange(of: setButtonConfig, configButton)
+            .environmentObject(manager)
+            .environment(\.managedObjectContext, manager.container.viewContext)
+            .onChange(of: loadingForExternalActions, setLoading)
+            .onChange(of: setButtonConfig, configButton)
         
         if let onTapGesture {
             view

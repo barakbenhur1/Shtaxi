@@ -125,10 +125,13 @@ class ProfileSyncHendeler: ObservableObject {
                     } error: { [weak self] error in
                         print(error)
                         guard let self else { return }
-                        removeAndPopToLogin(profile: syncedLocalProfile,
+                        return removeAndPopToLogin(profile: syncedLocalProfile,
                                             massege:.retry)
                     }
                 }
+                
+                handele(profile: syncedLocalProfile,
+                        logedin: onboardingScreens.isEmpty)
                 
                 didLogin(true)
                 return navigteWith(onboardingScreens)
@@ -190,6 +193,15 @@ class ProfileSyncHendeler: ObservableObject {
         return screens
     }
     
+    // MARK: handele
+    /// - Parameter Profile - local profile
+    /// - Parameter logedin - is user  logedin
+    func handele(profile: Profile?, logedin: Bool) {
+        guard let profile else { return }
+        manager.set(profile: profile,
+                    logedin: logedin)
+    }
+    
     // MARK: onboardingScreens
     /// - Parameter onboardingScreens
     func afterLogin(onboardingScreens: [OnboardingProgressble]) {
@@ -230,6 +242,10 @@ class ProfileSyncHendeler: ObservableObject {
     /// - Parameter Profile - local profile
     /// - Parameter didLogin - return if login successful
     func handleLogin(profile: Profile?, didLogin: @escaping (Bool) -> () = { _ in }) {
+        guard let logedin = profile?.logedin, logedin else {
+            removeAndPopToLogin(profile: profile)
+            return didLogin(false)
+        }
         preform(profile: profile,
                 id: profile?.userID,
                 didLogin: didLogin,

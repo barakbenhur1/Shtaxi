@@ -61,11 +61,12 @@ struct Logo3DView: View {
                             x: value > 0 ? 10 : 4,
                             y: value > 0 ? 10 : 4)
                 
-                Text("Taxi Share App")
-                    .foregroundStyle(Color(hex: "#343604"))
-                    .animation(.easeIn(duration: 0.4))
-                    .font(.caption2.bold().italic().monospaced())
-                    .opacity(value > 2 ? 1 : (value > 1 ? 0.8 : 0))
+                if animate {
+                    TypingAnimationView(textToType: "Taxi Share App", 
+                                        value: value, 
+                                        animationStage: 2)
+                        .opacity(value > 2 ? 1 : (value > 1 ? 0.8 : 0))
+                }
             }
             .padding(.top, -10)
         }

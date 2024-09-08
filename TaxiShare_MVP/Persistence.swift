@@ -47,6 +47,11 @@ class PersistenceController: NSObject, ObservableObject {
         return profile
     }
     
+    func set(profile: Profile, logedin: Bool) {
+        profile.logedin = logedin
+        save()
+    }
+    
     func set(profile: Profile, phone: String) {
         profile.phone = phone
         save()
