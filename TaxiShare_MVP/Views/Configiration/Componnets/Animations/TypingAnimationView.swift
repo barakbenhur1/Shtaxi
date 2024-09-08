@@ -62,11 +62,8 @@ struct TypingAnimationView: View {
         for (index, character) in textToType.enumerated() {
             queue.asyncAfter(deadline: .now() + Double(index) * time) {
                 main.async {
-                    let sindex = animatedText.index(animatedText.startIndex,
-                                                    offsetBy: index)
-                    animatedText.remove(at: sindex)
-                    animatedText.insert(character,
-                                        at: sindex)
+                    animatedText.replace(at: index,
+                                         with: character)
                     
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     
@@ -88,16 +85,12 @@ struct TypingAnimationView: View {
             let time = index == textToType.count - 1 ? 0.218 : 0.2
             queue.asyncAfter(deadline: .now() + Double(index) * time) {
                 main.async {
-                    let sindex = animatedText.index(animatedText.startIndex,
-                                                    offsetBy: textToType.count - 1 - index)
-                    animatedText.remove(at: sindex)
-                    animatedText.insert(contentsOf: " ",
-                                        at: sindex)
+                    animatedText.replace(at: textToType.count - 1 - index,
+                                         with: " ")
                     
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                    // Check if it's the last character
+                    
                     if index == textToType.count - 1 {
-                        // If it's the last character, restart the typing animation
                         queue.asyncAfter(deadline: .now() + 0.8) {
                             main.async {
                                 animateText()

@@ -8,6 +8,12 @@
 import Foundation
 
 extension String {
+    mutating func replace(at i: Int, with c: Character) {
+        let index = index(startIndex, offsetBy: i)
+        remove(at: index)
+        insert(c, at: index)
+    }
+    
     mutating func limitText(_ upper: Int) {
         if count > upper {
             self = String(prefix(upper))
