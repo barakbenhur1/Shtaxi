@@ -63,14 +63,12 @@ struct OnboardingBirthdateView<VM: OnboardingViewModel>: OnboardingProgress {
         }
     }
     
-    func preformAction(manager: CoreDataManager, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
+    func preformAction(profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
         errorValue = ""
         guard let profile else { return complete(false) }
         guard let birthdate = holder.value else { return complete(false) }
         vm.update(profile: profile,
                   updateBody: .init(birthdate: birthdate)) {
-            manager.set(profile: profile,
-                        date: birthdate)
             return complete(true)
         } error: { error in
             print(error)

@@ -162,5 +162,4 @@ struct SingUpView: View {
 
 #Preview {
     SingUpView(isNew: false)
-        .environmentObject(Router.shared)
 }

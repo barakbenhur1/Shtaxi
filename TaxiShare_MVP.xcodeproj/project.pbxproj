@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F14F1172C8EEDA5007616CA /* ViewModelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F14F1162C8EEDA5007616CA /* ViewModelProvider.swift */; };
+		4F14F1192C8F0019007616CA /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F14F1182C8F0019007616CA /* ViewModel.swift */; };
 		4F2AD02F2C87FF50004A32E5 /* SmsPinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2AD02E2C87FF50004A32E5 /* SmsPinCodeView.swift */; };
 		4F36D1AA2C89C7650025E91A /* Logo3DView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F36D1A92C89C7650025E91A /* Logo3DView.swift */; };
 		4F3C94442C851F5F00EBA6A2 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3C94402C851F5F00EBA6A2 /* Authentication.swift */; };
@@ -128,6 +130,8 @@
 
 /* Begin PBXFileReference section */
 		4F03C9882C89B6E100FFF199 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		4F14F1162C8EEDA5007616CA /* ViewModelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProvider.swift; sourceTree = "<group>"; };
+		4F14F1182C8F0019007616CA /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		4F2AD02E2C87FF50004A32E5 /* SmsPinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmsPinCodeView.swift; sourceTree = "<group>"; };
 		4F36D1A92C89C7650025E91A /* Logo3DView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logo3DView.swift; sourceTree = "<group>"; };
 		4F3C94402C851F5F00EBA6A2 /* Authentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
@@ -320,6 +324,7 @@
 				4FF443102C8E0707003E5CA7 /* OnboardingRepository.swift */,
 				4FF4431D2C8E0C7A003E5CA7 /* MapRepository.swift */,
 				4FF443252C8E10F8003E5CA7 /* CoreDataRepository.swift */,
+				4F14F1182C8F0019007616CA /* ViewModel.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -654,6 +659,7 @@
 		4FF5B16B2C851BB400176585 /* Hendelers */ = {
 			isa = PBXGroup;
 			children = (
+				4F14F1162C8EEDA5007616CA /* ViewModelProvider.swift */,
 				4FF5B1692C851BB400176585 /* ProfileSyncHendeler.swift */,
 			);
 			path = Hendelers;
@@ -879,6 +885,7 @@
 				4FF5B1DE2C851BB400176585 /* UserExistModel.swift in Sources */,
 				4FF5B1C72C851BB400176585 /* CharacterSet+EXT.swift in Sources */,
 				4F3C94442C851F5F00EBA6A2 /* Authentication.swift in Sources */,
+				4F14F1192C8F0019007616CA /* ViewModel.swift in Sources */,
 				4FF5B1DC2C851BB400176585 /* ProfileModel.swift in Sources */,
 				4FF5B1A82C851BB400176585 /* OnboardingLoginView.swift in Sources */,
 				4FF443142C8E0804003E5CA7 /* OnboardingUseCases.swift in Sources */,
@@ -894,6 +901,7 @@
 				4FF5B1A52C851BB400176585 /* OnboardingBirthdateView.swift in Sources */,
 				4FF5B1B12C851BB400176585 /* OnboardingProgress.swift in Sources */,
 				4FF5B1B22C851BB400176585 /* RightText.swift in Sources */,
+				4F14F1172C8EEDA5007616CA /* ViewModelProvider.swift in Sources */,
 				4FF4431E2C8E0C7A003E5CA7 /* MapRepository.swift in Sources */,
 				4FF5B1DA2C851BB400176585 /* FacebookAuthModel.swift in Sources */,
 				4FF5B1752C851BB400176585 /* TButtonConfig.swift in Sources */,
@@ -1064,7 +1072,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TaxiShare_MVP/TaxiShare_MVP.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = UNVTN9W8HQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1096,7 +1104,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TaxiShare_MVP/TaxiShare_MVP.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = UNVTN9W8HQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

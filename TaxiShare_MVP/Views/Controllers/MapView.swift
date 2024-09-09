@@ -8,10 +8,9 @@
 import SwiftUI
 import MapKit
 
-struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
-    @EnvironmentObject var router: Router
-    @EnvironmentObject private var viewModel: MapViewViewModel
-    @EnvironmentObject private var oVM: OnboardingViewModel
+struct MapView: View {
+    @EnvironmentObject private var router: Router
+    @EnvironmentObject private var vmProvider: ViewModelProvider
     @EnvironmentObject private var profileSync: ProfileSyncHendeler
 //    @EnvironmentObject private var manager: CoreDataManager
   
@@ -48,6 +47,14 @@ struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
         }
     }
     
+    private var onboardingVM: OnboardingViewModel {
+        return vmProvider.vm()
+    }
+    
+    private var mapVM: MapViewViewModel {
+        return vmProvider.vm()
+    }
+    
     private func navigateTo(route: Router.Route) {
         router.navigateTo(route)
     }
@@ -68,7 +75,7 @@ struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
                     if let location = item.location?.coordinate {
                         let location = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
                         if endFocused {
-                            viewModel.endPositionValue = item
+                            mapVM.endPositionValue = item
                             isShowAlert = true
                             postion = MapCameraPosition.region(MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.006, longitudeDelta: 0.006)))
                             endText = ""
@@ -76,7 +83,7 @@ struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
                         else if startFocused {
                             startPosition = item.location!
                             startText = item.title
-                            viewModel.startPositionValue = item
+                            mapVM.startPositionValue = item
                         }
                         startFocused = false
                         endFocused = false
@@ -118,10 +125,10 @@ struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
             }
             .onChange(of: selection) {
                 guard let selection else {
-                    viewModel.sheetValue = nil
+                    mapVM.sheetValue = nil
                     return
                 }
-                viewModel.sheetValue = selection
+                mapVM.sheetValue = selection
             }
             .mapStyle(.hybrid)
             .ignoresSafeArea()
@@ -129,10 +136,10 @@ struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
                 startFocused = false
                 endFocused = false
                 isShowSideMenu = false
-                viewModel.sheetValue = nil
+                mapVM.sheetValue = nil
                 selection = nil
                 
-                startText = viewModel.startPositionValue?.title ?? ""
+                startText = mapVM.startPositionValue?.title ?? ""
             }
             
             ZStack {
@@ -236,7 +243,7 @@ struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
         }
         .alert("בקשה לנסיעה".localized(), isPresented: $isShowAlert, actions: {
             Button(action: {
-                anotations.append(viewModel.endPositionValue!)
+                anotations.append(mapVM.endPositionValue!)
                 taxiTimes.append(Date())
             }, label: {
                 Text("כן".localized())
@@ -250,7 +257,7 @@ struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
         }, message: {
             let text = {
                 if anotations.contains(where: { item in
-                    return item.title == viewModel.endPositionValue?.title }) {
+                    return item.title == mapVM.endPositionValue?.title }) {
                     return "קיימות נסיעות למקום זה\nהאם ברצונך ליצר אחת חדשה בכל זאת?"
                 }
                 else {
@@ -259,7 +266,7 @@ struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
             }()
             Text(text)
         })
-        .sheet(isPresented: $viewModel.isShowSheet) {
+        .sheet(isPresented: mapVM.binding.isShowSheet) {
             VStack(alignment: .trailing) {
                 Text("נוסעים")
                     .font(.headline)
@@ -275,8 +282,8 @@ struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
                 }
                 .padding(.bottom, 30)
                 
-                if let sheetValue = viewModel.sheetValue {
-                    Text("\("איסוף") \(viewModel.startPositionValue!.title)")
+                if let sheetValue = mapVM.sheetValue {
+                    Text("\("איסוף") \(mapVM.startPositionValue!.title)")
                         .font(.title)
                         .padding(.bottom, 20)
                     Text("\("יעד:") \(anotations[sheetValue].title)")
@@ -287,7 +294,6 @@ struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
                         DatePicker(selection: $taxiTimes[sheetValue]) {
                             
                         }
-                        .environment(\.locale, Locale.init(identifier: "he"))
                         Text("שעת יציאה:")
                             .font(.title)
                     }
@@ -296,7 +302,7 @@ struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
                     Button(action: {
                         anotations[sheetValue].time = taxiTimes[sheetValue]
                         anotations[sheetValue].confirmed = true
-                        viewModel.isShowSheet = false
+                        mapVM.isShowSheet = false
                     }, label: {
                         Text("אישור".localized())
                     })
@@ -332,7 +338,7 @@ struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
                                                           enabled: true))) {
                 isShowSideMenu = false
                 if let profile = profiles.last, let id = profile.userID {
-                    oVM.logout(id: id) {
+                    onboardingVM.logout(id: id) {
                         profileSync.removeAndPopToLogin(profile: profile)
                     } error: { error in print(error) }
                 }
@@ -359,7 +365,7 @@ struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
     private func deleteProfile() {
         guard let profile = profiles.last else { return  router.popToRoot() }
         guard let id = profile.userID else { return  router.popToRoot() }
-        oVM.delete(id: id) {
+        onboardingVM.delete(id: id) {
             profileSync.removeAndPopToLogin(profile: profile)
         } error: { error in
             profileSync.removeAndPopToLogin(profile: profile)
@@ -421,5 +427,4 @@ struct MapView<VM: OnboardingViewModel, MapVM: MapViewViewModel>: View {
 
 #Preview {
     MapView()
-        .environmentObject(Router.shared)
 }

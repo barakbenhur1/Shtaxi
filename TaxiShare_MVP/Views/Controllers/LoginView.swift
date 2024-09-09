@@ -11,7 +11,7 @@ import GoogleSignIn
 
 struct LoginView: View, ProfileHandeler {
     @EnvironmentObject var router: Router
-    @EnvironmentObject var vm: OnboardingViewModel
+    @EnvironmentObject var vmProvider: ViewModelProvider
     @EnvironmentObject private var profileSync: ProfileSyncHendeler
    
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
@@ -30,14 +30,14 @@ struct LoginView: View, ProfileHandeler {
     }
     
     @ViewBuilder private func onboardingLoginView() -> some View {
-        OnboardingLoginView(vm: vm,
+        OnboardingLoginView(vm: vmProvider.vm(),
                             didSignup: didSignup,
                             didFillPhone: didFillPhone)
     }
     
     func preformAction(complete: @escaping (Bool) -> ()) {
         guard let phone = holder.value else { return complete(false) }
-        vm.phoneAuth(phone: phone) { verificationID in
+        vmProvider.vm().phoneAuth(phone: phone) { verificationID in
             complete(true)
             return router.navigateTo(.pinCode(phone: phone,
                                               verificationID: verificationID))

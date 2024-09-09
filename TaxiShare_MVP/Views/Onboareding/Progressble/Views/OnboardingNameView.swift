@@ -59,13 +59,11 @@ struct OnboardingNameView<VM: OnboardingViewModel>: OnboardingProgress {
         }
     }
     
-    func preformAction(manager: CoreDataManager, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
+    func preformAction(profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
         guard let profile else { return complete(false) }
         guard let name = holder.value else { return complete(false) }
         vm.update(profile: profile,
                   updateBody: .init(name: name)) {
-            manager.set(profile: profile,
-                        name: name)
             return complete(true)
         } error: { error in
             print(error)

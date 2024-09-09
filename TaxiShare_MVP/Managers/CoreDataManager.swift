@@ -9,9 +9,13 @@ import Foundation
 import CoreData
 
 class CoreDataManager: ObservableObject {
+    static let shared = CoreDataManager()
+    
     private let useCases = CoreDataUseCases(repo: CoreDataRepositoryImpl(dataSource: PersistenceController.shared))
     
     var managedObjectContext: NSManagedObjectContext { return useCases.managedObjectContext }
+    
+    private init() {}
     
     func replace(profile: Profile, with id: String) -> Profile {
         return useCases.replace(profile: profile, with: id)

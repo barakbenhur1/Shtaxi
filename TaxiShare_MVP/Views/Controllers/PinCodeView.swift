@@ -9,8 +9,7 @@ import SwiftUI
 
 struct PinCodeView: View, ProfileHandeler {
     @EnvironmentObject var manager: CoreDataManager
-    @EnvironmentObject var vm: OnboardingViewModel
-    @EnvironmentObject private var profileSync: ProfileSyncHendeler
+    @EnvironmentObject var vmProvider: ViewModelProvider
     @EnvironmentObject var router: Router
     
     @State internal var buttonEnabled: Bool = false
@@ -23,7 +22,6 @@ struct PinCodeView: View, ProfileHandeler {
     
     var body: some View {
         content()
-            .environmentObject(profileSync)
             .wrapWithBottun(buttonText: "אישור".localized(),
                             preformAction: preformAction,
                             loadingForExternalActions: $externalActionLoading,
@@ -37,7 +35,7 @@ struct PinCodeView: View, ProfileHandeler {
     }
     
     @ViewBuilder private func smsPinCodeView() -> some View {
-        SmsPinCodeView(vm: vm,
+        SmsPinCodeView(vm: vmProvider.vm(),
                        phone: phone,
                        verificationID: verificationID,
                        onAppear: { view in holder.value = view },
@@ -46,7 +44,7 @@ struct PinCodeView: View, ProfileHandeler {
     }
     
     @ViewBuilder private func changePhone() -> some View {
-        PinCodeChangePhoneView(vm: vm,
+        PinCodeChangePhoneView(vm: vmProvider.vm(),
                                phone: phone,
                                verificationID: $verificationID,
                                didType: { isDone in buttonEnabled = isDone },
@@ -60,8 +58,7 @@ struct PinCodeView: View, ProfileHandeler {
     }
     
     func preformAction(complete: @escaping (Bool) -> ()) {
-        holder.value?.preformAction(manager: manager,
-                                    profile: nil,
+        holder.value?.preformAction(profile: nil,
                                     complete: complete)
     }
 }

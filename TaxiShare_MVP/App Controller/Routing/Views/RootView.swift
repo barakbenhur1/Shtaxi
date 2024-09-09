@@ -10,12 +10,8 @@ import SwiftUI
 struct RootView: View {
     @EnvironmentObject private var profileSync: ProfileSyncHendeler
     @EnvironmentObject private var router: Router
-    @EnvironmentObject private var manager: CoreDataManager
     
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
-    
-    @StateObject private var vm = OnboardingViewModel()
-    @StateObject private var mvm = MapViewViewModel()
     
     @State private var showAlert = true
     
@@ -38,24 +34,11 @@ struct RootView: View {
                     Text(message)
                 }
             }
-            .environmentObject(router)
-            .environmentObject(profileSync)
-            .environmentObject(vm)
-            .environment(\.managedObjectContext, manager.managedObjectContext)
             .onAppear { showAlert = message != nil }
         case .onboarding(let screens):
             OnboardingProgressbleContainerView(screens: screens)
-                .environmentObject(vm)
-                .environmentObject(router)
-                .environmentObject(profileSync)
-                .environment(\.managedObjectContext, manager.managedObjectContext)
         case .map:
             MapView()
-                .environmentObject(router)
-                .environmentObject(vm)
-                .environmentObject(mvm)
-                .environmentObject(profileSync)
-                .environment(\.managedObjectContext, manager.managedObjectContext)
         }
     }
     

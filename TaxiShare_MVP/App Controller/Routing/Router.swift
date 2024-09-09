@@ -22,10 +22,6 @@ class Router: ObservableObject {
         case splash, login(message: String?), onboarding(screens: [OnboardingProgressble]), map
     }
     
-    @StateObject private var vm = OnboardingViewModel()
-    @StateObject private var mapVM = MapViewViewModel()
-    @StateObject private var profileSync = ProfileSyncHendeler.shared
-    
     @Published var root: Root = .splash
     @Published var path: NavigationPath = NavigationPath()
    
@@ -36,32 +32,23 @@ class Router: ObservableObject {
         switch route {
         case .login:
             LoginView()
-                .environmentObject(vm)
                 .navigationBarBackButtonHidden()
             
         case .pinCode(let phone, let verificationID):
             PinCodeView(phone: phone,
                         verificationID: verificationID)
-            .environmentObject(vm)
-            .environmentObject(profileSync)
             .navigationBarBackButtonHidden()
             
         case .onboarding(let screens):
             OnboardingProgressbleContainerView(screens: screens)
-                .environmentObject(profileSync)
-                .environmentObject(vm)
                 .navigationBarBackButtonHidden()
             
         case .map:
             MapView()
-                .environmentObject(vm)
-                .environmentObject(mapVM)
-                .environmentObject(profileSync)
                 .navigationBarBackButtonHidden()
             
         case .filter:
             FilterView()
-//                .environmentObject(OnboardingViewModel())
         }
     }
     

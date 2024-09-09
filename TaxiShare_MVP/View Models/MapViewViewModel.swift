@@ -7,8 +7,14 @@
 
 import SwiftUI
 
-class MapViewViewModel: Network {
+final class MapViewViewModel: Network, ViewModel {
     private let useCases = MapUseCases(repo: MapRepositoryImpl(dataSource: MapDataSource()))
+    
+    var binding: Binding<MapViewViewModel> {
+        return Binding {
+            return self
+        } set: { _ in }
+    }
     
     @Published var isShowSheet: Bool = false
     @Published var startPositionValue: SearchCompletions? = .init(title: "start place", subTitle: "", location: nil)

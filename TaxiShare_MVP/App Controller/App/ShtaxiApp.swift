@@ -6,38 +6,31 @@
 //
 
 import SwiftUI
-import GoogleSignIn
-import FacebookCore
-import FirebaseFirestore
-import Firebase
 import FirebaseAuth
 
 @main
 struct ShtaxiApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    @StateObject var router = Router.shared
-    @StateObject private var manager = CoreDataManager()
+    @StateObject private var router = Router.shared
+    @StateObject private var manager = CoreDataManager.shared
     @StateObject private var profileSync = ProfileSyncHendeler.shared
+    @StateObject private var vmProvider = ViewModelProvider.shared
+   
+    private var local = Locale(identifier: "he-IL")
     
     var body: some Scene {
         WindowGroup {
             RouterView() {
                 RootView()
             }
-            .onOpenURL { url in
-                DispatchQueue.main.async {
-                    _ = Auth.auth().canHandle(url)
-                    GIDSignIn.sharedInstance.handle(url)
-                    ApplicationDelegate.shared.application(UIApplication.shared,
-                                                           open: url,sourceApplication: nil,
-                                                           annotation: UIApplication.OpenURLOptionsKey.annotation)
-                }
-            }
             .environmentObject(router)
             .environmentObject(profileSync)
             .environmentObject(manager)
+            .environmentObject(vmProvider)
+            .environment(\.locale, local)
             .environment(\.managedObjectContext, manager.managedObjectContext)
+            .onOpenURL { url in DispatchQueue.main.async { _ = Auth.auth().canHandle(url) } }
         }
     }
 }

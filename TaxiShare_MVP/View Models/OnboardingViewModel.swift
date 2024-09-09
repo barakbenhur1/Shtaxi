@@ -5,10 +5,16 @@
 //  Created by Barak Ben Hur on 08/09/2024.
 //
 
-import Foundation
+import SwiftUI
 
-class OnboardingViewModel: ObservableObject {
+final class OnboardingViewModel: ObservableObject, ViewModel {
     private let useCases = OnboardingUseCases(repo: OnboardingRepositoryImpl(dataSource: OnboardringDataSource()))
+    
+    var binding: Binding<OnboardingViewModel> {
+        return Binding {
+            return self
+        } set: { _ in }
+    }
     
     func logoutProviders() {
         useCases.logoutProviders()

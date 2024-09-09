@@ -7,10 +7,7 @@
 
 import SwiftUI
 
-struct OnboardingProgressbleView<Contant: OnboardingProgress>: View {
-    @EnvironmentObject private var manager: CoreDataManager
-    @Environment(\.managedObjectContext) private var viewContext
-    
+struct OnboardingProgressbleView<Contant: OnboardingProgress>: View {    
     @Binding internal var value: Int
     @State internal var texts: [String]
     internal let total: Int
@@ -42,8 +39,6 @@ struct OnboardingProgressbleView<Contant: OnboardingProgress>: View {
                          value: $value)
             .padding(.bottom, 50)
             contant
-                .environmentObject(manager)
-                .environment(\.managedObjectContext, viewContext)
             Spacer()
         }
     }

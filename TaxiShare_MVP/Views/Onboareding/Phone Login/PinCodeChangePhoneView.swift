@@ -43,7 +43,7 @@ struct PinCodeChangePhoneView<VM: OnboardingViewModel>: ProfileUpdater {
         didType(phone.count == 11)
     }
     
-    func preformAction(manager: CoreDataManager, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
+    func preformAction(profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
         guard let phone = holder.value?.text else {
             complete(false)
             return didDone(phone)

@@ -9,9 +9,9 @@ import SwiftUI
 
 struct OnboardingProgressbleContainerView: View, ProfileHandeler {
     @EnvironmentObject private var profileSync: ProfileSyncHendeler
-    @EnvironmentObject private var vm: OnboardingViewModel
-    @EnvironmentObject var router: Router
+    @EnvironmentObject private var vmProvider: ViewModelProvider
     @EnvironmentObject private var manager: CoreDataManager
+    @EnvironmentObject var router: Router
     
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     
@@ -26,8 +26,6 @@ struct OnboardingProgressbleContainerView: View, ProfileHandeler {
         if progressSatge < screens.count {
             let buttonText = progressSatge < screens.count - 1 ? "אישור".localized() : "שנצא לדרך?".localized()
             progreesView()
-                .environmentObject(vm)
-                .environment(\.managedObjectContext, manager.managedObjectContext)
                 .wrapWithBottun(buttonText: buttonText,
                                 preformAction: preformAction,
                                 loadingForExternalActions: $externalActionLoading,
@@ -47,8 +45,7 @@ struct OnboardingProgressbleContainerView: View, ProfileHandeler {
     
     internal func preformAction(complete: @escaping (Bool) -> ()) {
         guard let profile = profiles.last else { return complete(false) }
-        holder.value?.preformAction(manager: manager,
-                                    profile: profile) { valid in
+        holder.value?.preformAction(profile: profile) { valid in
             complete(valid)
             guard valid else { return }
             approveProgress()

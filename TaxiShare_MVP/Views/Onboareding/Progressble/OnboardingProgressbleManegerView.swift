@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct OnboardingProgressbleManagerView: ProfileUpdater {
-    @EnvironmentObject private var manager: CoreDataManager
-    @EnvironmentObject private var vm: OnboardingViewModel
-    @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject private var vmProvider: ViewModelProvider
     
     @State private var holder = Holder<any ProfileUpdater>()
     let buttonText: String = ""
@@ -32,39 +30,31 @@ struct OnboardingProgressbleManagerView: ProfileUpdater {
             case .name(let value):
                 OnboardingProgressbleHandelerView<OnboardingNameView>(value: $progreesSatge,
                                                                        total: screens.count,
-                                                                      content: .init(vm: vm, 
+                                                                      content: .init(vm: vmProvider.vm(),
                                                                                      text: value,
                                                                                       complition: setButtonConfig),
                                                                       onAppear: setScreen)
-                .environmentObject(manager)
-                .environment(\.managedObjectContext, viewContext)
             case .birthdate(let value):
                 OnboardingProgressbleHandelerView<OnboardingBirthdateView>(value: $progreesSatge,
                                                                             total: screens.count,
-                                                                           content: .init(vm: vm, 
+                                                                           content: .init(vm: vmProvider.vm(),
                                                                                           date: value,
                                                                                            complition: setButtonConfig),
                                                                            onAppear: setScreen)
-                .environmentObject(manager)
-                .environment(\.managedObjectContext, viewContext)
             case .gender(let value):
                 OnboardingProgressbleHandelerView<OnboardingGenderView>(value: $progreesSatge,
                                                                          total: screens.count,
-                                                                        content: .init(vm: vm,
+                                                                        content: .init(vm: vmProvider.vm(),
                                                                                        selectedIndex: value,
                                                                                         complition: setButtonConfig,
                                                                                         otherAction: otherAction),
                                                                         onAppear: setScreen)
-                .environmentObject(manager)
-                .environment(\.managedObjectContext, viewContext)
             case .rules:
                 OnboardingProgressbleHandelerView<OnboardingRulesView>(value: $progreesSatge,
                                                                         total: screens.count,
-                                                                       content: .init(vm: vm, 
+                                                                       content: .init(vm: vmProvider.vm(), 
                                                                                       onAppear: noActionNeeded),
                                                                        onAppear: setScreen)
-                .environmentObject(manager)
-                .environment(\.managedObjectContext, viewContext)
             }
         }
         .onAppear {
@@ -72,9 +62,8 @@ struct OnboardingProgressbleManagerView: ProfileUpdater {
         }
     }
     
-    func preformAction(manager: CoreDataManager, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
-        holder.value?.preformAction(manager: manager,
-                                    profile: profile,
+    func preformAction(profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
+        holder.value?.preformAction(profile: profile,
                                     complete: complete)
     }
 }

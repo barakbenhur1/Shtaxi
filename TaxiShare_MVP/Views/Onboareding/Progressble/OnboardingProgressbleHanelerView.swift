@@ -25,15 +25,12 @@ struct OnboardingProgressbleHandelerView<Content: OnboardingProgress>: ProfileUp
             OnboardingProgressbleView(value: $value,
                                       total: total,
                                       contant: content)
-            .environmentObject(manager)
-            .environment(\.managedObjectContext, viewContext)
             .onAppear { onAppear(self) }
         }
     }
     
-    func preformAction(manager: CoreDataManager, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
-        content?.preformAction(manager: manager,
-                               profile: profile, 
+    func preformAction(profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
+        content?.preformAction(profile: profile,
                                complete: complete)
     }
 }

@@ -66,12 +66,10 @@ struct OnboardingGenderView<VM: OnboardingViewModel>: OnboardingProgress {
         }
     }
     
-    func preformAction(manager: CoreDataManager, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
+    func preformAction(profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
         guard let profile else { return complete(false) }
         vm.update(profile: profile,
                   updateBody: .init(gender: holder.value)) {
-            manager.set(profile: profile,
-                        gender: holder.value)
             return complete(true)
         } error: { error in
             print(error)

@@ -99,7 +99,7 @@ struct SmsPinCodeView<VM: OnboardingViewModel>: ProfileUpdater {
         }
     }
     
-    func preformAction(manager: CoreDataManager, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
+    func preformAction(profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
         errorValue = nil
         guard let pinCode = holder.value else { return }
         do {

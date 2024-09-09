@@ -29,9 +29,9 @@ private class ParameterHndeler: ObservableObject {
 class OnboardringDataSource: Network, OnboardingRepository {
     override internal var root: String { return "login" }
     
-    @StateObject private var handeler = ComplitionHandeler()
-    @StateObject private var pHandeler = ParameterHndeler()
-    @StateObject private var auth = Authentication.shared
+    private let handeler = ComplitionHandeler()
+    private let pHandeler = ParameterHndeler()
+    private let auth = Authentication.shared
     
     internal func logoutProviders() {
         auth.logout()
@@ -144,17 +144,19 @@ class OnboardringDataSource: Network, OnboardingRepository {
              error: error)
     }
     
-    // MARK: update
     /// - Parameter id - user id
     /// - Parameter updateBody - paramers to update
     /// - Parameter complition
     /// - Parameter error
-    func update(profile: Profile?, updateBody: UpdateBody, complition: @escaping () -> (), error: @escaping (String) -> ()) {
+    func update(profile: Profile?, updateBody: UpdateBody, complition: @escaping () -> () = {}, error: @escaping (String) -> ()) {
         guard let id = profile?.userID else { return error("no id") }
-        let newComplition: (UserExistModel) -> () = { result in
+        let newComplition: (UserExistModel) -> () = { [weak self] result in
             guard result.exist else { return ProfileSyncHendeler.shared.removeAndPopToLogin(profile: profile,
                                                                                             massege: .unknown) }
             complition()
+            guard let self else { return }
+            handeleCoreData(updateBody: updateBody,
+                            profile: profile)
         }
         let userIdBody = UserIdBody(id: id)
         let parameters = pHandeler.toDict(values: userIdBody, updateBody)
@@ -165,5 +167,36 @@ class OnboardringDataSource: Network, OnboardingRepository {
              parameters: parameters,
              complition: validComplition,
              error: error)
+    }
+}
+
+extension OnboardringDataSource {
+    // MARK: update
+    private func handeleCoreData(updateBody: UpdateBody, profile: Profile?) {
+        if let update = updateBody.getValue(), let profile {
+            let manager = CoreDataManager.shared
+            
+            switch update {
+            case let (key, value as String) where key == .email:
+                manager.set(profile: profile,
+                            email: value)
+            case let (key, value as String) where key == .phone:
+                manager.set(profile: profile,
+                            phone: value)
+            case let (key, value as String) where key == .name:
+                manager.set(profile: profile,
+                            name: value)
+            case let (key, value as String) where key == .birthdate:
+                manager.set(profile: profile,
+                            date: value)
+            case let (key, value as Int) where key == .gender:
+                manager.set(profile: profile,
+                            gender: value)
+            case let (key, value as Bool) where key == .rules:
+                manager.set(profile: profile,
+                            rules: value)
+            default: return
+            }
+        }
     }
 }

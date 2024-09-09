@@ -73,12 +73,10 @@ struct OnboardingRulesView<VM: OnboardingViewModel>: OnboardingProgress {
         }
     }
     
-    func preformAction(manager: CoreDataManager, profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
+    func preformAction(profile: Profile?, complete: @escaping (_ valid: Bool) -> ()) {
         guard let profile else { return complete(false) }
         vm.update(profile: profile,
                   updateBody: .init(rules: true)) {
-            manager.set(profile: profile,
-                        rules: true)
             return complete(true)
         } error: { error in
             print(error)

@@ -22,12 +22,13 @@ struct ViewWithButton: ViewModifier {
         let view = BaseViewWithBottomButton(buttonConfig: $buttonConfigManager.buttonConfig,
                                             loading: $loading,
                                             buttonText: buttonText,
-                                            contant: content) {
+                                            contant: content)
+        {
             loading = true
             preformAction { _ in loading = false }
         }
-            .onChange(of: loadingForExternalActions, setLoading)
-            .onChange(of: setButtonConfig, configButton)
+        .onChange(of: loadingForExternalActions, setLoading)
+        .onChange(of: setButtonConfig, configButton)
         
         if let onTapGesture {
             view
