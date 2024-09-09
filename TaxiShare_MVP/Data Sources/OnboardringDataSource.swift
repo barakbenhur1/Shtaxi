@@ -8,23 +8,6 @@
 import Foundation
 import SwiftUI
 
-// MARK: ComplitionHandeler
-private class ComplitionHandeler: ObservableObject {
-    func makeValid<T: Codable>(_ complition: @escaping () -> ()) -> (T) -> () { return { _ in complition() } }
-    func makeValid<T: Codable>(_ complition: @escaping (T) -> ()) -> (T) -> () { return complition }
-}
-
-// MARK: ParameterHndeler
-private class ParameterHndeler: ObservableObject {
-    // MARK: toDict
-    /// - Parameter values
-    func toDict(values: DictionaryRepresentable...) -> [String: Any] {
-        var dict: [String: Any] = [:]
-        values.forEach { dict.merge(dict: $0.dictionary()) }
-        return dict
-    }
-}
-
 // MARK: OnboardingViewModel
 class OnboardringDataSource: Network, OnboardingRepository {
     override internal var root: String { return "login" }

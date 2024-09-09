@@ -95,7 +95,7 @@ class Network: Networkble {
     }
 }
 
-// MARK: Network public extension
+// MARK: Network internal extension
 extension Network {
     // MARK: send - call send to network and unwrap (result || error)
     /// - Parameter method
@@ -112,6 +112,24 @@ extension Network {
         } error: { [weak self] err in
             guard let self else { return }
             responedQueue.async { error(err.localizedDescription) }
+        }
+    }
+    
+    
+    // MARK: ComplitionHandeler
+    internal class ComplitionHandeler: ObservableObject {
+        func makeValid<T: Codable>(_ complition: @escaping () -> ()) -> (T) -> () { return { _ in complition() } }
+        func makeValid<T: Codable>(_ complition: @escaping (T) -> ()) -> (T) -> () { return complition }
+    }
+    
+    // MARK: ParameterHndeler
+    internal class ParameterHndeler: ObservableObject {
+        // MARK: toDict
+        /// - Parameter values
+        func toDict(values: DictionaryRepresentable...) -> [String: Any] {
+            var dict: [String: Any] = [:]
+            values.forEach { dict.merge(dict: $0.dictionary()) }
+            return dict
         }
     }
 }
