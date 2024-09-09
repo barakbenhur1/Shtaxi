@@ -148,7 +148,7 @@ class OnboardringDataSource: Network, OnboardingRepository {
     /// - Parameter updateBody - paramers to update
     /// - Parameter complition
     /// - Parameter error
-    func update(profile: Profile?, updateBody: UpdateBody, complition: @escaping () -> () = {}, error: @escaping (String) -> ()) {
+    func update(profile: Profile?, updateBody: UpdateBody, complition: @escaping () -> (), error: @escaping (String) -> ()) {
         guard let id = profile?.userID else { return error("no id") }
         let newComplition: (UserExistModel) -> () = { [weak self] result in
             guard result.exist else { return ProfileSyncHendeler.shared.removeAndPopToLogin(profile: profile,

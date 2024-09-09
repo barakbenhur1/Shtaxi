@@ -100,25 +100,19 @@ class ProfileSyncHendeler: ObservableObject {
                 
                 if user.email.isEmpty && !email.isEmpty && email.isValidEmail() {
                     vm.update(profile: syncedLocalProfile,
-                              updateBody: .init(email: email)) { [weak self] in
-                        guard let self else { return }
-                        manager.set(profile: syncedLocalProfile,
-                                    email: email)
-                    } error: { error in print(error) }
+                              updateBody: .init(email: email),
+                              error: { error in print(error) })
                 }
                 
                 if user.phone.isEmpty && !phone.isEmpty && phone.isValidPhone() {
                     vm.update(profile: syncedLocalProfile,
-                              updateBody: .init(phone: phone)) { [weak self] in
-                        guard let self else { return }
-                        manager.set(profile: syncedLocalProfile,
-                                    phone: phone)
-                    } error: { [weak self] error in
+                              updateBody: .init(phone: phone),
+                              error: { [weak self] error in
                         print(error)
                         guard let self else { return }
                         return removeAndPopToLogin(profile: syncedLocalProfile,
-                                            massege:.retry)
-                    }
+                                                   massege: .retry)
+                    })
                 }
                 
                 handele(profile: syncedLocalProfile,

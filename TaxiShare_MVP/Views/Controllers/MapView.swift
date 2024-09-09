@@ -266,7 +266,7 @@ struct MapView: View {
             }()
             Text(text)
         })
-        .sheet(isPresented: mapVM.binding.isShowSheet) {
+        .sheet(isPresented: vmProvider.bindVm().isShowSheet) {
             VStack(alignment: .trailing) {
                 Text("נוסעים")
                     .font(.headline)

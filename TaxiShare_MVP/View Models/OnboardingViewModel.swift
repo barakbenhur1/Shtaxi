@@ -7,14 +7,8 @@
 
 import SwiftUI
 
-final class OnboardingViewModel: ObservableObject, ViewModel {
+class OnboardingViewModel: ViewModel {
     private let useCases = OnboardingUseCases(repo: OnboardingRepositoryImpl(dataSource: OnboardringDataSource()))
-    
-    var binding: Binding<OnboardingViewModel> {
-        return Binding {
-            return self
-        } set: { _ in }
-    }
     
     func logoutProviders() {
         useCases.logoutProviders()
@@ -56,7 +50,7 @@ final class OnboardingViewModel: ObservableObject, ViewModel {
         useCases.getUser(id: id, complition: complition, error: error)
     }
     
-    func update(profile: Profile?, updateBody: UpdateBody, complition: @escaping () -> (), error: @escaping (String) -> ()) {
+    func update(profile: Profile?, updateBody: UpdateBody, complition: @escaping () -> () = {}, error: @escaping (String) -> ()) {
         useCases.update(profile: profile, updateBody: updateBody, complition: complition, error: error)
     }
 }
