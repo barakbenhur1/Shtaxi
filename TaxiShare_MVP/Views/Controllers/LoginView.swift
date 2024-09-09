@@ -21,6 +21,8 @@ struct LoginView: View, ProfileHandeler {
     
     @State private var holder = Holder<String>()
     
+    private var vm: OnboardingViewModel { return vmProvider.vm() }
+    
     var body: some View {
         onboardingLoginView()
             .wrapWithBottun(buttonText: "אישור".localized(),
@@ -37,7 +39,7 @@ struct LoginView: View, ProfileHandeler {
     
     func preformAction(complete: @escaping (Bool) -> ()) {
         guard let phone = holder.value else { return complete(false) }
-        vmProvider.vm().phoneAuth(phone: phone) { verificationID in
+        vm.phoneAuth(phone: phone) { verificationID in
             complete(true)
             return router.navigateTo(.pinCode(phone: phone,
                                               verificationID: verificationID))

@@ -174,6 +174,8 @@ class OnboardringDataSource: Network, OnboardingRepository {
 }
 
 extension OnboardringDataSource {
+    // MARK: handleNoServerProfile
+    /// - Parameter profile
     private func handleNoServerProfile(profile: Profile?) {
         NotificationCenter.default.post(name: .popToLogin,
                                         object: LoginError.unknown)
@@ -181,7 +183,9 @@ extension OnboardringDataSource {
         manager.delete(profile: profile)
     }
     
-    // MARK: update
+    // MARK: handeleCoreData
+    /// - Parameter profile
+    /// - Parameter updateBody
     private func handeleCoreData(profile: Profile?, updateBody: UpdateBody) {
         if let update = updateBody.getValue(), let profile {
             switch update {

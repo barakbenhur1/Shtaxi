@@ -7,10 +7,12 @@
 
 import SwiftUI
 
-protocol ViewModel: ObservableObject {}
+protocol ViewModel: ObservableObject {
+    init()
+}
 
 extension ViewModel {
-    func binding() -> Binding<Self> {
+    var binding: Binding<Self> {
         return Binding<Self> {
             return self
         } set: { _ in }

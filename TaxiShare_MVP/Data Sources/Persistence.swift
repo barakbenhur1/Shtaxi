@@ -11,7 +11,7 @@ class PersistenceController: NSObject, CoreDataRepository, ObservableObject {
     static let shared = PersistenceController()
     let container: NSPersistentContainer
     
-    init(inMemory: Bool = false) {
+    private init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "TaxiShare_MVP")
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")

@@ -32,6 +32,9 @@ struct MapView: View {
     
     @State private var taxiTimes: [Date] = []
     
+    private var onboardingVM: OnboardingViewModel { return vmProvider.vm() }
+    private var mapVM: MapViewViewModel { return vmProvider.vm() }
+    
     @FocusState private var startFocused: Bool {
         didSet {
             guard startFocused else { return }
@@ -44,14 +47,6 @@ struct MapView: View {
             guard endFocused else { return }
             locationService.update(queryFragment: endText)
         }
-    }
-    
-    private var onboardingVM: OnboardingViewModel {
-        return vmProvider.vm()
-    }
-    
-    private var mapVM: MapViewViewModel {
-        return vmProvider.vm()
     }
     
     private func navigateTo(route: Router.Route) {
@@ -265,7 +260,7 @@ struct MapView: View {
             }()
             Text(text)
         })
-        .sheet(isPresented: vmProvider.bindVm().isShowSheet) {
+        .sheet(isPresented: mapVM.binding.isShowSheet) {
             VStack(alignment: .trailing) {
                 Text("נוסעים")
                     .font(.headline)

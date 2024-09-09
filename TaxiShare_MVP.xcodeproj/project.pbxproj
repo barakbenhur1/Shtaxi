@@ -394,7 +394,6 @@
 		4FF4432E2C8E174C003E5CA7 /* App Controller */ = {
 			isa = PBXGroup;
 			children = (
-				4FF5B16B2C851BB400176585 /* Hendelers */,
 				4FF5B1622C851BB300176585 /* Routing */,
 				4FF443332C8E1998003E5CA7 /* App */,
 			);
@@ -413,15 +412,6 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		4FF443302C8E17EC003E5CA7 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				4FF5B1492C851BB300176585 /* RootView.swift */,
-				4FF5B1612C851BB300176585 /* RouterView.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		4FF443332C8E1998003E5CA7 /* App */ = {
 			isa = PBXGroup;
 			children = (
@@ -434,6 +424,8 @@
 		4FF443342C8E19D2003E5CA7 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				4F14F1162C8EEDA5007616CA /* ViewModelProvider.swift */,
+				4FF5B1692C851BB400176585 /* ProfileSyncHendeler.swift */,
 				4FF5B16A2C851BB400176585 /* ValueHolder.swift */,
 			);
 			path = Helpers;
@@ -653,19 +645,11 @@
 		4FF5B1622C851BB300176585 /* Routing */ = {
 			isa = PBXGroup;
 			children = (
-				4FF443302C8E17EC003E5CA7 /* Views */,
+				4FF5B1492C851BB300176585 /* RootView.swift */,
+				4FF5B1612C851BB300176585 /* RouterView.swift */,
 				4FF5B1602C851BB300176585 /* Router.swift */,
 			);
 			path = Routing;
-			sourceTree = "<group>";
-		};
-		4FF5B16B2C851BB400176585 /* Hendelers */ = {
-			isa = PBXGroup;
-			children = (
-				4F14F1162C8EEDA5007616CA /* ViewModelProvider.swift */,
-				4FF5B1692C851BB400176585 /* ProfileSyncHendeler.swift */,
-			);
-			path = Hendelers;
 			sourceTree = "<group>";
 		};
 		4FF5B1722C851BB400176585 /* Models */ = {
