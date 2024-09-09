@@ -12,7 +12,6 @@ struct MapView: View {
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var vmProvider: ViewModelProvider
     @EnvironmentObject private var profileSync: ProfileSyncHendeler
-//    @EnvironmentObject private var manager: CoreDataManager
   
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     

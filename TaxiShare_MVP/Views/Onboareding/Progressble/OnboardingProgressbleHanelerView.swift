@@ -12,7 +12,6 @@ enum OnboardingProgressble: Codable, Hashable {
 }
 
 struct OnboardingProgressbleHandelerView<Content: OnboardingProgress>: ProfileUpdater {
-    @EnvironmentObject var manager: CoreDataManager
     @Environment(\.managedObjectContext) private var viewContext
     
     @Binding internal var value: Int

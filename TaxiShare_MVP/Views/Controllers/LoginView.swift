@@ -10,8 +10,8 @@ import CoreData
 import GoogleSignIn
 
 struct LoginView: View, ProfileHandeler {
-    @EnvironmentObject var router: Router
-    @EnvironmentObject var vmProvider: ViewModelProvider
+    @EnvironmentObject private var router: Router
+    @EnvironmentObject private var vmProvider: ViewModelProvider
     @EnvironmentObject private var profileSync: ProfileSyncHendeler
    
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>

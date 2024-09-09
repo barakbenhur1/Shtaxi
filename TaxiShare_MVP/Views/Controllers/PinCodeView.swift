@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct PinCodeView: View, ProfileHandeler {
-    @EnvironmentObject var manager: CoreDataManager
-    @EnvironmentObject var vmProvider: ViewModelProvider
-    @EnvironmentObject var router: Router
+    @EnvironmentObject private var vmProvider: ViewModelProvider
     
     @State internal var buttonEnabled: Bool = false
     @State internal var externalActionLoading: Bool? = false

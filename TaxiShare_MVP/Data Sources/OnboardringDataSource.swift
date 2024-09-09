@@ -29,9 +29,9 @@ private class ParameterHndeler: ObservableObject {
 class OnboardringDataSource: Network, OnboardingRepository {
     override internal var root: String { return "login" }
     
+    private let auth = Authentication.shared
     private let handeler = ComplitionHandeler()
     private let pHandeler = ParameterHndeler()
-    private let auth = Authentication.shared
     
     internal func logoutProviders() {
         auth.logout()
@@ -155,8 +155,8 @@ class OnboardringDataSource: Network, OnboardingRepository {
                                                                                             massege: .unknown) }
             complition()
             guard let self else { return }
-            handeleCoreData(updateBody: updateBody,
-                            profile: profile)
+            handeleCoreData(profile: profile,
+                            updateBody: updateBody)
         }
         let userIdBody = UserIdBody(id: id)
         let parameters = pHandeler.toDict(values: userIdBody, updateBody)
@@ -172,7 +172,7 @@ class OnboardringDataSource: Network, OnboardingRepository {
 
 extension OnboardringDataSource {
     // MARK: update
-    private func handeleCoreData(updateBody: UpdateBody, profile: Profile?) {
+    private func handeleCoreData(profile: Profile?, updateBody: UpdateBody) {
         if let update = updateBody.getValue(), let profile {
             let manager = CoreDataManager.shared
             

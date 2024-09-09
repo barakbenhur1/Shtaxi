@@ -11,7 +11,7 @@ import PhotosUI
 struct SingUpView: View {
     @Environment(\.managedObjectContext) var viewContext
 
-    @EnvironmentObject var router: Router
+    @EnvironmentObject private var router: Router
     
     @State private var name: String = ""
     @State private var age: String = ""
@@ -29,7 +29,7 @@ struct SingUpView: View {
     // MARK: Core Data Operations
     func saveProfile(name: String, age: String, gender: String, image: UIImage) {
         if profile == nil {
-            profile = Profile(context: self.viewContext)
+            profile = Profile(context: viewContext)
             profile?.name = name
             profile?.age = age
 //            profile?.gender = gender

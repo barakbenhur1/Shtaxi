@@ -10,8 +10,8 @@ import SwiftUI
 class ViewModelProvider: ObservableObject {
     static let shared = ViewModelProvider()
     
-    @Published private var onboardingVM = OnboardingViewModel()
-    @Published private var mapVM = MapViewViewModel()
+    @Published var onboardingVM = OnboardingViewModel()
+    @Published var mapVM = MapViewViewModel()
     
     private init() {}
     

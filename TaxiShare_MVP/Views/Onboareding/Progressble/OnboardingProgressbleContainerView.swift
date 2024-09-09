@@ -10,8 +10,7 @@ import SwiftUI
 struct OnboardingProgressbleContainerView: View, ProfileHandeler {
     @EnvironmentObject private var profileSync: ProfileSyncHendeler
     @EnvironmentObject private var vmProvider: ViewModelProvider
-    @EnvironmentObject private var manager: CoreDataManager
-    @EnvironmentObject var router: Router
+    @EnvironmentObject private var router: Router
     
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<Profile>
     
