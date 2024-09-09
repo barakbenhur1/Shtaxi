@@ -16,6 +16,8 @@ struct ShtaxiApp: App {
     @StateObject private var manager = CoreDataManager.shared
     @StateObject private var profileSync = ProfileSyncHendeler.shared
     @StateObject private var vmProvider = ViewModelProvider.shared
+    
+    private let popToLogin = NotificationCenter.default.publisher(for: .popToLogin)
    
     private var local = Locale(identifier: "he-IL")
     
@@ -30,6 +32,7 @@ struct ShtaxiApp: App {
             .environmentObject(vmProvider)
             .environment(\.locale, local)
             .environment(\.managedObjectContext, manager.managedObjectContext)
+            .onReceive(popToLogin) { value in router.popToRoot(message: value.object as? LoginError ) }
             .onOpenURL { url in DispatchQueue.main.async { _ = Auth.auth().canHandle(url) } }
         }
     }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4F14F1172C8EEDA5007616CA /* ViewModelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F14F1162C8EEDA5007616CA /* ViewModelProvider.swift */; };
 		4F14F1192C8F0019007616CA /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F14F1182C8F0019007616CA /* ViewModel.swift */; };
+		4F14F11B2C8F1DEC007616CA /* Notification+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F14F11A2C8F1DEC007616CA /* Notification+EXT.swift */; };
 		4F2AD02F2C87FF50004A32E5 /* SmsPinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F2AD02E2C87FF50004A32E5 /* SmsPinCodeView.swift */; };
 		4F36D1AA2C89C7650025E91A /* Logo3DView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F36D1A92C89C7650025E91A /* Logo3DView.swift */; };
 		4F3C94442C851F5F00EBA6A2 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3C94402C851F5F00EBA6A2 /* Authentication.swift */; };
@@ -132,6 +133,7 @@
 		4F03C9882C89B6E100FFF199 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		4F14F1162C8EEDA5007616CA /* ViewModelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProvider.swift; sourceTree = "<group>"; };
 		4F14F1182C8F0019007616CA /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		4F14F11A2C8F1DEC007616CA /* Notification+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+EXT.swift"; sourceTree = "<group>"; };
 		4F2AD02E2C87FF50004A32E5 /* SmsPinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmsPinCodeView.swift; sourceTree = "<group>"; };
 		4F36D1A92C89C7650025E91A /* Logo3DView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logo3DView.swift; sourceTree = "<group>"; };
 		4F3C94402C851F5F00EBA6A2 /* Authentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
@@ -635,6 +637,7 @@
 				4FF5B1582C851BB300176585 /* View+EXT.swift */,
 				4FD3CFCC2C8996AB00910867 /* URLRequest+EXT.swift */,
 				4FF443072C8BC35E003E5CA7 /* Font+EXT.swift */,
+				4F14F11A2C8F1DEC007616CA /* Notification+EXT.swift */,
 			);
 			path = Extansions;
 			sourceTree = "<group>";
@@ -881,6 +884,7 @@
 				4FF5B17E2C851BB400176585 /* LocationService.swift in Sources */,
 				4FF5B1A62C851BB400176585 /* PinCodeChangePhoneView.swift in Sources */,
 				4FF5B17C2C851BB400176585 /* TButtonParams.swift in Sources */,
+				4F14F11B2C8F1DEC007616CA /* Notification+EXT.swift in Sources */,
 				4FF5B1AD2C851BB400176585 /* OnboardingProgressbleHanelerView.swift in Sources */,
 				4FF5B1DE2C851BB400176585 /* UserExistModel.swift in Sources */,
 				4FF5B1C72C851BB400176585 /* CharacterSet+EXT.swift in Sources */,

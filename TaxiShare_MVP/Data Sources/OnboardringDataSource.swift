@@ -30,6 +30,7 @@ class OnboardringDataSource: Network, OnboardingRepository {
     override internal var root: String { return "login" }
     
     private let auth = Authentication.shared
+    private let manager = CoreDataManager.shared
     private let handeler = ComplitionHandeler()
     private let pHandeler = ParameterHndeler()
     
@@ -151,11 +152,13 @@ class OnboardringDataSource: Network, OnboardingRepository {
     func update(profile: Profile?, updateBody: UpdateBody, complition: @escaping () -> (), error: @escaping (String) -> ()) {
         guard let id = profile?.userID else { return error("no id") }
         let newComplition: (UserExistModel) -> () = { [weak self] result in
-            guard result.exist else { return ProfileSyncHendeler.shared.removeAndPopToLogin(profile: profile,
-                                                                                            massege: .unknown) }
+            guard result.exist else {
+                guard let self else { return }
+                return handleNoServerProfile(profile: profile)
+            }
             complition()
             guard let self else { return }
-            handeleCoreData(profile: profile,
+            return handeleCoreData(profile: profile,
                             updateBody: updateBody)
         }
         let userIdBody = UserIdBody(id: id)
@@ -171,11 +174,16 @@ class OnboardringDataSource: Network, OnboardingRepository {
 }
 
 extension OnboardringDataSource {
+    private func handleNoServerProfile(profile: Profile?) {
+        NotificationCenter.default.post(name: .popToLogin,
+                                        object: LoginError.unknown)
+        guard let profile else { return }
+        manager.delete(profile: profile)
+    }
+    
     // MARK: update
     private func handeleCoreData(profile: Profile?, updateBody: UpdateBody) {
         if let update = updateBody.getValue(), let profile {
-            let manager = CoreDataManager.shared
-            
             switch update {
             case let (key, value as String) where key == .email:
                 manager.set(profile: profile,
