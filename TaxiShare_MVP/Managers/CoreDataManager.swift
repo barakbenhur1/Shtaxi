@@ -8,14 +8,14 @@
 import Foundation
 import CoreData
 
-class CoreDataManager: ObservableObject {
+class CoreDataManager: ViewModel {
     static let shared = CoreDataManager()
     
-    private let useCases = CoreDataUseCases(repo: CoreDataRepositoryImpl(dataSource: PersistenceController.shared))
+    internal let useCases = CoreDataUseCases(repo: CoreDataRepositoryImpl(dataSource: PersistenceController.shared))
     
     var managedObjectContext: NSManagedObjectContext { return useCases.managedObjectContext }
     
-    private init() {}
+    required internal init() {}
     
     func replace(profile: Profile, with id: String) -> Profile {
         return useCases.replace(profile: profile, with: id)

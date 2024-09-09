@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-struct CoreDataRepositoryImpl: CoreDataRepository {
+struct CoreDataRepositoryImpl: Repository, CoreDataRepository {
     let dataSource: CoreDataRepository
    
     var managedObjectContext: NSManagedObjectContext { return dataSource.managedObjectContext }

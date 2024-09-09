@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: Networkble
-private protocol Networkble: ObservableObject {
+private protocol Networkble: DataSource {
     typealias UrlPathMaker = (String) -> String
     
     var responedQueue: DispatchQueue { get }

@@ -7,7 +7,7 @@
 
 import CoreData
 
-class PersistenceController: NSObject, CoreDataRepository, ObservableObject {
+class PersistenceController: NSObject, DataSource, CoreDataRepository, ObservableObject {
     static let shared = PersistenceController()
     let container: NSPersistentContainer
     

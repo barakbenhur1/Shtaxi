@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct OnboardingRepositoryImpl: OnboardingRepository {
+struct OnboardingRepositoryImpl: Repository, OnboardingRepository {
     let dataSource: OnboardingRepository
     
     func logoutProviders() {

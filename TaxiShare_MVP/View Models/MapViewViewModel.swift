@@ -8,7 +8,7 @@
 import SwiftUI
 
 class MapViewViewModel: ViewModel {
-    private let useCases = MapUseCases(repo: MapRepositoryImpl(dataSource: MapDataSource()))
+    internal let useCases = MapUseCases(repo: MapRepositoryImpl(dataSource: MapDataSource()))
     
     required init() {}
     

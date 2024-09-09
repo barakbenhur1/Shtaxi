@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct MapRepositoryImpl: MapRepository {
+struct MapRepositoryImpl: Repository, MapRepository {
     let dataSource: MapRepository
 }

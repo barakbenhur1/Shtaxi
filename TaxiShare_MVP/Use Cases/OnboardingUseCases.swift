@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct OnboardingUseCases: OnboardingRepository {
+struct OnboardingUseCases: USeCase, OnboardingRepository {
     let repo: OnboardingRepository
     
     func logoutProviders() {

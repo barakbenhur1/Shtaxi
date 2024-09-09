@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct MapUseCases: MapRepository {
+struct MapUseCases: USeCase, MapRepository {
     let repo: MapRepository
 }

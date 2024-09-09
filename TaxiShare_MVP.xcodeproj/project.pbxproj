@@ -22,6 +22,9 @@
 		4FD3CFC92C888D9E00910867 /* UpdateBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD3CFC82C888D9E00910867 /* UpdateBody.swift */; };
 		4FD3CFCB2C889FF600910867 /* UserIdBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD3CFCA2C889FF600910867 /* UserIdBody.swift */; };
 		4FD3CFCD2C8996AB00910867 /* URLRequest+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD3CFCC2C8996AB00910867 /* URLRequest+EXT.swift */; };
+		4FE5C5DA2C8F6C9E001C41F0 /* USeCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE5C5D92C8F6C9E001C41F0 /* USeCase.swift */; };
+		4FE5C5DC2C8F6CC2001C41F0 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE5C5DB2C8F6CC2001C41F0 /* Repository.swift */; };
+		4FE5C5E02C8F6EC4001C41F0 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE5C5DF2C8F6EC4001C41F0 /* DataSource.swift */; };
 		4FF443062C8BBABC003E5CA7 /* TButtonConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF443052C8BBABC003E5CA7 /* TButtonConfigManager.swift */; };
 		4FF443082C8BC35E003E5CA7 /* Font+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF443072C8BC35E003E5CA7 /* Font+EXT.swift */; };
 		4FF4430A2C8DA911003E5CA7 /* PhoneAuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF443092C8DA911003E5CA7 /* PhoneAuthModel.swift */; };
@@ -146,6 +149,9 @@
 		4FD3CFC82C888D9E00910867 /* UpdateBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBody.swift; sourceTree = "<group>"; };
 		4FD3CFCA2C889FF600910867 /* UserIdBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdBody.swift; sourceTree = "<group>"; };
 		4FD3CFCC2C8996AB00910867 /* URLRequest+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+EXT.swift"; sourceTree = "<group>"; };
+		4FE5C5D92C8F6C9E001C41F0 /* USeCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USeCase.swift; sourceTree = "<group>"; };
+		4FE5C5DB2C8F6CC2001C41F0 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		4FE5C5DF2C8F6EC4001C41F0 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		4FF443052C8BBABC003E5CA7 /* TButtonConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TButtonConfigManager.swift; sourceTree = "<group>"; };
 		4FF443072C8BC35E003E5CA7 /* Font+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+EXT.swift"; sourceTree = "<group>"; };
 		4FF443092C8DA911003E5CA7 /* PhoneAuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneAuthModel.swift; sourceTree = "<group>"; };
@@ -294,7 +300,6 @@
 		4F3C94432C851F5F00EBA6A2 /* Data Sources */ = {
 			isa = PBXGroup;
 			children = (
-				4FF5B1042C851BB300176585 /* Services */,
 				4FF5B0CE2C851B6C00176585 /* Persistence.swift */,
 				4F3C94412C851F5F00EBA6A2 /* Network.swift */,
 				4F3C94402C851F5F00EBA6A2 /* Authentication.swift */,
@@ -327,6 +332,9 @@
 				4FF4431D2C8E0C7A003E5CA7 /* MapRepository.swift */,
 				4FF443252C8E10F8003E5CA7 /* CoreDataRepository.swift */,
 				4F14F1182C8F0019007616CA /* ViewModel.swift */,
+				4FE5C5D92C8F6C9E001C41F0 /* USeCase.swift */,
+				4FE5C5DB2C8F6CC2001C41F0 /* Repository.swift */,
+				4FE5C5DF2C8F6EC4001C41F0 /* DataSource.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -465,6 +473,7 @@
 				4FF5B1592C851BB300176585 /* Extansions */,
 				4FF443342C8E19D2003E5CA7 /* Helpers */,
 				4FF5B1512C851BB300176585 /* Managers */,
+				4FF5B1042C851BB300176585 /* Services */,
 				4FC702872C86459F00C85CE9 /* Protocols */,
 				4F3C94432C851F5F00EBA6A2 /* Data Sources */,
 				4FF443172C8E09B0003E5CA7 /* Repository */,
@@ -850,6 +859,7 @@
 				4FF5B1A72C851BB400176585 /* OnboardingGenderView.swift in Sources */,
 				4FF5B1BC2C851BB400176585 /* MapViewViewModel.swift in Sources */,
 				4FF5B1B82C851BB400176585 /* FilterView.swift in Sources */,
+				4FE5C5DC2C8F6CC2001C41F0 /* Repository.swift in Sources */,
 				4FF4432A2C8E1182003E5CA7 /* CoreDataUseCases.swift in Sources */,
 				4FF5B1AE2C851BB400176585 /* OnboardingProgressbleManegerView.swift in Sources */,
 				4FF443262C8E10F8003E5CA7 /* CoreDataRepository.swift in Sources */,
@@ -864,6 +874,7 @@
 				4FF5B1BF2C851BB400176585 /* SideMenu.swift in Sources */,
 				4FF443222C8E0D18003E5CA7 /* MapRepositoryImpl.swift in Sources */,
 				4FF5B1C82C851BB400176585 /* Color+EXT.swift in Sources */,
+				4FE5C5E02C8F6EC4001C41F0 /* DataSource.swift in Sources */,
 				4FF5B1B92C851BB400176585 /* ImagePicker.swift in Sources */,
 				4FF5B17E2C851BB400176585 /* LocationService.swift in Sources */,
 				4FF5B1A62C851BB400176585 /* PinCodeChangePhoneView.swift in Sources */,
@@ -894,6 +905,7 @@
 				4FF5B1DA2C851BB400176585 /* FacebookAuthModel.swift in Sources */,
 				4FF5B1752C851BB400176585 /* TButtonConfig.swift in Sources */,
 				4FF5B0D22C851B6C00176585 /* TaxiShare_MVP.xcdatamodeld in Sources */,
+				4FE5C5DA2C8F6C9E001C41F0 /* USeCase.swift in Sources */,
 				4F36D1AA2C89C7650025E91A /* Logo3DView.swift in Sources */,
 				4F2AD02F2C87FF50004A32E5 /* SmsPinCodeView.swift in Sources */,
 			);

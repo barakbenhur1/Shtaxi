@@ -8,6 +8,8 @@
 import SwiftUI
 
 protocol ViewModel: ObservableObject {
+    associatedtype UC: USeCase
+    var useCases: UC { get }
     init()
 }
 

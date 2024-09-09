@@ -8,8 +8,8 @@
 import Foundation
 import CoreData
 
-struct CoreDataUseCases: CoreDataRepository {
-    let repo: CoreDataRepository
+struct CoreDataUseCases: USeCase, CoreDataRepository {
+    let repo: any CoreDataRepository
     
     var managedObjectContext: NSManagedObjectContext { return repo.managedObjectContext }
     

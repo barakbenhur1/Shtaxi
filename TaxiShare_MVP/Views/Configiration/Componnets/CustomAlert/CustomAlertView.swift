@@ -7,10 +7,15 @@
 
 import SwiftUI
 
+enum AlertType {
+    case regular, critical
+}
+
 struct CustomAlertView<T: Any, M: View>: View {
 
     @Namespace private var namespace
 
+    let type: AlertType
     @Binding private var isPresented: Bool
     @State private var titleKey: LocalizedStringKey
     @State private var actionTextKey: LocalizedStringKey
@@ -28,6 +33,7 @@ struct CustomAlertView<T: Any, M: View>: View {
     private let animationDuration = 0.3
 
     init(
+        type: AlertType = .regular,
         _ titleKey: LocalizedStringKey,
         _ isPresented: Binding<Bool>,
         returnedValue data: T?,
@@ -41,6 +47,7 @@ struct CustomAlertView<T: Any, M: View>: View {
         _cancelButtonTextKey = State(wrappedValue: cancelButtonTextKey)
         _isPresented = isPresented
 
+        self.type = type
         self.data = data
         self.action = nil
         self.message = nil
@@ -61,7 +68,7 @@ struct CustomAlertView<T: Any, M: View>: View {
                         /// Title
                         Text(titleKey)
                             .font(.title2).bold()
-                            .foregroundStyle(.yellow)
+                            .foregroundStyle(type == .critical ? .red : .yellow)
                             .padding(8)
 
                         /// Message
@@ -113,12 +120,12 @@ struct CustomAlertView<T: Any, M: View>: View {
         } label: {
             Text(cancelButtonTextKey)
                 .font(.headline)
-                .foregroundStyle(.yellow)
+                .foregroundStyle(type == .critical ? .red : .yellow)
                 .padding()
                 .lineLimit(1)
                 .frame(maxWidth: .infinity)
                 .background(Material.regular)
-                .background(.gray)
+                .background(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 30))
         }
     }
@@ -135,12 +142,12 @@ struct CustomAlertView<T: Any, M: View>: View {
         } label: {
             Text(actionTextKey)
                 .font(.headline).bold()
-                .foregroundStyle(Color.white)
+                .foregroundStyle(.white)
                 .padding()
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
-                .background(.yellow)
-                .clipShape(RoundedRectangle(cornerRadius: 30.0))
+                .background(type == .critical ? .red : .yellow)
+                .clipShape(RoundedRectangle(cornerRadius: 30))
         }
     }
 
@@ -172,6 +179,7 @@ struct CustomAlertView<T: Any, M: View>: View {
 extension CustomAlertView where T == Never {
 
     init(
+        type: AlertType = .regular,
         _ titleKey: LocalizedStringKey,
         _ isPresented: Binding<Bool>,
         actionTextKey: LocalizedStringKey,
@@ -185,6 +193,7 @@ extension CustomAlertView where T == Never {
         
         _isPresented = isPresented
 
+        self.type = type
         self.data = nil
         self.action = action
         self.message = message

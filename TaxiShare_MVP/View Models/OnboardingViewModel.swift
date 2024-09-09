@@ -8,7 +8,7 @@
 import SwiftUI
 
 class OnboardingViewModel: ViewModel {
-    private let useCases = OnboardingUseCases(repo: OnboardingRepositoryImpl(dataSource: OnboardringDataSource()))
+    internal let useCases = OnboardingUseCases(repo: OnboardingRepositoryImpl(dataSource: OnboardringDataSource()))
     
     required init() {}
     

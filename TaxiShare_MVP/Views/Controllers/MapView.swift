@@ -26,6 +26,7 @@ struct MapView: View {
     @State private var isShowSideMenu: Bool = false
     @State private var isShowAlert: Bool = false
     @State private var isShowDelete = false
+    @State private var isShowLogout = false
     @State private var anotations: [SearchCompletions] = []
     
     @State private var selection: Int?
@@ -227,7 +228,16 @@ struct MapView: View {
                      content: menuList())
             .ignoresSafeArea()
         }
+        .customAlert("התנתקות",
+                     isPresented: $isShowLogout,
+                     actionText: "כן, התנתק",
+                     cancelButtonText: "לא",
+                     action: logout)
+        {
+            Text("האם אתה בטוח?".localized())
+        }
         .customAlert("מחיקת פרופיל",
+                     type: .critical,
                      isPresented:  $isShowDelete,
                      actionText: "כן, מחק",
                      cancelButtonText: "לא",
@@ -329,16 +339,12 @@ struct MapView: View {
             menuItem(text: "התנתקות".localized(),
                      config: .init(buttonConfig: .regular(bold: true,
                                                           dimantions: .full,
-                                                          enabled: true))) {
+                                                          enabled: true)))
+            {
+                isShowLogout = true
                 isShowSideMenu = false
-                if let profile = profiles.last, let id = profile.userID {
-                    onboardingVM.logout(id: id) {
-                        profileSync.removeAndPopToLogin(profile: profile)
-                    } error: { error in print(error) }
-                }
-                else { router.popToRoot() }
             }
-                                                          .padding(.top, 5)
+            .padding(.top, 2)
             
             VStack {
                 separator()
@@ -349,11 +355,20 @@ struct MapView: View {
                     isShowSideMenu = false
                     isShowDelete = true
                 }
-                                          .padding(.top, 10)
-                                          .padding(.bottom, 10)
+                                          .padding(.top, 2)
+                                          .padding(.bottom, 2)
             }
-            .padding(.top, 5)
+            .padding(.top, 3)
         }
+    }
+    
+    private func logout() {
+        if let profile = profiles.last, let id = profile.userID {
+            onboardingVM.logout(id: id) {
+                profileSync.removeAndPopToLogin(profile: profile)
+            } error: { error in print(error) }
+        }
+        else { router.popToRoot() }
     }
     
     private func deleteProfile() {
