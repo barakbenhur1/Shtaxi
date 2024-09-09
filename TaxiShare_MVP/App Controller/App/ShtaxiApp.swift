@@ -17,9 +17,8 @@ struct ShtaxiApp: App {
     @StateObject private var profileSync = ProfileSyncHendeler.shared
     @StateObject private var vmProvider = ViewModelProvider.shared
     
+    private let local = Locale(identifier: "he-IL")
     private let popToLogin = NotificationCenter.default.publisher(for: .popToLogin)
-   
-    private var local = Locale(identifier: "he-IL")
     
     var body: some Scene {
         WindowGroup {
