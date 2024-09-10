@@ -10,20 +10,23 @@ import Foundation
 class Shared: NSObject, ObservableObject {
     private typealias SharedChase = [String: NSObject]
     
-    static private var _chase = SharedChase()
-    static private var _barrier: [String] = []
-    static private var currentInitilized: String? { return _barrier.last }
-    static var shared: Self { return value("\(self)") }
+    private static var _chase = SharedChase()
+    private static var _barrier: [String] = []
+    private static var _currentInitilized: String? { return _barrier.last }
+    static var shared: Self { return value(for: self) }
+    
+    private static var vaildate: (_ className: String) -> () {
+        return { className in
+            guard className == _currentInitilized else { fatalError("class \"\(className)\" must use shared property") }
+        }
+    }
     
     internal override init() {
-        Shared.vaildate("\(Self.self)".asClassName())
+        Self.vaildate("\(Self.self)".asClassName())
     }
-    
-    private static func vaildate(_ className: String) {
-        guard currentInitilized == className else { fatalError("class \"\(className)\" must use shared property") }
-    }
-    
-    static private func value<T: NSObject>(_ key: String) -> T {
+
+    private static func value<T: NSObject>(for value: Shared.Type) -> T {
+        let key = "\(value)"
         _barrier.append(key)
         if _chase[key] == nil { _chase[key] = T() }
         _ = _barrier.popLast()
