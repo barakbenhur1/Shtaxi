@@ -11,7 +11,14 @@ struct Logo3DView: View {
     @State private var animate = false
     
     var title: AttributedString {
-        let colors: [Color] = [.init(hex: "#DCCF23"), .init(hex: "#B8AD16"), .init(hex: "##9B920E"), .init(hex: "#857D07"), .init(hex: "#6E6E04"), .init(hex: "#575A01")]
+        let colors: [Color] = [
+            .init(hex: "#D0C55C"),
+            .init(hex: "#D1C556"),
+            .init(hex: "#DED073"),
+            .init(hex: "#E0D279"),
+            .init(hex: "#E6D881"),
+            .init(hex: "#EEDF7A")
+        ]
         
         let string = "Shtaxi"
         
@@ -29,9 +36,9 @@ struct Logo3DView: View {
     
     var body: some View {
         if animate {
-            PhaseAnimator([0, 1, 2, 3]) { value in
+            PhaseAnimator([0, 1, 2, 3, 4]) { value in
                 contnet(value: value)
-            } animation: { value in return .smooth(duration: 0.74) }
+            } animation: { value in return value > 1 && value < 4 ? .easeIn(duration: 0.5) : .smooth(duration: 0.5) }
         }
         else {
             contnet()
@@ -47,31 +54,31 @@ struct Logo3DView: View {
         VStack(alignment: .center) {
             TLogo(shape: Rectangle(),
                   size: 128)
-            .shadow(color: Color(hex: "#444122").opacity(0.8),
+            .shadow(color: Color(hex: "#444122").opacity(0.9),
                     radius: 10,
-                    x: value > 0 ? 10 : 4,
-                    y: value > 0 ? 10 : 4)
+                    x: value > 3 ? 0 : value > 2 ? -6 : value > 1 ? 6 : 0,
+                    y: value > 3 ? 0 : value > 1 ? 6 : 0)
             .opacity(value > 0 ? 0.9 : 1)
-            .padding(.top, -70)
+            .padding(.top, -20)
             
             VStack(spacing: 4) {
                 Text(title)
-                    .shadow(color: Color(hex: "#444122").opacity(0.8),
+                    .shadow(color: Color(hex: "#444122").opacity(0.9),
                             radius: 4,
-                            x: value > 0 ? 10 : 4,
-                            y: value > 0 ? 10 : 4)
+                            x: value > 3 ? 0 : value > 2 ? -6 : value > 1 ? 6 : 0,
+                            y: value > 3 ? 0 : value > 1 ? 6 : 0)
                 
                 if animate {
-                    TypingAnimationView(textToType: "Taxi Share App", 
+                    TypingAnimationView(textToType: "Taxi Share App",
                                         value: value, 
                                         animationStage: 2)
-                        .opacity(value > 2 ? 1 : (value > 1 ? 0.8 : 0))
+                    .opacity(value > 2 ? 1 : (value > 1 ? 0.8 : 0))
                 }
             }
             .padding(.top, -10)
         }
-        .scaleEffect(x: value > 0 ? 1.4 : 1,
-                     y: value > 0 ? 1.4 : 1,
+        .scaleEffect(x: value > 0 ? 1.8 : 1,
+                     y: value > 0 ? 1.8 : 1,
                      anchor: .center)
     }
 }

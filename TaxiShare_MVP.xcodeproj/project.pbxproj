@@ -285,16 +285,9 @@
 		4F36D1A72C89C6E30025E91A /* Logo */ = {
 			isa = PBXGroup;
 			children = (
-			);
-			path = Logo;
-			sourceTree = "<group>";
-		};
-		4F36D1A82C89C7430025E91A /* Logo3DScreen */ = {
-			isa = PBXGroup;
-			children = (
 				4F36D1A92C89C7650025E91A /* Logo3DView.swift */,
 			);
-			path = Logo3DScreen;
+			path = Logo;
 			sourceTree = "<group>";
 		};
 		4F3C94432C851F5F00EBA6A2 /* Data Sources */ = {
@@ -312,10 +305,6 @@
 		4FC7027F2C85524200C85CE9 /* CustomAlert */ = {
 			isa = PBXGroup;
 			children = (
-				4FF5B13C2C851BB300176585 /* RightText.swift */,
-				4FF5B13D2C851BB300176585 /* TDateTextFiled.swift */,
-				4FF5B13E2C851BB300176585 /* TPinCodeView.swift */,
-				4FF5B13F2C851BB300176585 /* TTextFieldView.swift */,
 				4FC7027D2C85524200C85CE9 /* CustomAlertView.swift */,
 				4FC7027E2C85524200C85CE9 /* View-CustomAlert.swift */,
 			);
@@ -514,10 +503,9 @@
 		4FF5B0FB2C851BB200176585 /* Componnets */ = {
 			isa = PBXGroup;
 			children = (
+				4FF5B0F62C851BB200176585 /* Configs */,
 				4FF4430B2C8DD630003E5CA7 /* Animations */,
 				4F36D1A72C89C6E30025E91A /* Logo */,
-				4F36D1A82C89C7430025E91A /* Logo3DScreen */,
-				4FF5B0F62C851BB200176585 /* Configs */,
 				4FC7027F2C85524200C85CE9 /* CustomAlert */,
 				4FF5B14A2C851BB300176585 /* SideMenu.swift */,
 				4FF5B1442C851BB300176585 /* ImagePicker.swift */,
@@ -525,6 +513,10 @@
 				4FF5B0F72C851BB200176585 /* TButton.swift */,
 				4FF5B0F82C851BB200176585 /* TLogo.swift */,
 				4FF5B0F92C851BB200176585 /* TProgressBar.swift */,
+				4FF5B13C2C851BB300176585 /* RightText.swift */,
+				4FF5B13D2C851BB300176585 /* TDateTextFiled.swift */,
+				4FF5B13E2C851BB300176585 /* TPinCodeView.swift */,
+				4FF5B13F2C851BB300176585 /* TTextFieldView.swift */,
 				4FF5B0FA2C851BB200176585 /* TSelectableButton.swift */,
 			);
 			path = Componnets;
@@ -1072,7 +1064,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TaxiShare_MVP/TaxiShare_MVP.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = UNVTN9W8HQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1104,7 +1096,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TaxiShare_MVP/TaxiShare_MVP.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = UNVTN9W8HQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

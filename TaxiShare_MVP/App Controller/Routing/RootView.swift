@@ -47,7 +47,7 @@ struct RootView: View {
     }
     
     private func initalScreen() {
-        main.asyncAfter(deadline: .now() + 4) {
+        main.asyncAfter(deadline: .now() + 5.42) {
             profileSync.handleLogin(profile: profiles.last,
                                     didLogin: { _ in })
         }

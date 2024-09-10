@@ -37,7 +37,6 @@ struct TypingAnimationView: View {
     var body: some View {
         let text = Text(animatedText)
             .foregroundStyle(Color(hex: "#343604"))
-            .animation(.easeIn(duration: 0.4))
             .font(.caption2.bold().italic().monospaced())
             .font(.title)
         
@@ -52,13 +51,16 @@ struct TypingAnimationView: View {
     }
     
     func animateTextAsPartOfAnimationChain() {
-        guard value == animationStage else { return }
-        animatedText = String(repeating: " ", count: textToType.count)
-        animateText()
+        if value == animationStage {
+            animateText()
+        }
+        else if value == animationStage + 1 {
+            retractText()
+        }
     }
     
     func animateText() {
-        let time = isStandAlone ? 0.2 : 0.1
+        let time = isStandAlone ? 0.2 : 0.11
         for (index, character) in textToType.enumerated() {
             queue.asyncAfter(deadline: .now() + Double(index) * time) {
                 main.async {
@@ -82,7 +84,13 @@ struct TypingAnimationView: View {
     
     func retractText() {
         for (index, _) in textToType.enumerated() {
-            let time = index == textToType.count - 1 ? 0.218 : 0.2
+            let time: CGFloat = {
+                let end = index == textToType.count - 1
+                if isStandAlone {
+                    return end ? 0.4 : 0.2
+                }
+                return 0.11
+            }()
             queue.asyncAfter(deadline: .now() + Double(index) * time) {
                 main.async {
                     animatedText.replace(at: textToType.count - 1 - index,
@@ -90,6 +98,7 @@ struct TypingAnimationView: View {
                     
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     
+                    guard isStandAlone else { return }
                     if index == textToType.count - 1 {
                         queue.asyncAfter(deadline: .now() + 0.8) {
                             main.async {
