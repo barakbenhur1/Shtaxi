@@ -217,7 +217,8 @@ struct MapView: View {
                     startPosition = CLLocation(latitude: location.latitude, longitude: location.longitude)
                     postion = MapCameraPosition.region(MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)))
                     Task {
-                        let name = try? await locationService.search(with: "", coordinate: location).first?.title
+                        let name = try? await locationService.search(with: "",
+                                                                     coordinate: location).first?.title
                         startText = name ?? ""
                     }
                 }
