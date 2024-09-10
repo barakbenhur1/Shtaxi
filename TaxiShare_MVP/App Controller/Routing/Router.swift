@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-class Router: ObservableObject {
-    static let shared = Router()
+class Router: Shared {
     // Contains the possible destinations in our Router
     enum Route: Codable, Hashable {
         case login
@@ -31,7 +30,7 @@ class Router: ObservableObject {
         }
     }
    
-    private init() {}
+    required internal init() {}
     
     // Builds the views
     @ViewBuilder func view(for route: Route) -> some View {

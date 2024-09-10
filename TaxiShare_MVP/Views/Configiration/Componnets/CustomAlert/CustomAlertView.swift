@@ -8,14 +8,14 @@
 import SwiftUI
 
 enum AlertType {
-    case regular, critical
+    case info, critical
 }
 
 struct CustomAlertView<T: Any, M: View>: View {
 
     @Namespace private var namespace
 
-    let type: AlertType
+    private let type: AlertType?
     @Binding private var isPresented: Bool
     @State private var titleKey: LocalizedStringKey
     @State private var actionTextKey: LocalizedStringKey
@@ -33,7 +33,7 @@ struct CustomAlertView<T: Any, M: View>: View {
     private let animationDuration = 0.3
 
     init(
-        type: AlertType = .regular,
+        type: AlertType? = nil,
         _ titleKey: LocalizedStringKey,
         _ isPresented: Binding<Bool>,
         returnedValue data: T?,
@@ -68,8 +68,10 @@ struct CustomAlertView<T: Any, M: View>: View {
                         /// Title
                         Text(titleKey)
                             .font(.title2).bold()
-                            .foregroundStyle(type == .critical ? .red : .yellow)
+                            .foregroundStyle(foregroundStyle)
                             .padding(8)
+                        
+                       icon
 
                         /// Message
                         Group {
@@ -120,7 +122,7 @@ struct CustomAlertView<T: Any, M: View>: View {
         } label: {
             Text(cancelButtonTextKey)
                 .font(.headline)
-                .foregroundStyle(type == .critical ? .red : .yellow)
+                .foregroundStyle(foregroundStyle)
                 .padding()
                 .lineLimit(1)
                 .frame(maxWidth: .infinity)
@@ -146,7 +148,7 @@ struct CustomAlertView<T: Any, M: View>: View {
                 .padding()
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
-                .background(type == .critical ? .red : .yellow)
+                .background(backgroundStyle)
                 .clipShape(RoundedRectangle(cornerRadius: 30))
         }
     }
@@ -173,18 +175,63 @@ struct CustomAlertView<T: Any, M: View>: View {
             isAnimating = true
         }
     }
+    
+    @ViewBuilder private var icon: some View {
+        if let type {
+            switch type {
+            case .info:
+                Image("info")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 25)
+                    .frame(width: 25)
+                    .padding(.top, 10)
+                    .padding(.bottom, 10)
+            case .critical:
+                Image("critical")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 25)
+                    .frame(width: 25)
+                    .padding(.top, 10)
+                    .padding(.bottom, 10)
+            }
+        }
+    }
+    
+    private var foregroundStyle: Color {
+        switch type {
+        case .info:
+            return Color.blue
+        case .critical:
+            return Color.red
+        case .none:
+            return Color.yellow
+        }
+    }
+    
+    private var backgroundStyle: Color {
+        switch type {
+        case .info:
+            return Color.blue
+        case .critical:
+            return Color.red
+        case .none:
+            return Color.yellow
+        }
+    }
 }
 
 // MARK: - Overload
 extension CustomAlertView where T == Never {
 
     init(
-        type: AlertType = .regular,
+        type: AlertType? = nil,
         _ titleKey: LocalizedStringKey,
         _ isPresented: Binding<Bool>,
         actionTextKey: LocalizedStringKey,
         cancelButtonTextKey: LocalizedStringKey?,
-        action: @escaping () -> (),
+        action: (() -> ())?,
         @ViewBuilder message: @escaping () -> M
     ) where T == Never {
         _titleKey = State(wrappedValue: titleKey)

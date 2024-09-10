@@ -29,22 +29,22 @@ extension LoginError: LocalizedError {
 }
 
 // MARK: ProfileSyncHendeler
-class ProfileSyncHendeler: ObservableObject {
-    static let shared = ProfileSyncHendeler()
-    
+class ProfileSyncHendeler: Shared {
     @Published private var router: Router
     @Published private var manager: CoreDataManager
     @Published private var vm: OnboardingViewModel
     
-    private init() {
+    // MARK: init
+    internal required init() {
         self.router = Router.shared
         self.manager = CoreDataManager.shared
         self.vm = ViewModelProvider.shared.vm()
     }
     
     // MARK: syncedLocalProfile
-    /// - Parameter profile - local profile
-    /// - Parameter id - user id
+    /// - Parameters:
+    ///  - profile - local profile
+    ///  - id - user id
     private func syncedLocalProfile(profile: Profile?, id: String) -> Profile {
         if let profile {
             return manager.replace(profile: profile,
@@ -56,8 +56,9 @@ class ProfileSyncHendeler: ObservableObject {
     }
     
     // MARK: handleError
-    /// - Parameter error - server error
-    /// - Parameter loginError - local error
+    /// - Parameters:
+    ///  - error - server error
+    ///  - loginError - local error
     private func handleError(error: String, loginError: LoginError? = nil) {
         print(error)
         goToLogin(message: loginError)
@@ -71,13 +72,14 @@ class ProfileSyncHendeler: ObservableObject {
     }
     
     // MARK: preform
-    /// - Parameter Profile - local profile
-    /// - Parameter id
-    /// - Parameter email
-    /// - Parameter name
-    /// - Parameter birthdate
-    /// - Parameter gender
-    /// - Parameter didLogin - return if login successful
+    /// - Parameters:
+    ///  - Profile - local profile
+    ///  -  id
+    ///  -  email
+    ///  -  name
+    ///  -  birthdate
+    ///  -  gender
+    ///  -  didLogin - return if login successful
     private func preform(profile: Profile?, id: String?, phone: String = "", name: String = "", email: String = "", birthdate: String = "", gender: String = "", didLogin: @escaping (Bool) -> (), navigteWith: @escaping ([OnboardingProgressble]) -> (), error: ((String, LoginError?) -> ())? = nil) {
         guard let id, !id.isEmpty else {
             removeAndPopToLogin(profile: profile)
@@ -140,12 +142,13 @@ class ProfileSyncHendeler: ObservableObject {
     // MARK: public
     
     // MARK: onboardingScreens
-    /// - Parameter user - server profile
-    /// - Parameter syncedProfile - local profile
-    /// - Parameter email
-    /// - Parameter name
-    /// - Parameter birthdate
-    /// - Parameter gender
+    /// - Parameters:
+    ///  - user - server profile
+    ///  -  syncedProfile - local profile
+    ///  -  email
+    ///  -  name
+    ///  -  birthdate
+    ///  -  gender
     func onboardingScreens(user: ProfileModel, syncedProfile: Profile, name: String, birthdate: String, gender: String) -> [OnboardingProgressble] {
         var screens: [OnboardingProgressble] = []
         
@@ -186,8 +189,9 @@ class ProfileSyncHendeler: ObservableObject {
     }
     
     // MARK: handele
-    /// - Parameter Profile - local profile
-    /// - Parameter logedin - is user  logedin
+    /// - Parameters:
+    ///  - Profile - local profile
+    ///  - logedin - is user  logedin
     func handele(profile: Profile?, logedin: Bool) {
         guard let profile else { return }
         manager.set(profile: profile,
@@ -209,13 +213,14 @@ class ProfileSyncHendeler: ObservableObject {
     }
     
     // MARK: handleLoginTap - from tap
-    /// - Parameter Profile - local profile
-    /// - Parameter id
-    /// - Parameter email
-    /// - Parameter name
-    /// - Parameter birthdate
-    /// - Parameter gender
-    /// - Parameter didLogin - return if login successful
+    /// - Parameters:
+    ///  - profile - local profile
+    ///  - id
+    ///  -  email
+    ///  -  name
+    ///  -  birthdate
+    ///  -  gender
+    ///  -  didLogin - return if login successful
     func handleLoginTap(profile: Profile?, id: String?, email: String = "", phone: String = "", name: String = "", birthdate: String = "", gender: String = "", didLogin: @escaping (Bool) -> () = { _ in }) {
         preform(profile: profile,
                 id: id,
@@ -224,15 +229,16 @@ class ProfileSyncHendeler: ObservableObject {
                 email: email,
                 birthdate: birthdate,
                 gender: gender,
-                didLogin: didLogin, 
+                didLogin: didLogin,
                 navigteWith: afterLogin,
                 error: handleError)
     }
     
     
     // MARK: handleLogin - auto login
-    /// - Parameter Profile - local profile
-    /// - Parameter didLogin - return if login successful
+    /// - Parameters:
+    ///  - profile - local profile
+    ///  - didLogin - return if login successful
     func handleLogin(profile: Profile?, didLogin: @escaping (Bool) -> () = { _ in }) {
         guard let logedin = profile?.logedin, logedin else {
             removeAndPopToLogin(profile: profile)
@@ -246,8 +252,10 @@ class ProfileSyncHendeler: ObservableObject {
     }
     
     // MARK: removeAndPopToLogin
-    /// - Parameter Profile - local profile
-    /// - Parameter message - local error
+    /// - Parameters:
+    ///  - Profile - local profile
+    ///  - message - local error
+    ///  - animate - animate navigation
     func removeAndPopToLogin(profile: Profile?, massege: LoginError? = nil, animate: Bool = false) {
         removeLocalProfile(profile: profile)
         goToLogin(message: massege,
@@ -255,7 +263,9 @@ class ProfileSyncHendeler: ObservableObject {
     }
     
     // MARK: goToLogin
-    /// - Parameter message - local error
+    /// - Parameters:
+    ///  - message - local error
+    ///  - animate - animate navigation
     func goToLogin(message: LoginError? = nil, animate: Bool = false) {
         router.popToRoot(message: message,
                          animate: animate)

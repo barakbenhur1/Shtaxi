@@ -17,24 +17,9 @@ class OnboardringDataSource: Network, OnboardingRepository {
     private let handeler = ComplitionHandeler()
     private let pHandeler = ParameterHndeler()
     
+    // MARK: logoutProviders
     internal func logoutProviders() {
         auth.logout()
-    }
-    
-    // MARK: googleAuth
-    /// - Parameter complition
-    func googleAuth(complition: @escaping (GoogleAuthModel) -> (), error: @escaping (String) -> ())  {
-        let validComplition = handeler.makeValid(complition)
-        auth.googleAuth(complition: validComplition,
-                        error: error)
-    }
-    
-    // MARK: facebookAuth
-    /// - Parameter complition
-    func facebookAuth(complition: @escaping (FacebookAuthModel) -> (), error: @escaping (String) -> ()) {
-        let validComplition = handeler.makeValid(complition)
-        auth.facebookAuth(complition: validComplition,
-                          error: error)
     }
     
     // MARK: appleAuth
@@ -42,11 +27,32 @@ class OnboardringDataSource: Network, OnboardingRepository {
         logoutProviders()
     }
     
+    // MARK: googleAuth
+    /// - Parameters:
+    ///  - complition
+    ///  - error
+    func googleAuth(complition: @escaping (GoogleAuthModel) -> (), error: @escaping (String) -> ())  {
+        let validComplition = handeler.makeValid(complition)
+        auth.googleAuth(complition: validComplition,
+                        error: error)
+    }
+    
+    // MARK: facebookAuth
+    /// - Parameters:
+    ///  - complition
+    ///  - error
+    func facebookAuth(complition: @escaping (FacebookAuthModel) -> (), error: @escaping (String) -> ()) {
+        let validComplition = handeler.makeValid(complition)
+        auth.facebookAuth(complition: validComplition,
+                          error: error)
+    }
+    
     // MARK: verifayPinCode
-    /// - Parameter verificationID - sms verification id
-    /// - Parameter code - sms code
-    /// - Parameter complition
-    /// - Parameter error
+    /// - Parameters:
+    ///  - verificationID - sms verification id
+    ///  - code - sms code
+    ///  - complition
+    ///  - error
     func verifayPinCode(verificationID: String, code: String, complition: @escaping (PhoneAuthModel) -> (), error: @escaping (String?) -> ()) {
         let validComplition = handeler.makeValid(complition)
         auth.phoneVerify(verificationID: verificationID,
@@ -56,9 +62,10 @@ class OnboardringDataSource: Network, OnboardingRepository {
     }
     
     // MARK: phoneAuth
-    /// - Parameter phone - phone number
-    /// - Parameter complition
-    /// - Parameter error
+    /// - Parameters:
+    ///  - phone - phone number
+    ///  - complition
+    ///  - error
     func phoneAuth(phone: String, complition: @escaping (_ verificationID: String) -> (), error: @escaping (String?) -> ()) {
         let validComplition = handeler.makeValid(complition)
         auth.phoneAuth(phone: phone,
@@ -67,9 +74,10 @@ class OnboardringDataSource: Network, OnboardingRepository {
     }
     
     // MARK: delete
-    /// - Parameter id - user id
-    /// - Parameter complition
-    /// - Parameter error
+    /// - Parameters:
+    ///  - id - user id
+    ///  - complition
+    ///  - error
     func delete(id: String, complition: @escaping () -> (), error: @escaping (String) -> ()) {
         let userIdBody = UserIdBody(id: id)
         let parameters = pHandeler.toDict(values: userIdBody)
@@ -83,9 +91,10 @@ class OnboardringDataSource: Network, OnboardingRepository {
     }
     
     // MARK: logout
-    /// - Parameter id - user id
-    /// - Parameter complition
-    /// - Parameter error
+    /// - Parameters:
+    ///  - id - user id
+    ///  - complition
+    ///  - error
     func logout(id: String, complition: @escaping () -> (), error: @escaping (String) -> ()) {
         let userIdBody = UserIdBody(id: id)
         let parameters = pHandeler.toDict(values: userIdBody)
@@ -99,9 +108,10 @@ class OnboardringDataSource: Network, OnboardingRepository {
     }
     
     // MARK: login
-    /// - Parameter id - user id
-    /// - Parameter complition
-    /// - Parameter error
+    /// - Parameters:
+    ///  - id - user id
+    ///  - complition
+    ///  - error
     func login(id: String, complition: @escaping (ProfileModel) -> (), error: @escaping (String) -> ()) {
         let validComplition = handeler.makeValid(complition)
         let userIdBody = UserIdBody(id: id)
@@ -114,9 +124,10 @@ class OnboardringDataSource: Network, OnboardingRepository {
     }
     
     // MARK: getUser
-    /// - Parameter id - user id
-    /// - Parameter complition
-    /// - Parameter error
+    /// - Parameters:
+    ///  - id - user id
+    ///  - complition
+    ///  - error
     func getUser(id: String, complition: @escaping (UserExistModel) -> (), error: @escaping (String) -> ()) {
         let validComplition = handeler.makeValid(complition)
         let userIdBody = UserIdBody(id: id)
@@ -128,10 +139,11 @@ class OnboardringDataSource: Network, OnboardingRepository {
              error: error)
     }
     
-    /// - Parameter id - user id
-    /// - Parameter updateBody - paramers to update
-    /// - Parameter complition
-    /// - Parameter error
+    /// - Parameters:
+    ///  - id - user id
+    ///  - updateBody - paramers to update
+    ///  - complition
+    ///  - error
     func update(profile: Profile?, updateBody: UpdateBody, complition: @escaping () -> (), error: @escaping (String) -> ()) {
         guard let id = profile?.userID else { return error("no id") }
         let newComplition: (UserExistModel) -> () = { [weak self] result in
@@ -167,8 +179,9 @@ extension OnboardringDataSource {
     }
     
     // MARK: handeleCoreData
-    /// - Parameter profile
-    /// - Parameter updateBody
+    /// - Parameters:
+    ///  - profile
+    ///  - updateBody
     private func handeleCoreData(profile: Profile?, updateBody: UpdateBody) {
         if let update = updateBody.getValue(), let profile {
             switch update {

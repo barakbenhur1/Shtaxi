@@ -364,23 +364,19 @@ struct MapView: View {
     }
     
     private func logout() {
-        if let profile = profiles.last, let id = profile.userID {
-            onboardingVM.logout(id: id) {
-                profileSync.removeAndPopToLogin(profile: profile)
-            } error: { error in print(error) }
-        }
-        else { router.popToRoot() }
+        guard let profile = profiles.last else { return router.popToRoot() }
+        guard let id = profile.userID else { return router.popToRoot() }
+        onboardingVM.logout(id: id) {
+            profileSync.removeAndPopToLogin(profile: profile)
+        } error: { error in print(error) }
     }
     
     private func deleteProfile() {
-        guard let profile = profiles.last else { return  router.popToRoot() }
-        guard let id = profile.userID else { return  router.popToRoot() }
+        guard let profile = profiles.last else { return router.popToRoot() }
+        guard let id = profile.userID else { return router.popToRoot() }
         onboardingVM.delete(id: id) {
             profileSync.removeAndPopToLogin(profile: profile)
-        } error: { error in
-            profileSync.removeAndPopToLogin(profile: profile)
-            print(error)
-        }
+        } error: { error in print(error) }
     }
     
     @ViewBuilder private func navigationButtonText(_ text: String, bold: Bool = false) -> some View {

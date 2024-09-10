@@ -17,7 +17,10 @@ struct ShtaxiApp: App {
     @StateObject private var profileSync = ProfileSyncHendeler.shared
     @StateObject private var vmProvider = ViewModelProvider.shared
     
+    @State private var showError = false
+    
     private let local = Locale(identifier: "he-IL")
+    private let apiError = NotificationCenter.default.publisher(for: .apiError)
     private let popToLogin = NotificationCenter.default.publisher(for: .popToLogin)
     
     var body: some Scene {
@@ -32,8 +35,15 @@ struct ShtaxiApp: App {
             .environment(\.locale, local)
             .environment(\.managedObjectContext, manager.managedObjectContext)
             .onOpenURL { url in DispatchQueue.main.async { _ = Auth.auth().canHandle(url) } }
+            .onReceive(apiError) { _ in showError = true }
             .onReceive(popToLogin) { value in router.popToRoot(message: value.object as? LoginError,
-                                                               animate: true ) }
+                                                               animate: true) }
+            .customAlert("הפעולה נכשלה",
+                         type: .info,
+                         isPresented: $showError,
+                         actionText: "הבנתי") {
+                Text("אנא נסה שנית...".localized())
+            }
         }
     }
 }

@@ -7,14 +7,12 @@
 
 import SwiftUI
 
-class ViewModelProvider: ObservableObject {
-    static let shared = ViewModelProvider()
-    
+class ViewModelProvider: Shared {
     private typealias ViewModelMap = [String: any ViewModel]
     
     @Published private var vmMap: ViewModelMap
     
-    private init() { vmMap = ViewModelMap() }
+    required internal init() { vmMap = ViewModelMap() }
     func vm<VM: ViewModel>() -> VM { return viewModelFor(key: "\(VM.self)") }
     
     private func viewModelFor<VM: ViewModel>(key: String) -> VM {

@@ -18,7 +18,7 @@ extension View {
     ///   - message: A ViewBuilder returning the message for the alert given the currently available data.
     func customAlert<M, T: Any>(
         _ titleKey: LocalizedStringKey,
-        type: AlertType = .regular,
+        type: AlertType? = nil,
         isPresented: Binding<Bool>,
         returnedValue data: T?,
         actionText: LocalizedStringKey,
@@ -59,11 +59,11 @@ extension View {
     ///   - message: A ViewBuilder returning the message for the alert.
     func customAlert<M>(
         _ titleKey: LocalizedStringKey,
-        type: AlertType = .regular,
+        type: AlertType? = nil,
         isPresented: Binding<Bool>,
         actionText: LocalizedStringKey,
         cancelButtonText: LocalizedStringKey? = nil,
-        action: @escaping () -> (),
+        action: (() -> ())? = nil,
         @ViewBuilder message: @escaping () -> M
     ) -> some View where M: View {
         fullScreenCover(isPresented: isPresented) {

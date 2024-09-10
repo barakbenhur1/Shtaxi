@@ -57,11 +57,12 @@ class Network: Networkble {
     internal init() {}
     
     // MARK: send - to network
-    /// - Parameter method
-    /// - Parameter url
-    /// - Parameter parameters
-    /// - Parameter complition
-    /// - Parameter error
+    /// - Parameters:
+    ///  - method
+    ///  - url
+    ///  - parameters
+    ///  - complition
+    ///  - error
     private func send<T: Codable>(method: HttpMethod, url: String, parameters: [String: Any], complition: @escaping (Response<T>) -> (), error: @escaping (Error) -> ()) {
         do {
             let request = try Request(method: method, url: url, parameters: parameters).build()
@@ -98,18 +99,22 @@ class Network: Networkble {
 // MARK: Network internal extension
 extension Network {
     // MARK: send - call send to network and unwrap (result || error)
-    /// - Parameter method
-    /// - Parameter url
-    /// - Parameter parameters
-    /// - Parameter complition
-    /// - Parameter error
+    /// - Parameters:
+    ///  - method
+    ///  - url
+    ///  - parameters
+    ///  - complition
+    ///  - error
     internal func send<T: Codable>(method: HttpMethod, route: String, parameters: [String: Any] = [:], complition: @escaping (T) -> (), error: @escaping (String) -> ()) {
+        let url = url(route)
         send(method: method,
-             url: url(route),
+             url: url,
              parameters: parameters) { [weak self] result in
             guard let self else { return }
             responedQueue.async { complition(result.value) }
         } error: { [weak self] err in
+            NotificationCenter.default.post(name: .apiError,
+                                            object: url)
             guard let self else { return }
             responedQueue.async { error(err.localizedDescription) }
         }

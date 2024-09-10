@@ -11,10 +11,8 @@ import Firebase
 import FacebookLogin
 import GoogleSignIn
 
-class Authentication: ObservableObject {
-    static let shared = Authentication()
-    
-    private init() {}
+class Authentication: Shared {
+    internal required init() {}
     
     private func checkStatus() -> GoogleAuthModel? {
         if GIDSignIn.sharedInstance.currentUser != nil {

@@ -8,9 +8,7 @@
 import Foundation
 import CoreData
 
-class CoreDataManager: ViewModel {
-    static let shared = CoreDataManager()
-    
+class CoreDataManager: Shared, ViewModel {
     internal let useCases = CoreDataUseCases(repo: CoreDataRepositoryImpl(dataSource: PersistenceController.shared))
     
     var managedObjectContext: NSManagedObjectContext { return useCases.managedObjectContext }
