@@ -30,7 +30,7 @@ class Router: Shared {
         }
     }
    
-    required internal init() {}
+    private override init(){}
     
     // Builds the views
     @ViewBuilder func view(for route: Route) -> some View {

@@ -12,7 +12,7 @@ import FacebookLogin
 import GoogleSignIn
 
 class Authentication: Shared {
-    internal required init() {}
+    private override init() {}
     
     private func checkStatus() -> GoogleAuthModel? {
         if GIDSignIn.sharedInstance.currentUser != nil {

@@ -34,7 +34,7 @@ class PersistenceController: Shared, DataSource, CoreDataRepository {
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
     
-    required internal init() {
+    private override init() {
         container = NSPersistentContainer(name: "TaxiShare_MVP")
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in

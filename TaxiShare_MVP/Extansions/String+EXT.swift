@@ -38,6 +38,9 @@ extension String {
         }
     }
     
+    func asClassName() -> String {
+        return replacingOccurrences(of: "TaxiShare_MVP.", with: "")
+    }
     
     /* Change to be #else statement if not testing */
     func internationalPhone() -> String {

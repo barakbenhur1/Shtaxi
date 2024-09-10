@@ -14,8 +14,8 @@ struct ShtaxiApp: App {
     
     @StateObject private var router = Router.shared
     @StateObject private var manager = CoreDataManager.shared
-    @StateObject private var profileSync = ProfileSyncHendeler.shared
     @StateObject private var vmProvider = ViewModelProvider.shared
+    @StateObject private var profileSync = ProfileSyncHendeler.shared
     
     @State private var showError = false
     

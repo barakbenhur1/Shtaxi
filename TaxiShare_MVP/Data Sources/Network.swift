@@ -38,9 +38,9 @@ class Network: Networkble {
     
     // MARK: root - root url value
     internal var root: String {
-        guard type(of: self) == Network.self else {
-            let className = "\(self)".replacingOccurrences(of: "TaxiShare_MVP.", with: "")
-            fatalError("must override root in \(className)")
+        guard type(of: self) == NSObject.self else {
+            let className = "\(self)".asClassName()
+            fatalError("must override root in class \"\(className)\"")
         }
         return ""
     }
@@ -146,7 +146,7 @@ extension Network {
         static var value: String {
             get {
 #if DEBUG
-                //                        return "http://localhost:3000/"
+                // return "http://localhost:3000/"
                 return "https://shtaxi-server.onrender.com/"
 #else
                 return "https://shtaxi-server.onrender.com/"

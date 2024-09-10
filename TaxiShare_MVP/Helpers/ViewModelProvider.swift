@@ -12,7 +12,8 @@ class ViewModelProvider: Shared {
     
     @Published private var vmMap: ViewModelMap
     
-    required internal init() { vmMap = ViewModelMap() }
+    private override init() { vmMap = ViewModelMap() }
+   
     func vm<VM: ViewModel>() -> VM { return viewModelFor(key: "\(VM.self)") }
     
     private func viewModelFor<VM: ViewModel>(key: String) -> VM {

@@ -35,7 +35,7 @@ class ProfileSyncHendeler: Shared {
     @Published private var vm: OnboardingViewModel
     
     // MARK: init
-    internal required init() {
+    private override init() {
         self.router = Router.shared
         self.manager = CoreDataManager.shared
         self.vm = ViewModelProvider.shared.vm()
