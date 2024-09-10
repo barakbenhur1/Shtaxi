@@ -27,7 +27,7 @@ struct RootView: View {
             LoginView()
                 .customAlert("הודעה מערכת",
                              isPresented: $showAlert,
-                             actionText:"הבנתי",
+                             actionText: "הבנתי",
                              action: cleanLogin)
             {
                 if let message {
@@ -35,7 +35,7 @@ struct RootView: View {
                 }
             }
             .onAppear { showAlert = message != nil }
-        case .onboarding(let screens):
+        case .onboarding(let screens): /// won't happen
             OnboardingProgressbleContainerView(screens: screens)
         case .map:
             MapView()
@@ -43,7 +43,7 @@ struct RootView: View {
     }
     
     private func cleanLogin() {
-        router.root = .login(message: nil)
+        router.popToRoot()
     }
     
     private func initalScreen() {

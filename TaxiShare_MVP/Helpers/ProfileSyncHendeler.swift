@@ -117,7 +117,8 @@ class ProfileSyncHendeler: ObservableObject {
                         print(error)
                         guard let self else { return }
                         return removeAndPopToLogin(profile: syncedLocalProfile,
-                                                   massege: .retry)
+                                                   massege: .retry,
+                                                   animate: true)
                     })
                 }
                 
@@ -247,14 +248,16 @@ class ProfileSyncHendeler: ObservableObject {
     // MARK: removeAndPopToLogin
     /// - Parameter Profile - local profile
     /// - Parameter message - local error
-    func removeAndPopToLogin(profile: Profile?, massege: LoginError? = nil) {
+    func removeAndPopToLogin(profile: Profile?, massege: LoginError? = nil, animate: Bool = false) {
         removeLocalProfile(profile: profile)
-        goToLogin(message: massege)
+        goToLogin(message: massege,
+                  animate: animate)
     }
     
     // MARK: goToLogin
     /// - Parameter message - local error
-    func goToLogin(message: LoginError? = nil) {
-        router.popToRoot(message: message)
+    func goToLogin(message: LoginError? = nil, animate: Bool = false) {
+        router.popToRoot(message: message,
+                         animate: animate)
     }
 }

@@ -31,8 +31,9 @@ struct ShtaxiApp: App {
             .environmentObject(vmProvider)
             .environment(\.locale, local)
             .environment(\.managedObjectContext, manager.managedObjectContext)
-            .onReceive(popToLogin) { value in router.popToRoot(message: value.object as? LoginError ) }
             .onOpenURL { url in DispatchQueue.main.async { _ = Auth.auth().canHandle(url) } }
+            .onReceive(popToLogin) { value in router.popToRoot(message: value.object as? LoginError,
+                                                               animate: true ) }
         }
     }
 }

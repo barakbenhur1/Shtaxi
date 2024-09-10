@@ -24,6 +24,12 @@ class Router: ObservableObject {
     
     @Published var root: Root = .splash
     @Published var path: NavigationPath = NavigationPath()
+    
+    @Published private var navigationAnimation: Bool = false {
+        didSet {
+            UINavigationBar.setAnimationsEnabled(navigationAnimation)
+        }
+    }
    
     private init() {}
     
@@ -54,16 +60,19 @@ class Router: ObservableObject {
     
     // Used by views to navigate to another view
     func navigateTo(_ appRoute: Route, animate: Bool = true) {
+        navigationAnimation = animate
         path.append(appRoute)
     }
     
     // Used to go back to the previous screen
-    func navigateBack() {
+    func navigateBack(animate: Bool = true) {
+        navigationAnimation = animate
         path.removeLast()
     }
     
     // Pop to the root screen in our hierarchy
-    func popToRoot(message: LoginError? = nil) {
+    func popToRoot(message: LoginError? = nil, animate: Bool = false) {
+        navigationAnimation = animate
         root = .login(message: message?.localizedDescription)
         path.removeLast(path.count)
     }
