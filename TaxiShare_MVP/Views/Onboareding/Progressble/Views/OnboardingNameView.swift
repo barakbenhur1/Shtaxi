@@ -29,7 +29,7 @@ struct OnboardingNameView<VM: OnboardingViewModel>: OnboardingProgress {
             HStack {
                 Spacer()
                 RightText(text: "מה השם שלך?",
-                          font: .title)
+                          font: .tTitle)
             }
             .padding(.bottom, 20)
             

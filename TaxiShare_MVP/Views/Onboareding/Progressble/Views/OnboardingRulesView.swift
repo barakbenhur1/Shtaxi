@@ -20,7 +20,7 @@ struct OnboardingRulesView<VM: OnboardingViewModel>: OnboardingProgress {
             HStack {
                 Spacer()
                 RightText(text: "ברוך הבא לשטקסי!",
-                          font: .title)
+                          font: .tTitle)
             }
             HStack {
                 Spacer()

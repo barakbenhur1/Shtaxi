@@ -33,8 +33,8 @@ struct MapView: View {
     
     @State private var taxiTimes: [Date] = []
     
-    private var onboardingVM: OnboardingViewModel { return vmProvider.vm() }
-    private var mapVM: MapViewViewModel { return vmProvider.vm() }
+    private var onboardingVM: OnboardingViewModel { return vmProvider.viewModel() }
+    private var mapVM: MapViewViewModel { return vmProvider.viewModel() }
     
     @FocusState private var startFocused: Bool {
         didSet {
@@ -332,32 +332,37 @@ struct MapView: View {
         List {
             ForEach(1..<8, id: \.self) { i in
                 menuItem(text: "אופצייה \(i)".localized(),
-                         config: .init(buttonConfig: .regular(bold: false,
-                                                              dimantions: .full,
-                                                              enabled: true))) { isShowSideMenu = false }
+                         config: .init(config: .regular(bold: false,
+                                                        dimantions: .full,
+                                                        enabled: true)))
+                {
+                    isShowSideMenu = false
+                    // preform action
+                }
             }
+            .padding(.bottom, 2)
             
             menuItem(text: "התנתקות".localized(),
-                     config: .init(buttonConfig: .regular(bold: true,
-                                                          dimantions: .full,
-                                                          enabled: true)))
+                     config: .init(config: .regular(bold: true,
+                                                    dimantions: .full,
+                                                    enabled: true)))
             {
                 isShowLogout = true
                 isShowSideMenu = false
             }
-            .padding(.top, 2)
             
             VStack {
                 separator()
                 
                 menuItem(text: "מחיקת פרופיל".localized(),
-                         config: .init(buttonConfig: .critical(dimantions: .full,
-                                                               enabled: true))) {
+                         config: .init(config: .critical(dimantions: .full,
+                                                         enabled: true)))
+                {
                     isShowSideMenu = false
                     isShowDelete = true
                 }
-                                          .padding(.top, 2)
-                                          .padding(.bottom, 2)
+                .padding(.top, 2)
+                .padding(.bottom, 2)
             }
             .padding(.top, 3)
         }
@@ -406,7 +411,7 @@ struct MapView: View {
     
     @ViewBuilder private func menuItem(text: String, config: TButtonConfigManager, didTap: @escaping () -> ()) -> some View {
         TButton(text: text,
-                config: config.buttonConfig) {
+                config: config.config) {
             didTap()
         }
                 .listRowSeparator(.hidden)

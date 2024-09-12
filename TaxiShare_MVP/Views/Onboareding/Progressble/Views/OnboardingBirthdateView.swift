@@ -27,7 +27,7 @@ struct OnboardingBirthdateView<VM: OnboardingViewModel>: OnboardingProgress {
             HStack {
                 Spacer()
                 RightText(text: "מה תאריך הלידה שלך?",
-                          font: .title)
+                          font: .tTitle)
             }
             .padding(.bottom, 20)
             

@@ -30,21 +30,21 @@ struct OnboardingProgressbleManagerView: ProfileUpdater {
             case .name(let value):
                 OnboardingProgressbleHandelerView<OnboardingNameView>(value: $progreesSatge,
                                                                        total: screens.count,
-                                                                      content: .init(vm: vmProvider.vm(),
+                                                                      content: .init(vm: vmProvider.viewModel(),
                                                                                      text: value,
                                                                                       complition: setButtonConfig),
                                                                       onAppear: setScreen)
             case .birthdate(let value):
                 OnboardingProgressbleHandelerView<OnboardingBirthdateView>(value: $progreesSatge,
                                                                             total: screens.count,
-                                                                           content: .init(vm: vmProvider.vm(),
+                                                                           content: .init(vm: vmProvider.viewModel(),
                                                                                           date: value,
                                                                                            complition: setButtonConfig),
                                                                            onAppear: setScreen)
             case .gender(let value):
                 OnboardingProgressbleHandelerView<OnboardingGenderView>(value: $progreesSatge,
                                                                          total: screens.count,
-                                                                        content: .init(vm: vmProvider.vm(),
+                                                                        content: .init(vm: vmProvider.viewModel(),
                                                                                        selectedIndex: value,
                                                                                         complition: setButtonConfig,
                                                                                         otherAction: otherAction),
@@ -52,7 +52,7 @@ struct OnboardingProgressbleManagerView: ProfileUpdater {
             case .rules:
                 OnboardingProgressbleHandelerView<OnboardingRulesView>(value: $progreesSatge,
                                                                         total: screens.count,
-                                                                       content: .init(vm: vmProvider.vm(), 
+                                                                       content: .init(vm: vmProvider.viewModel(), 
                                                                                       onAppear: noActionNeeded),
                                                                        onAppear: setScreen)
             }

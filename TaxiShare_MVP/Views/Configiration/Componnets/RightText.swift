@@ -20,5 +20,6 @@ struct RightText: View {
 }
 
 #Preview {
-    RightText(text: "Hello", font: .title)
+    RightText(text: "Hello", 
+              font: .title)
 }

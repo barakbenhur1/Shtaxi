@@ -7,13 +7,17 @@
 
 import SwiftUI
 
-class OnboardingViewModel: ViewModel {
+final class OnboardingViewModel: ViewModel {
     internal let useCases = OnboardingUseCases(repo: OnboardingRepositoryImpl(dataSource: OnboardringDataSource()))
     
-    required init() {}
+//    required init() {}
     
     func logoutProviders() {
         useCases.logoutProviders()
+    }
+    
+    func appleAuth() {
+        useCases.appleAuth()
     }
     
     func googleAuth(complition: @escaping (GoogleAuthModel) -> (), error: @escaping (String) -> ()) {
@@ -22,10 +26,6 @@ class OnboardingViewModel: ViewModel {
     
     func facebookAuth(complition: @escaping (FacebookAuthModel) -> (), error: @escaping (String) -> ()) {
         useCases.facebookAuth(complition: complition, error: error)
-    }
-    
-    func appleAuth() {
-        useCases.appleAuth()
     }
     
     func verifayPinCode(verificationID: String, code: String, complition: @escaping (PhoneAuthModel) -> (), error: @escaping (String?) -> ()) {

@@ -29,7 +29,7 @@ struct OnboardingGenderView<VM: OnboardingViewModel>: OnboardingProgress {
             HStack {
                 Spacer()
                 RightText(text: "מה המגדר שלך?",
-                          font: .title)
+                          font: .tTitle)
             }
             .padding(.bottom, 20)
             

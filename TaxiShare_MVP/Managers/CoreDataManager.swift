@@ -8,8 +8,8 @@
 import Foundation
 import CoreData
 
-class CoreDataManager: Shared, CoreDataRepository {
-    let coreData = CoreDataHndeler()
+class CoreDataManager: Singleton, CoreDataRepository {
+    private let coreData: CoreDataHndeler = ViewModelProvider.shared.viewModel()
     
     private override init() {}
     

@@ -8,9 +8,9 @@
 import SwiftUI
 
 class TButtonConfigManager: ObservableObject {
-    @Published var buttonConfig: TButtonConfig
+    @Published var config: TButtonConfig
     
-    init(buttonConfig: TButtonConfig) {
-        self.buttonConfig = buttonConfig
+    init(config: TButtonConfig) {
+        self.config = config
     }
 }

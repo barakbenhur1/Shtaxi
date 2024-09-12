@@ -8,10 +8,10 @@
 import Foundation
 import CoreData
 
-class CoreDataHndeler: ViewModel {
+final class CoreDataHndeler: ViewModel {
     internal let useCases = CoreDataUseCases(repo: CoreDataRepositoryImpl(dataSource: PersistenceController.shared))
     
-    required init() {}
+//    required init() {}
     
     var managedObjectContext: NSManagedObjectContext { return useCases.managedObjectContext }
     

@@ -8,24 +8,22 @@
 import SwiftUI
 
 struct TSelectableButton: View {
-    @Binding var params: TButtonParams
-    let isSelected: () -> ()
+    private let title: String
+    @Binding private var manger: TButtonConfigManager
+    private let isSelected: () -> ()
     
     init(text: String, selected: Bool, isSelected: @escaping () -> Void) {
-        _params = Binding(get: {
-            return .init(title: text,
-                         config: .selectebale(selected: selected,
-                                              dimantions: .full,
-                                              enabled: true))
-        }, set: {_ in })
+        _manger = .constant(.init(config: .selectebale(selected: selected,
+                                                                   dimantions: .full,
+                                                                   enabled: true)))
+        self.title = text
         self.isSelected = isSelected
     }
     
     var body: some View {
-        TButton(text: params.title,
-                config: params.config) {
-            isSelected()
-        }
+        TButton(text: title,
+                config: manger.config,
+                didTap: isSelected)
     }
 }
 

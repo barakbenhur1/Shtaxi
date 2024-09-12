@@ -10,12 +10,16 @@ import FirebaseAuth
 
 @main
 struct ShtaxiApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    typealias UrlHandler = (URL) -> ()
+    typealias PublisherOutput = (NotificationCenter.Publisher.Output) -> ()
+    
+    @UIApplicationDelegateAdaptor private var delegate: AppDelegate
     
     @StateObject private var router = Router.shared
     @StateObject private var manager = CoreDataManager.shared
     @StateObject private var vmProvider = ViewModelProvider.shared
     @StateObject private var profileSync = ProfileSyncHendeler.shared
+    @StateObject private var launchScreenManager = LaunchScreenStateManager()
     
     @State private var showError = false
     
@@ -23,27 +27,38 @@ struct ShtaxiApp: App {
     private let apiError = NotificationCenter.default.publisher(for: .apiError)
     private let popToLogin = NotificationCenter.default.publisher(for: .popToLogin)
     
+    private var canHandle: UrlHandler { return { url in _ = Auth.auth().canHandle(url) } }
+    private var onEror: PublisherOutput { return { _ in showError = true } }
+    private var onFualire: PublisherOutput { return { value in router.popToRoot(message: value.object as? LoginError,
+                                                                                animate: true) } }
+    
     var body: some Scene {
         WindowGroup {
-            RouterView() {
-                RootView()
+            ZStack {
+                RouterView() { RootView() }
+                    .environmentObject(router)
+                    .environmentObject(manager)
+                    .environmentObject(vmProvider)
+                    .environmentObject(profileSync)
+                    .environment(\.locale, local)
+                    .environment(\.managedObjectContext,
+                                  manager.managedObjectContext)
+                    .onOpenURL(perform: canHandle)
+                    .onReceive(popToLogin,
+                               perform: onFualire)
+                    .onReceive(apiError,
+                               perform: onEror)
+                    .customAlert("שגיאה!",
+                                 type: .info,
+                                 isPresented: $showError,
+                                 actionText: "הבנתי",
+                                 message: { Text("אנא נסה שנית...".localized()) })
+                
+                if launchScreenManager.state != .finished {
+                    LaunchScreenView()
+                }
             }
-            .environmentObject(router)
-            .environmentObject(profileSync)
-            .environmentObject(manager)
-            .environmentObject(vmProvider)
-            .environment(\.locale, local)
-            .environment(\.managedObjectContext, manager.managedObjectContext)
-            .onOpenURL { url in DispatchQueue.main.async { _ = Auth.auth().canHandle(url) } }
-            .onReceive(apiError) { _ in showError = true }
-            .onReceive(popToLogin) { value in router.popToRoot(message: value.object as? LoginError,
-                                                               animate: true) }
-            .customAlert("הפעולה נכשלה",
-                         type: .info,
-                         isPresented: $showError,
-                         actionText: "הבנתי") {
-                Text("אנא נסה שנית...".localized())
-            }
+            .environmentObject(launchScreenManager)
         }
     }
 }

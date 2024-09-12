@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-class MapViewViewModel: ViewModel {
+final class MapViewViewModel: ViewModel {
     internal let useCases = MapUseCases(repo: MapRepositoryImpl(dataSource: MapDataSource()))
     
-    required init() {}
+//    required init() {}
     
     @Published var isShowSheet: Bool = false
     @Published var startPositionValue: SearchCompletions? = .init(title: "start place", subTitle: "", location: nil)

@@ -29,7 +29,7 @@ extension LoginError: LocalizedError {
 }
 
 // MARK: ProfileSyncHendeler
-class ProfileSyncHendeler: Shared {
+class ProfileSyncHendeler: Singleton {
     @Published private var router: Router
     @Published private var manager: CoreDataManager
     @Published private var vm: OnboardingViewModel
@@ -38,7 +38,7 @@ class ProfileSyncHendeler: Shared {
     private override init() {
         self.router = Router.shared
         self.manager = CoreDataManager.shared
-        self.vm = ViewModelProvider.shared.vm()
+        self.vm = ViewModelProvider.shared.viewModel()
     }
     
     // MARK: syncedLocalProfile

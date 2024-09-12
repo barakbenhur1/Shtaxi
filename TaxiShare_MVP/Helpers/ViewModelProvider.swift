@@ -7,17 +7,18 @@
 
 import SwiftUI
 
-class ViewModelProvider: Shared {
-    private typealias ViewModelMap = [String: any ViewModel]
+class ViewModelProvider: Singleton {
+    private typealias ViewModelChase = [String: any ViewModel]
     
-    @Published private var vmMap: ViewModelMap
+    private var chase: ViewModelChase
     
-    private override init() { vmMap = ViewModelMap() }
-   
-    func vm<VM: ViewModel>() -> VM { return viewModelFor(key: "\(VM.self)") }
+    private override init() { chase = ViewModelChase() }
     
-    private func viewModelFor<VM: ViewModel>(key: String) -> VM {
-       if vmMap[key] == nil { vmMap[key] = VM.init() }
-       return vmMap[key] as! VM
-   }
+    func viewModel<VM: ViewModel>() -> VM { return viewModelFor(value: VM.self) }
+    
+    private func viewModelFor<VM: ViewModel>(value: any ViewModel.Type) -> VM {
+        let key = "\(value)"
+        if chase[key] == nil { chase[key] = VM() }
+        return chase[key] as! VM
+    }
 }

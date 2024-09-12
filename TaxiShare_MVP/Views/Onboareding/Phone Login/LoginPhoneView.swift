@@ -24,7 +24,7 @@ struct LoginPhoneView: View {
             HStack {
                 Spacer()
                 RightText(text: "כניסה עם הנייד".localized(),
-                          font: .title)
+                          font: .tTitle)
             }
             
             HStack {

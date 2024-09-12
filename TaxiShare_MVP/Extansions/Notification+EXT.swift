@@ -10,4 +10,5 @@ import Foundation
 extension Notification.Name {
     static let popToLogin = Notification.Name("popToLogin")
     static let apiError = Notification.Name("apiError")
+    static let deepLink = Notification.Name("deepLink")
 }

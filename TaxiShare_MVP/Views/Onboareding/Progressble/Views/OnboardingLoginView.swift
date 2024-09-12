@@ -118,7 +118,7 @@ struct OnboardingLoginView<VM: OnboardingViewModel>: View {
             HStack {
                 Spacer()
                 RightText(text: "יצירת חשבון".localized(),
-                          font: .title)
+                          font: .tTitle)
             }
             .padding(.bottom)
             

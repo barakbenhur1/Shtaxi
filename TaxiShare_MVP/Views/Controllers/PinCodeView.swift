@@ -33,7 +33,7 @@ struct PinCodeView: View, ProfileHandeler {
     }
     
     @ViewBuilder private func smsPinCodeView() -> some View {
-        SmsPinCodeView(vm: vmProvider.vm(),
+        SmsPinCodeView(vm: vmProvider.viewModel(),
                        phone: phone,
                        verificationID: verificationID,
                        onAppear: { view in holder.value = view },
@@ -42,7 +42,7 @@ struct PinCodeView: View, ProfileHandeler {
     }
     
     @ViewBuilder private func changePhone() -> some View {
-        PinCodeChangePhoneView(vm: vmProvider.vm(),
+        PinCodeChangePhoneView(vm: vmProvider.viewModel(),
                                phone: phone,
                                verificationID: $verificationID,
                                didType: { isDone in buttonEnabled = isDone },

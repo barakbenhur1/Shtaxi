@@ -11,7 +11,7 @@ import Firebase
 import FacebookLogin
 import GoogleSignIn
 
-class Authentication: Shared {
+class Authentication: Singleton {
     private override init() {}
     
     private func checkStatus() -> GoogleAuthModel? {

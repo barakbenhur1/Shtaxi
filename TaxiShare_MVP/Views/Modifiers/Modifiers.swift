@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ViewWithButton: ViewModifier {
-    @StateObject var buttonConfigManager = TButtonConfigManager(buttonConfig: .designed(dimantions: .full,
+    @StateObject var buttonConfigManager = TButtonConfigManager(config: .designed(dimantions: .full,
                                                                                         enabled: false))
     
     @State private var loading = false
@@ -19,7 +19,7 @@ struct ViewWithButton: ViewModifier {
     let onTapGesture: (() -> ())?
     
     func body(content: Content) -> some View {
-        let view = BaseViewWithBottomButton(buttonConfig: $buttonConfigManager.buttonConfig,
+        let view = BaseViewWithBottomButton(buttonConfig: $buttonConfigManager.config,
                                             loading: $loading,
                                             buttonText: buttonText,
                                             contant: content)
@@ -47,7 +47,7 @@ struct ViewWithButton: ViewModifier {
     
     private func configButton() {
         withAnimation(.smooth) {
-            buttonConfigManager.buttonConfig = .designed(dimantions: .full,
+            buttonConfigManager.config = .designed(dimantions: .full,
                                                          enabled: setButtonConfig)
         }
     }

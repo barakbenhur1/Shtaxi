@@ -35,7 +35,7 @@ struct SmsPinCodeView<VM: OnboardingViewModel>: ProfileUpdater {
             HStack {
                 Spacer()
                 RightText(text: "הכנסת קוד",
-                          font: .title)
+                          font: .tTitle)
             }
             .padding(.bottom, 4)
             

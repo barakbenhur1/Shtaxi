@@ -14,15 +14,17 @@ struct TypingAnimationView: View {
     private let main : DispatchQueue
     private let value: Int
     private let animationStage: Int
+    private let nextAnimtionDaley: Int
     private var isStandAlone: Bool { return value == -1 }
     
-    init(textToType: String, value: Int, animationStage: Int) {
+    init(textToType: String, value: Int, animationStage: Int, nextAnimtionDaley: Int) {
         self.queue = DispatchQueue.init(label: "work")
         self.main = DispatchQueue.main
-        self.textToType = textToType
+        self.textToType = String(textToType.reversed())
         self.animatedText = String(repeating: " ", count: textToType.count)
         self.value = value
         self.animationStage = animationStage
+        self.nextAnimtionDaley = nextAnimtionDaley
     }
     
     init(textToType: String) {
@@ -32,13 +34,13 @@ struct TypingAnimationView: View {
         self.animatedText = String(repeating: " ", count: textToType.count)
         self.value = -1
         self.animationStage = -1
+        self.nextAnimtionDaley = -1
     }
     
     var body: some View {
         let text = Text(animatedText)
             .foregroundStyle(Color(hex: "#343604"))
             .font(.caption2.bold().italic().monospaced())
-            .font(.title)
         
         if isStandAlone {
             text
@@ -46,25 +48,31 @@ struct TypingAnimationView: View {
         }
         else {
             text
-                .onChange(of: value, animateTextAsPartOfAnimationChain)
+                .shadow(color: Color(hex: "#444122"),
+                        radius: 2,
+                        x: value > 4 || value == 3 ? 0 : value > 3 ? -5 : value > 1 ? 5 : 0,
+                        y: value > 4 || value == 3 ? 0 : value > 1 ? 5 : 0)
+                .onChange(of: value,
+                          animateTextAsPartOfAnimationChain)
         }
     }
     
     func animateTextAsPartOfAnimationChain() {
         if value == animationStage {
+            animatedText = String(repeating: " ", count: textToType.count)
             animateText()
         }
-        else if value == animationStage + 1 {
-            retractText()
-        }
+//        else if value == animationStage + nextAnimtionDaley {
+//            retractText()
+//        }
     }
     
     func animateText() {
-        let time = isStandAlone ? 0.2 : 0.11
+        let time = isStandAlone ? 0.2 : 0.04
         for (index, character) in textToType.enumerated() {
             queue.asyncAfter(deadline: .now() + Double(index) * time) {
                 main.async {
-                    animatedText.replace(at: index,
+                    animatedText.replace(at: textToType.count - 1 - index,
                                          with: character)
                     
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -85,11 +93,11 @@ struct TypingAnimationView: View {
     func retractText() {
         for (index, _) in textToType.enumerated() {
             let time: CGFloat = {
-                let end = index == textToType.count - 1
                 if isStandAlone {
-                    return end ? 0.4 : 0.2
+                    let end = index == textToType.count - 1
+                    return end ? 0.4 : 0.5
                 }
-                return 0.11
+                return 0.08
             }()
             queue.asyncAfter(deadline: .now() + Double(index) * time) {
                 main.async {

@@ -16,7 +16,8 @@ extension Font {
     private static let bold = "_Bold"
     private static let semibold = "_SemiBold"
     
-    static let title: Font = .custom("\(notoHebrew)\(bold)", size: 32)
+    // MARK: Fonts
+    static let tTitle: Font = .custom("\(notoHebrew)\(bold)", size: 32)
     static let textHuge: Font = .custom("\(notoHebrew)\(regular)", size: 36)
     static let textHugeBold: Font = .custom("\(notoHebrew)\(bold)", size: 36)
     static let textBig: Font = .custom("\(notoHebrew)\(regular)", size: 20)

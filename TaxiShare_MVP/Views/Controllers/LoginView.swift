@@ -21,7 +21,7 @@ struct LoginView: View, ProfileHandeler {
     
     @State private var holder = Holder<String>()
     
-    private var vm: OnboardingViewModel { return vmProvider.vm() }
+    private var vm: OnboardingViewModel { return vmProvider.viewModel() }
     
     var body: some View {
         onboardingLoginView()
@@ -32,7 +32,7 @@ struct LoginView: View, ProfileHandeler {
     }
     
     @ViewBuilder private func onboardingLoginView() -> some View {
-        OnboardingLoginView(vm: vmProvider.vm(),
+        OnboardingLoginView(vm: vmProvider.viewModel(),
                             didSignup: didSignup,
                             didFillPhone: didFillPhone)
     }

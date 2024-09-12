@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class Router: Shared {
+class Router: Singleton {
     // Contains the possible destinations in our Router
     enum Route: Codable, Hashable {
         case login
@@ -18,10 +18,10 @@ class Router: Shared {
     }
     
     enum Root: Codable, Hashable {
-        case splash, login(message: String?), onboarding(screens: [OnboardingProgressble]), map
+        case /*splash*/ login(message: String?), onboarding(screens: [OnboardingProgressble]), map
     }
     
-    @Published var root: Root = .splash
+    @Published var root: Root = .login(message: nil)
     @Published var path: NavigationPath = NavigationPath()
     
     @Published private var navigationAnimation: Bool = false {

@@ -14,6 +14,7 @@ protocol ViewModel: ObservableObject {
 }
 
 extension ViewModel {
+    var allowed: Bool { return true }
     var binding: Binding<Self> {
         return Binding<Self> {
             return self

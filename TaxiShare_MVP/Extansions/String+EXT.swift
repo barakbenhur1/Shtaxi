@@ -78,15 +78,19 @@ extension String {
             return nil
         }
     }
-    
-    //    func decrypt() -> String? {
-    //        do {
-    //            guard let outputData = data(using: .utf8) else { throw "data corrupted" }
-    //            let decryptedData = try CryptoManager.decryptData(data: outputData)
-    //            return String(data: decryptedData, encoding: .utf8)
-    //        } catch {
-    //            print(error.localizedDescription)
-    //            return nil
-    //        }
-    //    }
+}
+
+extension StringProtocol {
+    subscript(offset: Int) -> Character { self[index(startIndex, offsetBy: offset)] }
+    subscript(range: Range<Int>) -> SubSequence {
+        let startIndex = index(self.startIndex, offsetBy: range.lowerBound)
+        return self[startIndex..<index(startIndex, offsetBy: range.count)]
+    }
+    subscript(range: ClosedRange<Int>) -> SubSequence {
+        let startIndex = index(self.startIndex, offsetBy: range.lowerBound)
+        return self[startIndex..<index(startIndex, offsetBy: range.count)]
+    }
+    subscript(range: PartialRangeFrom<Int>) -> SubSequence { self[index(startIndex, offsetBy: range.lowerBound)...] }
+    subscript(range: PartialRangeThrough<Int>) -> SubSequence { self[...index(startIndex, offsetBy: range.upperBound)] }
+    subscript(range: PartialRangeUpTo<Int>) -> SubSequence { self[..<index(startIndex, offsetBy: range.upperBound)] }
 }

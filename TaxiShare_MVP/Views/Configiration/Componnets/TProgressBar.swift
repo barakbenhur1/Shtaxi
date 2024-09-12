@@ -41,6 +41,7 @@ struct TProgressBar: View {
 struct TProgressBarView: View {
     @Binding var value: Int
     let total: Int
+    var colors: [Color] = [.progressStart, .progressEnd]
     
     var body: some View {
         GeometryReader { geometry in
@@ -53,7 +54,7 @@ struct TProgressBarView: View {
                 
                 RoundedRectangle(cornerRadius: 79)
                     .fill(
-                        LinearGradient(gradient: Gradient(colors: [.progressStart, .progressEnd]),
+                        LinearGradient(gradient: Gradient(colors: colors),
                                        startPoint: .leading,
                                        endPoint: .trailing)
                     )
