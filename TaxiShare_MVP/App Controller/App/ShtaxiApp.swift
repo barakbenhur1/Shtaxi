@@ -19,7 +19,7 @@ struct ShtaxiApp: App {
     @StateObject private var manager = CoreDataManager.shared
     @StateObject private var vmProvider = ViewModelProvider.shared
     @StateObject private var profileSync = ProfileSyncHendeler.shared
-    @StateObject private var launchScreenManager = LaunchScreenStateManager()
+    @StateObject private var launchScreenManager = LaunchScreenStateManager.shared
     
     @State private var showError = false
     
@@ -54,9 +54,7 @@ struct ShtaxiApp: App {
                                  actionText: "הבנתי",
                                  message: { Text("אנא נסה שנית...".localized()) })
                 
-                if launchScreenManager.state != .finished {
-                    LaunchScreenView()
-                }
+                if launchScreenManager.state != .finished { LaunchScreenView() }
             }
             .environmentObject(launchScreenManager)
         }

@@ -17,6 +17,8 @@ struct LaunchScreenView: View {
     @State private var startFadeoutAnimation = false // Mark 2
     @State private var drive = false
     
+    var translucent: Bool = false
+    
     private let main = DispatchQueue.main
     
     @ViewBuilder
@@ -24,9 +26,9 @@ struct LaunchScreenView: View {
         Text("שטקסי")
             .foregroundStyle(Color(hex: "#686868"))
             .font(.tTitle)
-            .opacity(firstAnimation ? 0.4 : 0.04)
-            .padding(.bottom, 214)
-            .padding(.leading, -110)
+            .opacity(firstAnimation ? 0.8 : 0.04)
+            .padding(.bottom, 200)
+            .padding(.leading, -106)
     }
     
     @ViewBuilder
@@ -35,22 +37,25 @@ struct LaunchScreenView: View {
             .resizable()
             .scaledToFit()
             .opacity(0.8)
-            .frame(width: 80,
-                   height: 80)
+            .frame(width: 74,
+                   height: 74)
             .rotationEffect(Angle(degrees: degreesRotating)) // Mark 4
             .scaleEffect(secondAnimation ? 0 : 1) // Mark 4
     }
     
     @ViewBuilder
     private var taxi: some View {  // Mark 3
-        Image(!drive ? "taxi_launch" : "taxi_launch_off")
-            .resizable()
-            .scaledToFit()
-            .frame(height: 400)
-            .frame(width: !startFadeoutAnimation ? 420 : 400)
-            .opacity(firstAnimation ? 0.4 : 0.02)
-            .padding(.leading, 18)
-            .padding(.bottom, 176)
+        GeometryReader {
+            let size = $0.size
+            Image(drive ? "taxi_launch_off" : "taxi_launch")
+                .resizable()
+                .scaledToFit()
+                .frame(height: 400)
+                .frame(width: size.width - 18)
+                .opacity(firstAnimation ? 0.4 : 0.02)
+                .padding(.leading, 18)
+        }
+        .padding(.top, 146)
     }
     
     @ViewBuilder

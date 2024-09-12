@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class LaunchScreenStateManager: ObservableObject {
+final class LaunchScreenStateManager: Singleton {
     enum LaunchScreenStep {
         case firstStep
         case secondStep
@@ -16,6 +16,10 @@ final class LaunchScreenStateManager: ObservableObject {
     
     @MainActor @Published private(set) var state: LaunchScreenStep = .firstStep
     @Published var sleep: CGFloat = 1
+    
+    @MainActor func reset() {
+        state = .firstStep
+    }
     
     @MainActor func dismiss() {
         Task {

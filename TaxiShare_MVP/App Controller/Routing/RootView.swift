@@ -15,6 +15,7 @@ struct RootView: View {
     @EnvironmentObject private var launchScreenManager: LaunchScreenStateManager
     
     @State private var showAlert = true
+    @State private var intilize = true
     
     private let main = DispatchQueue.main
     
@@ -23,6 +24,7 @@ struct RootView: View {
             switch router.root {
             case .login(let message):
                 LoginView()
+                    .onAppear { showAlert = message != nil }
                     .customAlert("הודעה מערכת",
                                  isPresented: $showAlert,
                                  actionText: "הבנתי",
@@ -32,14 +34,13 @@ struct RootView: View {
                         Text(message)
                     }
                 }
-                .onAppear { showAlert = message != nil }
             case .onboarding(let screens): /// won't happen
                 OnboardingProgressbleContainerView(screens: screens)
             case .map:
                 MapView()
             }
         }
-        .task { initalScreen() }
+        .onAppear { initalScreen() }
     }
     
     private func cleanLogin() {
@@ -47,8 +48,10 @@ struct RootView: View {
     }
     
     private func initalScreen() {
+        guard intilize else { return }
+        intilize = false
         profileSync.handleLogin(profile: profiles.last,
-                                didLogin: { _ in  main.asyncAfter(deadline: .now() + 4) { launchScreenManager.dismiss() } } )
+                                didLogin: { _ in  main.asyncAfter(deadline: .now() + 5) { launchScreenManager.dismiss() } } )
     }
 }
 
