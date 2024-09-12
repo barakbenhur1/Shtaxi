@@ -87,7 +87,7 @@ struct LaunchScreenView: View {
                   updateAnimation)
         .opacity(startFadeoutAnimation ? 0 : 1)
         .onAppear {
-            withAnimation(.linear(duration: 0.7)
+            withAnimation(.linear(duration: 0.6)
                 .repeatForever(autoreverses: false)) {
                     degreesRotating = 360
                 }
