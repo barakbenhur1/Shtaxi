@@ -15,6 +15,9 @@ struct LaunchScreenView: View {
     @State private var firstAnimation = false  // Mark 2
     @State private var secondAnimation = false // Mark 2
     @State private var startFadeoutAnimation = false // Mark 2
+    @State private var drive = false
+    
+    private let main = DispatchQueue.main
     
     @ViewBuilder
     private var title: some View {
@@ -40,11 +43,11 @@ struct LaunchScreenView: View {
     
     @ViewBuilder
     private var taxi: some View {  // Mark 3
-        Image("taxi_launch")
+        Image(!drive ? "taxi_launch" : "taxi_launch_off")
             .resizable()
             .scaledToFit()
             .frame(height: 400)
-            .frame(width: !secondAnimation ? 420 : 400)
+            .frame(width: !startFadeoutAnimation ? 420 : 400)
             .opacity(firstAnimation ? 0.4 : 0.02)
             .padding(.leading, 18)
             .padding(.bottom, 176)
@@ -56,12 +59,6 @@ struct LaunchScreenView: View {
             .opacity(0.8)
             .ignoresSafeArea()
     }
-    
-    private let animationTimer = Timer // Mark 5
-        .publish(every: 0.5,
-                 on: .current,
-                 in: .common)
-        .autoconnect()
     
     var body: some View {
         ZStack {
@@ -76,45 +73,48 @@ struct LaunchScreenView: View {
                         x: -2,
                         y: 2)
             }
-            .offset(x: secondAnimation ? 400 : 0)
+            .offset(x: secondAnimation ? 600 : 0)
         }
         .background(.white)
         .ignoresSafeArea()
         .task { updateAnimation() }
-        .onReceive(animationTimer) { _ in updateAnimation() }
+        .onChange(of: launchScreenState.state,
+                  updateAnimation)
         .opacity(startFadeoutAnimation ? 0 : 1)
         .onAppear {
             withAnimation(.linear(duration: 0.7)
                 .repeatForever(autoreverses: false)) {
                     degreesRotating = 360
                 }
-            withAnimation(.easeInOut(duration: 4)
-                .repeatForever(autoreverses: true)) {
-                    firstAnimation = true
-                }
+            withAnimation(.easeInOut(duration: 4)) {
+                firstAnimation = true
+            }
         }
     }
     
     private func updateAnimation() { // Mark 5
         switch launchScreenState.state {
-        case .firstStep, .finished:
-            break
+        case .firstStep:
+            launchScreenState.sleep = 2.94
         case .secondStep:
-            animationTimer
-                .upstream
-                .connect()
-                .cancel()
-            if secondAnimation == false {
-                withAnimation(.linear(duration: 0.34)) {
-                    secondAnimation = true
-                }
-                DispatchQueue.main.asyncAfter(wallDeadline: .now() + 1) {
-                    withAnimation(.easeInOut(duration: 2)) {
-                        startFadeoutAnimation = true
+            withAnimation(.easeOut(duration: 0.8)) {
+                drive = true
+            }
+            main.asyncAfter(wallDeadline: .now() + 0.74) {
+                if secondAnimation == false {
+                    withAnimation(.linear(duration: 0.6)) {
+                        secondAnimation = true
+                    }
+                    main.asyncAfter(wallDeadline: .now() + 0.4) {
+                        withAnimation(.easeInOut(duration: 1.8)) {
+                            startFadeoutAnimation = true
+                        }
                     }
                 }
             }
+            
+        case .finished:
+            break
         }
     }
-    
 }

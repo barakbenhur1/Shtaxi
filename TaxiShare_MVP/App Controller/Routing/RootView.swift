@@ -46,10 +46,9 @@ struct RootView: View {
         router.popToRoot()
     }
     
-    
     private func initalScreen() {
         profileSync.handleLogin(profile: profiles.last,
-                                didLogin: { _ in  main.asyncAfter(deadline: .now() + 10) { launchScreenManager.dismiss() } } )
+                                didLogin: { _ in  main.asyncAfter(deadline: .now() + 4) { launchScreenManager.dismiss() } } )
     }
 }
 
