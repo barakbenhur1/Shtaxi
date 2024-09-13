@@ -27,35 +27,35 @@ struct LaunchScreenView: View {
             .foregroundStyle(Color(hex: "#686868"))
             .font(.tTitle)
             .opacity(firstAnimation ? 0.8 : 0.04)
-            .padding(.bottom, 200)
-            .padding(.leading, -106)
     }
     
     @ViewBuilder
     private var wheel: some View {  // Mark 3
-        Image(systemName: "circle.grid.hex.fill")
-            .resizable()
-            .scaledToFit()
-            .opacity(0.8)
-            .frame(width: 74,
-                   height: 74)
-            .rotationEffect(Angle(degrees: degreesRotating)) // Mark 4
-            .scaleEffect(secondAnimation ? 0 : 1) // Mark 4
+            Image(systemName: "circle.grid.hex.fill")
+                .resizable()
+                .scaledToFit()
+                .opacity(0.8)
+                .rotationEffect(Angle(degrees: degreesRotating)) // Mark 4
+                .scaleEffect(secondAnimation ? 0 : 1) // Mark 4
     }
     
     @ViewBuilder
     private var taxi: some View {  // Mark 3
         GeometryReader {
             let size = $0.size
+            let height = size.height * 0.51716738199
+            let paddingTop = size.width / size.height < 0.6 ? height / 4 + 17 : size.width / size.height < 0.7 ? height / 4 - 34 :   height / 4 - 53
+            let width = size.width / size.height < 0.6 ?  size.width - 17 :  size.width / size.height < 0.7 ? size.width - 34 : size.width - 46
+            let paddingLeading: CGFloat = size.width / size.height < 0.6 ? 17 :  size.width / size.height < 0.7 ? 34 : 46
             Image(drive ? "taxi_launch_off" : "taxi_launch")
                 .resizable()
                 .scaledToFit()
-                .frame(height: 400)
-                .frame(width: size.width - 18)
+                .frame(height: height)
+                .frame(width: width)
                 .opacity(firstAnimation ? 0.4 : 0.02)
-                .padding(.leading, 18)
+                .padding(.leading, paddingLeading)
+                .padding(.top, paddingTop)
         }
-        .padding(.top, 146)
     }
     
     @ViewBuilder
@@ -68,17 +68,25 @@ struct LaunchScreenView: View {
     var body: some View {
         ZStack {
             backgroundColor  // Mark 3
-            ZStack {
-                title
-                ZStack {
-                    taxi
-                    wheel  // Mark 3
+            GeometryReader {
+                let size = $0.size
+                ZStack(alignment: .center) {
+                    let paddingBottom: CGFloat = size.width / size.height < 0.6 ? 200 : size.width / size.height < 0.6 ? 420 : 500
+                    title
+                        .padding(.bottom, paddingBottom)
+                        .padding(.leading, -106)
+                    ZStack {
+                        taxi
+                        wheel  // Mark 3
+                            .frame(width: size.width / 5,
+                                   height: size.width / 5)
+                    }
+                    .shadow(radius: 1,
+                            x: -2,
+                            y: 2)
                 }
-                .shadow(radius: 1,
-                        x: -2,
-                        y: 2)
+                .offset(x: secondAnimation ? size.width : 0)
             }
-            .offset(x: secondAnimation ? 600 : 0)
         }
         .background(.white)
         .ignoresSafeArea()
@@ -87,7 +95,7 @@ struct LaunchScreenView: View {
                   updateAnimation)
         .opacity(startFadeoutAnimation ? 0 : 1)
         .onAppear {
-            withAnimation(.linear(duration: 0.6)
+            withAnimation(.linear(duration: 0.7)
                 .repeatForever(autoreverses: false)) {
                     degreesRotating = 360
                 }
