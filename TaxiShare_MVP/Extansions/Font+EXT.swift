@@ -25,8 +25,10 @@ extension Font {
     static let textCritical: Font = .custom("\(notoHebrew)\(bold)", size: 18)
     static let button: Font = .custom("\(notoHebrew)\(semibold)", size: 12)
     static let textMedium: Font = .custom("\(notoHebrew)\(regular)", size: 16)
+    static let textMediumSemiBold: Font = .custom("\(notoHebrew)\(semibold)", size: 16)
     static let textMediumBold: Font = .custom("\(notoHebrew)\(bold)", size: 16)
     static let textSmall: Font = .custom("\(notoHebrew)\(regular)", size: 12)
+    static let text14: Font = .custom("\(notoHebrew)\(regular)", size: 14)
     static let none: Font = .custom("", size: 0)
     
 }

@@ -11,7 +11,7 @@ struct SideMenu<Title: View, Content: View>: View {
     @Binding var isShowing: Bool
     var title: Title? = nil
     let content: Content
-    let edge: Edge = .leading
+    let edge: Edge
     let spaceFromEdge: CGFloat = 140
     
     var body: some View {
@@ -23,7 +23,7 @@ struct SideMenu<Title: View, Content: View>: View {
                     .onTapGesture {
                         isShowing.toggle()
                     }
-                let view = VStack() {
+                let view = VStack {
                     if let title {
                         title
                             .padding(.bottom, 10)
@@ -36,13 +36,17 @@ struct SideMenu<Title: View, Content: View>: View {
                 
                 switch edge {
                 case .leading:
-                    view.padding(.trailing, spaceFromEdge)
+                    view
+                        .padding(.trailing, spaceFromEdge)
                 case .trailing:
-                    view.padding(.leading, spaceFromEdge)
+                    view
+                        .padding(.leading, spaceFromEdge)
                 case .top:
-                    view.padding(.bottom, spaceFromEdge)
+                    view
+                        .padding(.bottom, spaceFromEdge)
                 case .bottom:
-                    view.padding(.top, spaceFromEdge)
+                    view
+                        .padding(.top, spaceFromEdge)
                 }
             }
         }

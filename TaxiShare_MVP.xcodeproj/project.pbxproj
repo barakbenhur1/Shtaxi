@@ -29,6 +29,14 @@
 		4FE5C5E62C90B15D001C41F0 /* CoreDataHndeler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE5C5E52C90B15D001C41F0 /* CoreDataHndeler.swift */; };
 		4FE5C5EC2C930541001C41F0 /* LaunchScreenStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE5C5EB2C930541001C41F0 /* LaunchScreenStateManager.swift */; };
 		4FE5C5EE2C930616001C41F0 /* LuanchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE5C5ED2C930615001C41F0 /* LuanchScreen.swift */; };
+		4FE5C5F02C9470D5001C41F0 /* smoke.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4FE5C5EF2C9470D4001C41F0 /* smoke.gif */; };
+		4FE5C5F72C94723B001C41F0 /* GifImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE5C5F62C94723B001C41F0 /* GifImageView.swift */; };
+		4FE5C5FB2CAAEFA8001C41F0 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE5C5FA2CAAEFA8001C41F0 /* MapView.swift */; };
+		4FE5C5FE2CAEF771001C41F0 /* CustomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE5C5FD2CAEF771001C41F0 /* CustomSheetView.swift */; };
+		4FE5C6002CAF0180001C41F0 /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE5C5FF2CAF0180001C41F0 /* SwiftUIView.swift */; };
+		4FE5C6032CAF4B31001C41F0 /* MapSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE5C6022CAF4B31001C41F0 /* MapSheetView.swift */; };
+		4FE5C6052CAF5A6D001C41F0 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE5C6042CAF5A6D001C41F0 /* TableView.swift */; };
+		4FE5C6072CB05CCC001C41F0 /* DestanationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE5C6062CB05CCC001C41F0 /* DestanationSearchView.swift */; };
 		4FF443062C8BBABC003E5CA7 /* TButtonConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF443052C8BBABC003E5CA7 /* TButtonConfigManager.swift */; };
 		4FF443082C8BC35E003E5CA7 /* Font+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF443072C8BC35E003E5CA7 /* Font+EXT.swift */; };
 		4FF4430A2C8DA911003E5CA7 /* PhoneAuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF443092C8DA911003E5CA7 /* PhoneAuthModel.swift */; };
@@ -78,7 +86,6 @@
 		4FF5B1B82C851BB400176585 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1432C851BB300176585 /* FilterView.swift */; };
 		4FF5B1B92C851BB400176585 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1442C851BB300176585 /* ImagePicker.swift */; };
 		4FF5B1BA2C851BB400176585 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1452C851BB300176585 /* LoginView.swift */; };
-		4FF5B1BB2C851BB400176585 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1462C851BB300176585 /* MapView.swift */; };
 		4FF5B1BC2C851BB400176585 /* MapViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1472C851BB300176585 /* MapViewViewModel.swift */; };
 		4FF5B1BD2C851BB400176585 /* PinCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1482C851BB300176585 /* PinCodeView.swift */; };
 		4FF5B1BE2C851BB400176585 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF5B1492C851BB300176585 /* RootView.swift */; };
@@ -159,6 +166,14 @@
 		4FE5C5E52C90B15D001C41F0 /* CoreDataHndeler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHndeler.swift; sourceTree = "<group>"; };
 		4FE5C5EB2C930541001C41F0 /* LaunchScreenStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenStateManager.swift; sourceTree = "<group>"; };
 		4FE5C5ED2C930615001C41F0 /* LuanchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuanchScreen.swift; sourceTree = "<group>"; };
+		4FE5C5EF2C9470D4001C41F0 /* smoke.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = smoke.gif; sourceTree = "<group>"; };
+		4FE5C5F62C94723B001C41F0 /* GifImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifImageView.swift; sourceTree = "<group>"; };
+		4FE5C5FA2CAAEFA8001C41F0 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		4FE5C5FD2CAEF771001C41F0 /* CustomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSheetView.swift; sourceTree = "<group>"; };
+		4FE5C5FF2CAF0180001C41F0 /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
+		4FE5C6022CAF4B31001C41F0 /* MapSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSheetView.swift; sourceTree = "<group>"; };
+		4FE5C6042CAF5A6D001C41F0 /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
+		4FE5C6062CB05CCC001C41F0 /* DestanationSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestanationSearchView.swift; sourceTree = "<group>"; };
 		4FF443052C8BBABC003E5CA7 /* TButtonConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TButtonConfigManager.swift; sourceTree = "<group>"; };
 		4FF443072C8BC35E003E5CA7 /* Font+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+EXT.swift"; sourceTree = "<group>"; };
 		4FF443092C8DA911003E5CA7 /* PhoneAuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneAuthModel.swift; sourceTree = "<group>"; };
@@ -212,7 +227,6 @@
 		4FF5B1432C851BB300176585 /* FilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		4FF5B1442C851BB300176585 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		4FF5B1452C851BB300176585 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		4FF5B1462C851BB300176585 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		4FF5B1472C851BB300176585 /* MapViewViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewViewModel.swift; sourceTree = "<group>"; };
 		4FF5B1482C851BB300176585 /* PinCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeView.swift; sourceTree = "<group>"; };
 		4FF5B1492C851BB300176585 /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -359,6 +373,23 @@
 			path = Body;
 			sourceTree = "<group>";
 		};
+		4FE5C5FC2CAEF74B001C41F0 /* Custom Sheet View */ = {
+			isa = PBXGroup;
+			children = (
+				4FE5C5FD2CAEF771001C41F0 /* CustomSheetView.swift */,
+			);
+			path = "Custom Sheet View";
+			sourceTree = "<group>";
+		};
+		4FE5C6012CAF4B14001C41F0 /* Map Sheet View */ = {
+			isa = PBXGroup;
+			children = (
+				4FE5C6022CAF4B31001C41F0 /* MapSheetView.swift */,
+				4FE5C6062CB05CCC001C41F0 /* DestanationSearchView.swift */,
+			);
+			path = "Map Sheet View";
+			sourceTree = "<group>";
+		};
 		4FF4430B2C8DD630003E5CA7 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
@@ -411,7 +442,7 @@
 			children = (
 				4FF5B1452C851BB300176585 /* LoginView.swift */,
 				4FF5B1482C851BB300176585 /* PinCodeView.swift */,
-				4FF5B1462C851BB300176585 /* MapView.swift */,
+				4FE5C5FA2CAAEFA8001C41F0 /* MapView.swift */,
 				4FF5B1432C851BB300176585 /* FilterView.swift */,
 				4FF5B14B2C851BB300176585 /* SingUpView.swift */,
 			);
@@ -468,6 +499,7 @@
 				4FF5B0D02C851B6C00176585 /* TaxiShare_MVP.xcdatamodeld */,
 				4FF5B1022C851BB300176585 /* Localizable.xcstrings */,
 				4FF5B1522C851BB300176585 /* Assets.xcassets */,
+				4FE5C5EF2C9470D4001C41F0 /* smoke.gif */,
 				4FF5B12A2C851BB300176585 /* Fonts */,
 				4FF5B1592C851BB300176585 /* Extansions */,
 				4FF443342C8E19D2003E5CA7 /* Helpers */,
@@ -513,6 +545,8 @@
 		4FF5B0FB2C851BB200176585 /* Componnets */ = {
 			isa = PBXGroup;
 			children = (
+				4FE5C6012CAF4B14001C41F0 /* Map Sheet View */,
+				4FE5C5FC2CAEF74B001C41F0 /* Custom Sheet View */,
 				4FF5B0F62C851BB200176585 /* Configs */,
 				4FF4430B2C8DD630003E5CA7 /* Animations */,
 				4F36D1A72C89C6E30025E91A /* Logo */,
@@ -527,6 +561,8 @@
 				4FF5B13E2C851BB300176585 /* TPinCodeView.swift */,
 				4FF5B13F2C851BB300176585 /* TTextFieldView.swift */,
 				4FF5B0FA2C851BB200176585 /* TSelectableButton.swift */,
+				4FE5C5F62C94723B001C41F0 /* GifImageView.swift */,
+				4FE5C6042CAF5A6D001C41F0 /* TableView.swift */,
 			);
 			path = Componnets;
 			sourceTree = "<group>";
@@ -632,6 +668,7 @@
 				4FD3CFCC2C8996AB00910867 /* URLRequest+EXT.swift */,
 				4FF443072C8BC35E003E5CA7 /* Font+EXT.swift */,
 				4F14F11A2C8F1DEC007616CA /* Notification+EXT.swift */,
+				4FE5C5FF2CAF0180001C41F0 /* SwiftUIView.swift */,
 			);
 			path = Extansions;
 			sourceTree = "<group>";
@@ -765,6 +802,7 @@
 				4FF5B1E12C851D9200176585 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4FF5B1EA2C851DA900176585 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 				4FF5B1EF2C851DBC00176585 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				4FE5C5F12C9471A6001C41F0 /* XCRemoteSwiftPackageReference "SwiftyGif" */,
 			);
 			productRefGroup = 4FF5B0C32C851B6A00176585 /* Products */;
 			projectDirPath = "";
@@ -782,6 +820,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FE5C5F02C9470D5001C41F0 /* smoke.gif in Resources */,
 				4FC702772C85307200C85CE9 /* NotoSansHebrew-VariableFont_wdth,wght.ttf in Resources */,
 				4FF5B1C52C851BB400176585 /* Assets.xcassets in Resources */,
 				4FF5B17D2C851BB400176585 /* Localizable.xcstrings in Resources */,
@@ -811,6 +850,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F3C94452C851F5F00EBA6A2 /* Network.swift in Sources */,
+				4FE5C5FB2CAAEFA8001C41F0 /* MapView.swift in Sources */,
 				4FF5B1C42C851BB400176585 /* UserLoginManager.swift in Sources */,
 				4FD3CFC92C888D9E00910867 /* UpdateBody.swift in Sources */,
 				4FF5B1A92C851BB400176585 /* OnboardingNameView.swift in Sources */,
@@ -837,7 +877,6 @@
 				4FF443242C8E0D45003E5CA7 /* MapDataSource.swift in Sources */,
 				4FF5B1CE2C851BB400176585 /* Modifiers.swift in Sources */,
 				4FF443202C8E0CA7003E5CA7 /* MapUseCases.swift in Sources */,
-				4FF5B1BB2C851BB400176585 /* MapView.swift in Sources */,
 				4FF5B1DD2C851BB400176585 /* Response.swift in Sources */,
 				4FF5B1792C851BB400176585 /* TSelectableButton.swift in Sources */,
 				4FF5B1CC2C851BB400176585 /* AppDelegate.swift in Sources */,
@@ -845,6 +884,7 @@
 				4FF443112C8E0707003E5CA7 /* OnboardingRepository.swift in Sources */,
 				4FF5B1D22C851BB400176585 /* ShtaxiApp.swift in Sources */,
 				4F3C94462C851F5F00EBA6A2 /* OnboardringDataSource.swift in Sources */,
+				4FE5C6002CAF0180001C41F0 /* SwiftUIView.swift in Sources */,
 				4FF4430F2C8DF1DA003E5CA7 /* TypingAnimationView.swift in Sources */,
 				4FD3CFCB2C889FF600910867 /* UserIdBody.swift in Sources */,
 				4FF5B1BA2C851BB400176585 /* LoginView.swift in Sources */,
@@ -855,7 +895,9 @@
 				4FF5B1BC2C851BB400176585 /* MapViewViewModel.swift in Sources */,
 				4FF5B1B82C851BB400176585 /* FilterView.swift in Sources */,
 				4FE5C5DC2C8F6CC2001C41F0 /* Repository.swift in Sources */,
+				4FE5C6072CB05CCC001C41F0 /* DestanationSearchView.swift in Sources */,
 				4FF4432A2C8E1182003E5CA7 /* CoreDataUseCases.swift in Sources */,
+				4FE5C5F72C94723B001C41F0 /* GifImageView.swift in Sources */,
 				4FF5B1AE2C851BB400176585 /* OnboardingProgressbleManegerView.swift in Sources */,
 				4FF443262C8E10F8003E5CA7 /* CoreDataRepository.swift in Sources */,
 				4FF5B1A42C851BB400176585 /* LoginPhoneView.swift in Sources */,
@@ -867,11 +909,13 @@
 				4FF5B1C02C851BB400176585 /* SingUpView.swift in Sources */,
 				4FF5B1AC2C851BB400176585 /* OnboardingProgressbleContainerView.swift in Sources */,
 				4FF5B1BF2C851BB400176585 /* SideMenu.swift in Sources */,
+				4FE5C6032CAF4B31001C41F0 /* MapSheetView.swift in Sources */,
 				4FF443222C8E0D18003E5CA7 /* MapRepositoryImpl.swift in Sources */,
 				4FF5B1C82C851BB400176585 /* Color+EXT.swift in Sources */,
 				4FE5C5E02C8F6EC4001C41F0 /* DataSource.swift in Sources */,
 				4FE5C5E62C90B15D001C41F0 /* CoreDataHndeler.swift in Sources */,
 				4FF5B1B92C851BB400176585 /* ImagePicker.swift in Sources */,
+				4FE5C6052CAF5A6D001C41F0 /* TableView.swift in Sources */,
 				4FF5B17E2C851BB400176585 /* LocationService.swift in Sources */,
 				4FF5B1A62C851BB400176585 /* PinCodeChangePhoneView.swift in Sources */,
 				4F14F11B2C8F1DEC007616CA /* Notification+EXT.swift in Sources */,
@@ -904,6 +948,7 @@
 				4FE5C5DA2C8F6C9E001C41F0 /* USeCase.swift in Sources */,
 				4F36D1AA2C89C7650025E91A /* Logo3DView.swift in Sources */,
 				4F2AD02F2C87FF50004A32E5 /* SmsPinCodeView.swift in Sources */,
+				4FE5C5FE2CAEF771001C41F0 /* CustomSheetView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1068,7 +1113,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TaxiShare_MVP/TaxiShare_MVP.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = UNVTN9W8HQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1100,7 +1145,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TaxiShare_MVP/TaxiShare_MVP.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 24;
+				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = UNVTN9W8HQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1243,6 +1288,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4FE5C5F12C9471A6001C41F0 /* XCRemoteSwiftPackageReference "SwiftyGif" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kirualex/SwiftyGif.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.4.5;
+			};
+		};
 		4FF5B1E12C851D9200176585 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";

@@ -15,7 +15,7 @@ final class LaunchScreenStateManager: Singleton {
     }
     
     @MainActor @Published private(set) var state: LaunchScreenStep = .firstStep
-    @Published var sleep: CGFloat = 1
+    @Published var dissmisAnimationDuration: CGFloat = 1
     
     @MainActor func reset() {
         state = .firstStep
@@ -25,7 +25,7 @@ final class LaunchScreenStateManager: Singleton {
         Task {
             state = .secondStep
             
-            try? await Task.sleep(for: Duration.seconds(sleep))
+            try? await Task.sleep(for: Duration.seconds(dissmisAnimationDuration))
             
            state = .finished
         }

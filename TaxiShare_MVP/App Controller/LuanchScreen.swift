@@ -26,7 +26,7 @@ struct LaunchScreenView: View {
         Text("שטקסי")
             .foregroundStyle(Color(hex: "#686868"))
             .font(.tTitle)
-            .opacity(firstAnimation ? 0.8 : 0.04)
+            .opacity(firstAnimation ? 0.8 : 0.02)
     }
     
     @ViewBuilder
@@ -59,6 +59,13 @@ struct LaunchScreenView: View {
     }
     
     @ViewBuilder
+    private var smoke: some View {
+        GifImageView("smoke")
+            .background(Color.clear)
+            .opacity(secondAnimation ? 1 : 0)
+    }
+    
+    @ViewBuilder
     private var backgroundColor: some View {  // Mark 3
         Color(hex: "#f6c600")
             .opacity(0.8)
@@ -68,10 +75,11 @@ struct LaunchScreenView: View {
     var body: some View {
         ZStack {
             backgroundColor  // Mark 3
+//            smoke
             GeometryReader {
                 let size = $0.size
                 ZStack(alignment: .center) {
-                    let paddingBottom: CGFloat = size.width / size.height < 0.6 ? 200 : size.width / size.height < 0.6 ? 420 : 500
+                    let paddingBottom: CGFloat = size.width / size.height < 0.6 ? 200 : size.width / size.height < 0.7 ? 420 : 500
                     title
                         .padding(.bottom, paddingBottom)
                         .padding(.leading, -106)
@@ -85,7 +93,7 @@ struct LaunchScreenView: View {
                             x: -2,
                             y: 2)
                 }
-                .offset(x: secondAnimation ? size.width : 0)
+                .offset(x: secondAnimation ? size.width + 40 : 0)
             }
         }
         .background(.white)
@@ -99,7 +107,7 @@ struct LaunchScreenView: View {
                 .repeatForever(autoreverses: false)) {
                     degreesRotating = 360
                 }
-            withAnimation(.easeInOut(duration: 4)) {
+            withAnimation(.easeInOut(duration: 5)) {
                 firstAnimation = true
             }
         }
@@ -108,24 +116,25 @@ struct LaunchScreenView: View {
     private func updateAnimation() { // Mark 5
         switch launchScreenState.state {
         case .firstStep:
-            launchScreenState.sleep = 2.94
+            launchScreenState.dissmisAnimationDuration = 7.74
         case .secondStep:
-            withAnimation(.easeOut(duration: 0.8)) {
-                drive = true
-            }
-            main.asyncAfter(wallDeadline: .now() + 0.74) {
-                if secondAnimation == false {
-                    withAnimation(.linear(duration: 0.6)) {
-                        secondAnimation = true
-                    }
-                    main.asyncAfter(wallDeadline: .now() + 0.4) {
-                        withAnimation(.easeInOut(duration: 1.8)) {
-                            startFadeoutAnimation = true
+            main.asyncAfter(deadline: .now() + 5) {
+                withAnimation(.easeOut(duration: 0.8)) {
+                    drive = true
+                }
+                main.asyncAfter(wallDeadline: .now() + 0.74) {
+                    if secondAnimation == false {
+                        withAnimation(.interpolatingSpring(duration: 0.6)) {
+                            secondAnimation = true
+                        }
+                        main.asyncAfter(wallDeadline: .now() + 0.4) {
+                            withAnimation(.easeInOut(duration: 1.6)) {
+                                startFadeoutAnimation = true
+                            }
                         }
                     }
                 }
             }
-            
         case .finished:
             break
         }

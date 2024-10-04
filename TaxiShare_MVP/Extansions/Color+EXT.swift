@@ -10,6 +10,7 @@ import SwiftUI
 extension Color {
     static let tBlue: Color = Color(hex: "#0C8CE9")
     static let tGray: Color = Color(hex: "#ACACAC")
+    static let saperatorGrey: Color = Color(hex: "#D9D9D9")
     static let lightText: Color = Color(hex: "#FAFAFA")
     static let darkText: Color = Color(hex: "#131313")
     static let infoText: Color = Color(hex: "#7B7B7B")
@@ -17,6 +18,8 @@ extension Color {
     static let progressEnd: Color = Color(hex: "#0094FF")
     static let inputFiled: Color = Color(hex: "#727272")
     static let tYellow: Color = Color(hex: "#FFC100")
+    static let gBlack: Color = Color(hex: "#292929")
+    static let gWhite: Color = Color(hex: "#FAFAFA")
     
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

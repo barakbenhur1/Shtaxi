@@ -49,6 +49,8 @@
 	<false/>
 	<key>GIDClientID</key>
 	<string>com.googleusercontent.apps.475395241430-hpr1kug97olsfsaeeuj83hol0cbs029v</string>
+	<key>Privacy — Location When In Use Usage Description</key>
+	<string>The app needs access to your location to provide location-based services</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NotoSansHebrew-VariableFont_wdth,wght.ttf</string>

@@ -25,7 +25,7 @@ struct SearchResult: Identifiable, Hashable {
     static func == (lhs: SearchResult, rhs: SearchResult) -> Bool {
         lhs.id == rhs.id
     }
-
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
@@ -34,50 +34,37 @@ struct SearchResult: Identifiable, Hashable {
 @Observable
 class LocationService: NSObject, MKLocalSearchCompleterDelegate {
     private let completer: MKLocalSearchCompleter
+    private var query: String
     
-    var completions = [SearchCompletions]()
+    var completions: [SearchCompletions]
     
-    init(completer: MKLocalSearchCompleter) {
-        self.completer = completer
+    override init() {
+        self.completer = .init()
+        self.completions = [SearchCompletions]()
+        self.query = ""
         super.init()
         self.completer.delegate = self
+        self.completer.resultTypes = .pointOfInterest
     }
     
     func update(queryFragment: String) {
-        completer.resultTypes = .pointOfInterest
+        self.query = queryFragment
+        guard !queryFragment.isEmpty else { return completions = [] }
         completer.queryFragment = queryFragment
     }
     
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        guard !query.isEmpty else { return }
         completions = completer.results.map { completion in
             // Get the private _mapItem property
             let mapItem = completion.value(forKey: "_mapItem") as? MKMapItem
             
             return .init(
                 title: completion.title,
-                subTitle: completion.subtitle, 
+                subTitle: completion.subtitle,
                 location: mapItem?.placemark.location,
                 url: mapItem?.url
             )
         }
     }
-    
-    func search(with query: String, coordinate: CLLocationCoordinate2D? = nil) async throws -> [SearchResult] {
-            let mapKitRequest = MKLocalSearch.Request()
-            mapKitRequest.naturalLanguageQuery = query
-            mapKitRequest.resultTypes = .pointOfInterest
-            if let coordinate {
-                mapKitRequest.region = .init(.init(origin: .init(coordinate), size: .init(width: 1, height: 1)))
-            }
-            let search = MKLocalSearch(request: mapKitRequest)
-
-            let response = try await search.start()
-
-            return response.mapItems.compactMap { mapItem in
-                guard let location = mapItem.placemark.location?.coordinate else { return .init(location: .init(), title: "") }
-                guard let name = mapItem.placemark.name else { return .init(location: .init(), title: "") }
-
-                return .init(location: location, title: name)
-            }
-        }
 }

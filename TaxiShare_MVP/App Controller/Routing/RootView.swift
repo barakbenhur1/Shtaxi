@@ -17,8 +17,6 @@ struct RootView: View {
     @State private var showAlert = true
     @State private var intilize = true
     
-    private let main = DispatchQueue.main
-    
     var body: some View {
         ZStack(alignment: .center) {
             switch router.root {
@@ -51,7 +49,7 @@ struct RootView: View {
         guard intilize else { return }
         intilize = false
         profileSync.handleLogin(profile: profiles.last,
-                                didLogin: { _ in  main.asyncAfter(deadline: .now() + 5) { launchScreenManager.dismiss() } } )
+                                didLogin: { _ in launchScreenManager.dismiss() } )
     }
 }
 

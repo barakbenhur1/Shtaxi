@@ -34,7 +34,9 @@ internal struct TButtonConfigRawValue: Hashable {
 enum TButtonConfig: Hashable {
     case none,
          designed(dimantions: TButtonDimantions,
-                  enabled: Bool),
+                  enabled: Bool,
+                  bold: Bool,
+                  cornerRadius: CGFloat),
          critical(dimantions: TButtonDimantions,
                   enabled: Bool),
          selectebale(selected: Bool,
@@ -70,7 +72,7 @@ extension TButtonConfig: RawRepresentable {
                    font: rawValue.font,
                    forgroundColor: rawValue.enabled ? .black : .darkText,
                    backroundColor: .clear,
-                   cornerRadius: 0,
+                   cornerRadius: rawValue.cornerRadius,
                    enabled: rawValue.enabled,
                    border: .init(width: 0,
                                  color: .clear)):
@@ -96,20 +98,34 @@ extension TButtonConfig: RawRepresentable {
                    font: .button,
                    forgroundColor: rawValue.enabled ?.lightText : .darkText,
                    backroundColor: rawValue.enabled ? .tBlue : .tGray,
-                   cornerRadius: 149,
+                   cornerRadius: rawValue.cornerRadius,
                    enabled: rawValue.enabled,
                    border: .init(width: 0,
                                  color: .clear)):
             
-            self = .designed(dimantions: rawValue.dimantions,
-                             enabled: rawValue.enabled)
+            if rawValue.font == .button || rawValue.font == .textMediumSemiBold {
+                self = .designed(dimantions: rawValue.dimantions,
+                                 enabled: rawValue.enabled,
+                                 bold: rawValue.font == .textMediumSemiBold,
+                                 cornerRadius: rawValue.cornerRadius)
+            }
+            else {
+                self = .custom(dimantions: rawValue.dimantions,
+                               font: rawValue.font,
+                               forgroundColor: rawValue.forgroundColor,
+                               backroundColor: rawValue.backroundColor,
+                               cornerRadius: rawValue.cornerRadius,
+                               enabled: rawValue.enabled,
+                               border: rawValue.border)
+            }
+            
             return
             
         case .init(dimantions: rawValue.dimantions,
                    font: rawValue.font,
                    forgroundColor: rawValue.enabled ? .inputFiled : .darkText,
                    backroundColor: .white,
-                   cornerRadius: 149,
+                   cornerRadius: rawValue.cornerRadius,
                    enabled: rawValue.enabled,
                    border: .init(width: 1,
                                  color: rawValue.enabled ? rawValue.font == .textMediumBold ? .tBlue : .darkText : .darkText)):
@@ -191,12 +207,12 @@ extension TButtonConfig: RawRepresentable {
                          border: .init(width: 0,
                                        color: .clear))
             
-        case .designed(let dimantions, let enabled):
+        case .designed(let dimantions, let enabled, let bold, let cornerRadius):
             return .init(dimantions: dimantions,
-                         font: .button,
+                         font: bold ? .textMediumSemiBold : .button,
                          forgroundColor: enabled ?.lightText : .darkText,
                          backroundColor: enabled ? .tBlue : .tGray,
-                         cornerRadius: 149,
+                         cornerRadius: cornerRadius,
                          enabled: enabled,
                          border: .init(width: 0,
                                        color: .clear))

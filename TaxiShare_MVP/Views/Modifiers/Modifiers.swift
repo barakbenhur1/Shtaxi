@@ -9,7 +9,9 @@ import SwiftUI
 
 struct ViewWithButton: ViewModifier {
     @StateObject var buttonConfigManager = TButtonConfigManager(config: .designed(dimantions: .full,
-                                                                                        enabled: false))
+                                                                                  enabled: false,
+                                                                                  bold: false,
+                                                                                  cornerRadius: 149))
     
     @State private var loading = false
     let buttonText: String
@@ -48,7 +50,9 @@ struct ViewWithButton: ViewModifier {
     private func configButton() {
         withAnimation(.smooth) {
             buttonConfigManager.config = .designed(dimantions: .full,
-                                                         enabled: setButtonConfig)
+                                                   enabled: setButtonConfig, 
+                                                   bold: false, 
+                                                   cornerRadius: 149)
         }
     }
 }
