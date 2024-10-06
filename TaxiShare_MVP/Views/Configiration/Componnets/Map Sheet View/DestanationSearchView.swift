@@ -7,8 +7,11 @@
 
 import SwiftUI
 import Combine
+import MapKit
 
 struct DestanationSearchView: View {
+    @EnvironmentObject private var locationManager: LocationManager
+    
     enum SerachField: Int, Hashable {
         case field
     }
@@ -25,17 +28,14 @@ struct DestanationSearchView: View {
     var body: some View {
         VStack {
             HStack {
-                Button {
+                ButtonWithShadow(image: "back") {
+                    hideKeyboard()
                     didSelect(nil)
-                } label: {
-                    Text("⇐")
-                        .font(.textHugeBold)
-                        .foregroundStyle(.black)
                 }
-                
                 Spacer()
             }
-            .padding(.top, 60)
+            .padding(.top, 84)
+            .padding(.bottom, 5)
             
             textField()
                 .onReceive(Just(text)) { _ in locationService.update(queryFragment: text) }
@@ -43,6 +43,21 @@ struct DestanationSearchView: View {
                          equals: .field)
             
             List {
+                Section {
+                    Text("מיקום נוכחי")
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
+                        .onTapGesture {
+                            hideKeyboard()
+                            lookUpCurrentLocation { place in
+                                guard let place else { return }
+                                guard let title = place.name else { return }
+                                guard let location = place.location else { return }
+                                didSelect(.init(title: title, subTitle: place.description, location: location))
+                            }
+                        }
+                }
+                
                 Section {
                     ForEach(locationService.completions, id: \.self) { serach in
                         VStack(alignment: .center) {
@@ -54,16 +69,17 @@ struct DestanationSearchView: View {
                                 .multilineTextAlignment(.center)
                                 .frame(maxWidth: .infinity)
                         }
-                        .onTapGesture { didSelect(serach) }
                         .padding(.all, 12)
                         .frame(maxWidth: .infinity)
                         .listRowSeparator(.hidden)
-//                        .alignmentGuide(.listRowSeparatorTrailing) { d in d[.trailing] }
+                        .onTapGesture {
+                            hideKeyboard()
+                            didSelect(serach)
+                        }
                     }
                 }
             }
             .frame(maxWidth: .infinity)
-            .edgesIgnoringSafeArea(.all)
             .listStyle(.grouped)
             .scrollContentBackground(.hidden)
         }
@@ -71,11 +87,40 @@ struct DestanationSearchView: View {
         .background(.white)
         .frame(maxHeight: .infinity)
         .frame(maxWidth: .infinity)
-        .ignoresSafeArea()
+        .onTapGesture { hideKeyboard() }
         .onAppear {
             focusedField = .field
             locationService.update(queryFragment: text)
         }
+    }
+    
+    private func lookUpCurrentLocation(completionHandler: @escaping (CLPlacemark?) -> Void) {
+        // Use the last reported location.
+        if let lastLocation = locationManager.lastKnownLocation {
+        lookupLocation(location: CLLocation(latitude: lastLocation.latitude, longitude: lastLocation.longitude),
+                       completionHandler: completionHandler)
+        }
+        else {
+            // No location was available.
+            completionHandler(nil)
+        }
+    }
+    
+    private func lookupLocation(location: CLLocation?, completionHandler: @escaping (CLPlacemark?) -> Void) {
+        guard let location else { return completionHandler(nil) }
+        let geocoder = CLGeocoder()
+        
+        // Look up the location and pass it to the completion handler
+        geocoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
+            if error == nil {
+                let firstLocation = placemarks?[0]
+                completionHandler(firstLocation)
+            }
+            else {
+                // An error occurred during geocoding.
+                completionHandler(nil)
+            }
+        })
     }
     
     @ViewBuilder private func textField() -> some View {

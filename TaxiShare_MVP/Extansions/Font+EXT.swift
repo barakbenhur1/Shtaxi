@@ -20,6 +20,7 @@ extension Font {
     static let tTitle: Font = .custom("\(notoHebrew)\(bold)", size: 32)
     static let textHuge: Font = .custom("\(notoHebrew)\(regular)", size: 36)
     static let textHugeBold: Font = .custom("\(notoHebrew)\(bold)", size: 36)
+    static let text24Bold: Font = .custom("\(notoHebrew)\(bold)", size: 24)
     static let textBig: Font = .custom("\(notoHebrew)\(regular)", size: 20)
     static let textBigBold: Font = .custom("\(notoHebrew)\(bold)", size: 20)
     static let textCritical: Font = .custom("\(notoHebrew)\(bold)", size: 18)

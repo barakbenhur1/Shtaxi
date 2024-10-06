@@ -20,6 +20,7 @@ extension Color {
     static let tYellow: Color = Color(hex: "#FFC100")
     static let gBlack: Color = Color(hex: "#292929")
     static let gWhite: Color = Color(hex: "#FAFAFA")
+    static let gBlue: Color = Color(hex: "#D4ECFE")
     
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

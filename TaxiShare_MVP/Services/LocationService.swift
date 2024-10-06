@@ -49,8 +49,8 @@ class LocationService: NSObject, MKLocalSearchCompleterDelegate {
     
     func update(queryFragment: String) {
         self.query = queryFragment
-        guard !queryFragment.isEmpty else { return completions = [] }
         completer.queryFragment = queryFragment
+        guard !queryFragment.isEmpty else { return completions = [] }
     }
     
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {

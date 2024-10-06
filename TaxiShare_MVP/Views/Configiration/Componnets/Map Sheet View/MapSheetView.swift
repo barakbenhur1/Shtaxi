@@ -20,18 +20,18 @@ struct MapSheetView: View {
     @State private var number: Int = 1
     @State private var selectedIndex = -1
     @State private var filters: [String] = []
-    @State private var filterOptions: [[Cell]] = [
+    @State private var filterOptions: [[FilterCell]] = [
         [
             .init(image: "price",
-                  text: "מחיר"),
+                  text: "מחיר".localized()),
             .init(image: "mFrindes",
-                  text: "חברים משותפים")
+                  text: "חברים משותפים".localized())
         ],
         [
             .init(image: "time",
-                  text: "שעת איסוף"),
+                  text: "שעת איסוף".localized()),
             .init(image: "rating",
-                  text: "דירוג")
+                  text: "דירוג".localized())
         ]
     ]
     
@@ -45,7 +45,7 @@ struct MapSheetView: View {
     
     let showDestenationSearchView: (DestanationSearchView?) -> ()
     
-    private func getIndexFor(cell: Cell) -> (Int, Int)? {
+    private func getIndexFor(cell: FilterCell) -> (Int, Int)? {
         for i in 0..<filterOptions.count {
             for j in 0..<filterOptions[i].count {
                 if cell == filterOptions[i][j] { return (i, j) }
@@ -148,7 +148,8 @@ struct MapSheetView: View {
             HStack {
                 Spacer()
                 
-                TableView(items: $filterOptions) { item in
+                TableView(diraction: .vertical, 
+                          items: $filterOptions) { item in
                     guard let axis = getIndexFor(cell: item) else { return }
                     filterOptions[axis.0][axis.1].selected.toggle()
                     if filterOptions[axis.0][axis.1].selected {
@@ -159,6 +160,7 @@ struct MapSheetView: View {
                         filters.remove(at: at)
                     }
                 }
+                .frame(height: 92)
             }
             .padding(.bottom, 32)
             

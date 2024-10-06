@@ -8,44 +8,104 @@
 import SwiftUI
 import MapKit
 
+struct RouteParamters: Hashable {
+    let from: SearchCompletions
+    let to: SearchCompletions
+}
+
 struct MapView: View {
     //MARK: - Properties
     @EnvironmentObject private var launchScreenManager: LaunchScreenStateManager
     
     @StateObject private var locationManager = LocationManager()
     
+    @State private var cameraPosition: MapCameraPosition = .userLocation(followsHeading: true, 
+                                                                         fallback: .automatic)
     @State private var isShowSideMenu: Bool = false
     @State private var isSheetOpen: Bool = true
-    
-    @State private var destnationView: DestanationSearchView? = nil
+    @State private var routes: [MKRoute]?
+    @State private var routeParamters: [RouteParamters]?
+    @State private var destnationView: DestanationSearchView?
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            if let location = locationManager.lastKnownLocation {
-                let position =  MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: location.latitude,
-                                                                                                           longitude: location.longitude),
-                                                                            span: MKCoordinateSpan(latitudeDelta: 0.006,
-                                                                                                   longitudeDelta: 0.006)))
-                Map(position: .constant(position))
-                    .onTapGesture { isSheetOpen = false }
-                    .overlay {
-                        CustomSheetView(open: $isSheetOpen) { MapSheetView { view in destnationView = view } }
+            Map(position: $cameraPosition) {
+                if let routes {
+                    ForEach(routes, id: \.self) { route in
+                        MapPolyline(route)
+                            .stroke(Color.tBlue, lineWidth: 5)
                     }
+                }
+                
+                if let routeParamters {
+                    ForEach(routeParamters, id: \.self) { paramter in
+                        if let location = paramter.from.location {
+                            Annotation(paramter.from.title, coordinate: location.coordinate) {
+                                ZStack {
+                                    Image(systemName: "noUser") /// user image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: 20)
+                                        .frame(width: 20)
+                                }
+                                .frame(height: 20)
+                                .frame(width: 20)
+                                .cornerRadius(10, corners: .allCorners)
+                            }
+                        }
+                        
+                        if let location = paramter.to.location {
+                            Annotation(paramter.from.title, coordinate: location.coordinate) {
+                                ZStack {
+                                    if paramter == routeParamters.last {
+                                        Circle()
+                                            .background(Color.tBlue)
+                                        
+                                    }
+                                    else {
+                                        Image(systemName: "noUser") /// user image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height: 20)
+                                            .frame(width: 20)
+                                    }
+                                }
+                                .frame(height: 20)
+                                .frame(width: 20)
+                                .cornerRadius(10, corners: .allCorners)
+                            }
+                        }
+                    }
+                }
+            }
+            .onTapGesture { withAnimation { isSheetOpen = false } }
+            .overlay { CustomSheetView(open: $isSheetOpen) { MapSheetView { view in destnationView = view } } }
+            //            .mapControls {
+//                MapUserLocationButton()
+//                    .mapControlVisibility(.visible)
+//                MapCompass()
+//                    .buttonBorderShape(.circle)
+//                MapScaleView()
+//                    .buttonBorderShape(.circle)
+//            }
+//            .controlSize(.large)
+            .onChange(of: routeParamters) {
+                guard let routeParamters else { return }
+                guard let routeParamter = routeParamters.first else { return }
+                guard let location = routeParamter.from.location else { return }
+                getDirections()
+                let region = MKCoordinateRegion(center: location.coordinate, span: MKCoordinateSpan(latitudeDelta: 500, longitudeDelta: 500))
+                withAnimation { cameraPosition = .region(region) }
             }
             
-            Button {
-                isShowSideMenu.toggle()
-            } label: {
-                Image("menu")
-            }
-            .padding(.top, 56)
-            .padding(.trailing, 40)
-            .frame(height: 52)
-            .frame(width: 52)
+            ButtonWithShadow(image: "menu") { isShowSideMenu.toggle() }
+                .padding(.top, 84)
+                .padding(.trailing, 20)
             
             if let destnationView {
                 destnationView
                     .transition(.move(edge: .bottom))
+                    .environmentObject(locationManager)
             }
             
             SideMenu(isShowing: $isShowSideMenu,
@@ -55,6 +115,31 @@ struct MapView: View {
             .ignoresSafeArea()
         }
         .onAppear { locationManager.checkLocationAuthorization() }
+        .edgesIgnoringSafeArea(.all)
+    }
+    
+    private func getDirections() {
+        routes = nil
+        guard let routeParamters else { return }
+        
+        Task {
+            var r = [MKRoute]()
+            for paramter in routeParamters {
+                guard let coordinate = paramter.from.location?.coordinate else { return }
+                guard let to = paramter.to.location?.coordinate else { return }
+                let selectedResult = MKMapItem(placemark: .init(coordinate: to))
+                
+                let request = MKDirections.Request ()
+                request.source = MKMapItem(placemark: MKPlacemark (coordinate: coordinate))
+                request.destination = selectedResult
+                let directions = MKDirections(request: request)
+                let response = try? await directions.calculate()
+                guard let route = response?.routes.first else { continue }
+                r.append(route)
+            }
+            
+            routes = r
+        }
     }
     
     @ViewBuilder private func menuTitle() -> some View {

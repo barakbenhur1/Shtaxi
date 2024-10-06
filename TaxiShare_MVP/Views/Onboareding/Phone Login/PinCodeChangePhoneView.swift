@@ -21,13 +21,8 @@ struct PinCodeChangePhoneView<VM: OnboardingViewModel>: ProfileUpdater {
     
     var body: some View {
         ZStack(alignment: .topLeading) {
-            Button {
-                didDone(nil)
-            } label: {
-                Text("⇐")
-                    .font(.textHugeBold)
-                    .foregroundStyle(.black)
-            }
+            ButtonWithShadow(image: "back") { didDone(nil) }
+                .padding(.top, 28)
             
             LoginPhoneView(text: phone,
                            beginFocused: true,

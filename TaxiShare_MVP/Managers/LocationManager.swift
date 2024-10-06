@@ -6,10 +6,15 @@
 //
 import Foundation
 import CoreLocation
+import _MapKit_SwiftUI
 
 final class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
     
     @Published var lastKnownLocation: CLLocationCoordinate2D?
+    @Published var position: MapCameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0,
+                                                                                                                                 longitude: 0),
+                                                                                                  span: MKCoordinateSpan(latitudeDelta: 0.006,
+                                                                                                                         longitudeDelta: 0.006)))
     var manager = CLLocationManager()
     
     func checkLocationAuthorization() {
@@ -45,9 +50,21 @@ final class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObje
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         lastKnownLocation = locations.first?.coordinate
+        
+        guard let lastKnownLocation else { return }
+        position = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lastKnownLocation.latitude,
+                                                                                                   longitude: lastKnownLocation.longitude),
+                                                                    span: MKCoordinateSpan(latitudeDelta: 0.006,
+                                                                                           longitudeDelta: 0.006)))
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {
         lastKnownLocation = CLLocationCoordinate2D(latitude: 51.507222, longitude: -0.1275)
+        
+        guard let lastKnownLocation else { return }
+        position = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lastKnownLocation.latitude,
+                                                                                                   longitude: lastKnownLocation.longitude),
+                                                                    span: MKCoordinateSpan(latitudeDelta: 0.006,
+                                                                                           longitudeDelta: 0.006)))
     }
 }
