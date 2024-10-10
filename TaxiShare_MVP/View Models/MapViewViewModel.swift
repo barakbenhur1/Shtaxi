@@ -14,15 +14,16 @@ struct City: Identifiable, Hashable {
     let location: CLLocation
 }
 
+@Observable
 final class MapViewViewModel: ViewModel {
     internal let useCases = MapUseCases(repo: MapRepositoryImpl(dataSource: MapDataSource()))
     
     let locationManager = LocationManager()
     
-    @Published var trips: [TripModel] = []
-    @Published var cities: [City] = []
-    @Published var routes: [MKRoute]?
-    @Published var routeParamters: [RouteParamters]?
+    var trips: [TripModel] = []
+    var cities: [City] = []
+    var routes: [MKRoute]?
+    var routeParamters: [RouteParamters]?
     
     func newTrip(id: String, fromBody: TripBody, toBody: TripBody, number: Int, complition: @escaping () -> (), error: @escaping (String) -> ()) {
         useCases.newTrip(id: id, fromBody: fromBody, toBody: toBody, number: number, complition: complition, error: error)
@@ -41,8 +42,13 @@ final class MapViewViewModel: ViewModel {
                                    location: location))
                 }
                 
-                trips = tripsValue
-                cities = c
+                await MainActor.run { [c, tripsValue] in
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self else { return }
+                        trips = tripsValue
+                        cities = c
+                    }
+                }
             }
         } error: { error in print(error) }
     }

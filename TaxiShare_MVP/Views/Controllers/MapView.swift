@@ -26,8 +26,7 @@ struct MapView<VM: MapViewViewModel>: View {
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            Map(position: $cameraPosition,
-                bounds: .init(maximumDistance: 5000000)) {
+            Map(position: $cameraPosition) {
                 ForEach(vm.cities, id: \.self) { city in
                     Annotation("", coordinate: city.location.coordinate) {
                         ZStack(alignment: .center) {
