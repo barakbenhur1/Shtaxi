@@ -30,10 +30,10 @@ struct CustomSheetView<Content: View>: View {
                     content()
                         .saveSize(in: $size)
                         .frame(maxWidth: .infinity)
-                }
-                .onAppear {
-                    startingOffset = UIScreen.main.bounds.height - proxy.size.height
-                    offsetLimit = size.height + 10
+                        .onAppear {
+                            startingOffset = UIScreen.main.bounds.height - proxy.size.height
+                            offsetLimit = size.height + 10
+                        }
                 }
                 .background(Color.white)
                 .cornerRadius(44, corners: [.topLeft, .topRight])

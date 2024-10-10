@@ -13,11 +13,11 @@ struct MapSheetView: View {
                                                                                     enabled: false,
                                                                                     bold: true,
                                                                                     cornerRadius: 8))
-    @State private var fromItem: SearchCompletions? = nil
-    @State private var toItem: SearchCompletions? = nil
+    @State private var fromItem: DestanationSearch? = nil
+    @State private var toItem: DestanationSearch? = nil
     @State private var from: String = ""
     @State private var to: String = ""
-    @State private var number: Int = 1
+    @State private var number: Int = -1
     @State private var selectedIndex = -1
     @State private var filters: [String] = []
     @State private var filterOptions: [[FilterCell]] = [
@@ -44,6 +44,7 @@ struct MapSheetView: View {
     }()
     
     let showDestenationSearchView: (DestanationSearchView?) -> ()
+    let trip: (_ from: DestanationSearch, _ to: DestanationSearch, _ number: Int, _ filters: [String]) -> ()
     
     private func getIndexFor(cell: FilterCell) -> (Int, Int)? {
         for i in 0..<filterOptions.count {
@@ -77,15 +78,16 @@ struct MapSheetView: View {
                         configButton(enabled: false)
                     }
                               .onTapGesture {
+                                  let text = fromItem != nil ? "\(fromItem!.city) \(fromItem!.street)" : ""
                                   let view = DestanationSearchView(image: "location",
                                                                    placeHolder: "מאיפה יוצאים?".localized(),
-                                                                   text: fromItem?.title ?? "") { serach in
+                                                                   text: text) { serach in
                                       showDestenationSearchView(nil)
                                       guard let serach else { return }
                                       fromItem = serach
-                                      let value = "\(serach.title) - \(serach.subTitle)"
+                                      let value = "\(serach.city) - \(serach.street)"
                                       from = value
-                                      configButton(enabled: !from.isEmpty && !to.isEmpty )
+                                      configButton(enabled: !from.isEmpty && !to.isEmpty && number > -1 )
                                   }
                                   
                                   showDestenationSearchView(view)
@@ -99,15 +101,16 @@ struct MapSheetView: View {
                         configButton(enabled: false)
                     }
                               .onTapGesture {
+                                  let text = toItem != nil ? "\(toItem!.city) \(toItem!.street)" : ""
                                   let view = DestanationSearchView(image: "flag",
                                                                    placeHolder: "לאן נוסעים?".localized(),
-                                                                   text: toItem?.title ?? "") { serach in
+                                                                   text: text) { serach in
                                       showDestenationSearchView(nil)
                                       guard let serach else { return }
                                       toItem = serach
-                                      let value = "\(serach.title) - \(serach.subTitle)"
+                                      let value = "\(serach.city) - \(serach.street)"
                                       to = value
-                                      configButton(enabled: !from.isEmpty && !to.isEmpty )
+                                      configButton(enabled: !from.isEmpty && !to.isEmpty && number > -1 )
                                   }
                                   
                                   showDestenationSearchView(view)
@@ -132,6 +135,7 @@ struct MapSheetView: View {
                                        selected: selectedIndex == index) {
                             selectedIndex = index
                             number = Int(button)!
+                            configButton(enabled: !from.isEmpty && !to.isEmpty && number > -1 )
                         }
                     }
                 }
@@ -147,7 +151,6 @@ struct MapSheetView: View {
             
             HStack {
                 Spacer()
-                
                 TableView(diraction: .vertical, 
                           items: $filterOptions) { item in
                     guard let axis = getIndexFor(cell: item) else { return }
@@ -166,7 +169,30 @@ struct MapSheetView: View {
             
             TButton(text: "חיפוש הצעות נסיעה".localized(),
                     config: buttonConfigManager.config) {
+                guard let fromItem, let toItem else { return }
+                self.trip(fromItem, toItem, number, filters)
                 
+                self.fromItem = nil
+                self.toItem = nil
+                self.from = ""
+                self.to = ""
+                self.number = -1
+                self.selectedIndex = -1
+                self.filters = []
+                self.filterOptions = [
+                    [
+                        .init(image: "price",
+                              text: "מחיר".localized()),
+                        .init(image: "mFrindes",
+                              text: "חברים משותפים".localized())
+                    ],
+                    [
+                        .init(image: "time",
+                              text: "שעת איסוף".localized()),
+                        .init(image: "rating",
+                              text: "דירוג".localized())
+                    ]
+                ]
             }
         }
         .padding(.leading, 40)
@@ -244,8 +270,8 @@ struct MapSheetView: View {
     }
 }
 
-#Preview {
-    MapSheetView { _ in
-        
-    }
-}
+//#Preview {
+//    MapSheetView { _ in
+//        
+//    }
+//}

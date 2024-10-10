@@ -22,6 +22,9 @@
 		4FD3CFC92C888D9E00910867 /* UpdateBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD3CFC82C888D9E00910867 /* UpdateBody.swift */; };
 		4FD3CFCB2C889FF600910867 /* UserIdBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD3CFCA2C889FF600910867 /* UserIdBody.swift */; };
 		4FD3CFCD2C8996AB00910867 /* URLRequest+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD3CFCC2C8996AB00910867 /* URLRequest+EXT.swift */; };
+		4FD6D1622CB5EC7700755D03 /* TripBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD6D1612CB5EC6F00755D03 /* TripBody.swift */; };
+		4FD6D1642CB5ED2700755D03 /* TripModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD6D1632CB5ED1800755D03 /* TripModel.swift */; };
+		4FD6D1692CB605E900755D03 /* CLLocation+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD6D1682CB605D500755D03 /* CLLocation+EXT.swift */; };
 		4FE5C5DA2C8F6C9E001C41F0 /* USeCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE5C5D92C8F6C9E001C41F0 /* USeCase.swift */; };
 		4FE5C5DC2C8F6CC2001C41F0 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE5C5DB2C8F6CC2001C41F0 /* Repository.swift */; };
 		4FE5C5E02C8F6EC4001C41F0 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE5C5DF2C8F6EC4001C41F0 /* DataSource.swift */; };
@@ -161,6 +164,9 @@
 		4FD3CFC82C888D9E00910867 /* UpdateBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBody.swift; sourceTree = "<group>"; };
 		4FD3CFCA2C889FF600910867 /* UserIdBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdBody.swift; sourceTree = "<group>"; };
 		4FD3CFCC2C8996AB00910867 /* URLRequest+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+EXT.swift"; sourceTree = "<group>"; };
+		4FD6D1612CB5EC6F00755D03 /* TripBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripBody.swift; sourceTree = "<group>"; };
+		4FD6D1632CB5ED1800755D03 /* TripModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripModel.swift; sourceTree = "<group>"; };
+		4FD6D1682CB605D500755D03 /* CLLocation+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocation+EXT.swift"; sourceTree = "<group>"; };
 		4FE5C5D92C8F6C9E001C41F0 /* USeCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USeCase.swift; sourceTree = "<group>"; };
 		4FE5C5DB2C8F6CC2001C41F0 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		4FE5C5DF2C8F6EC4001C41F0 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
@@ -357,6 +363,7 @@
 		4FD3CFC62C888D5800910867 /* Responses */ = {
 			isa = PBXGroup;
 			children = (
+				4FD6D1632CB5ED1800755D03 /* TripModel.swift */,
 				4FF5B16D2C851BB400176585 /* FacebookAuthModel.swift */,
 				4FF5B16C2C851BB400176585 /* EmptyModel.swift */,
 				4FF5B16F2C851BB400176585 /* ProfileModel.swift */,
@@ -371,6 +378,7 @@
 		4FD3CFC72C888D8800910867 /* Body */ = {
 			isa = PBXGroup;
 			children = (
+				4FD6D1612CB5EC6F00755D03 /* TripBody.swift */,
 				4FD3CFC82C888D9E00910867 /* UpdateBody.swift */,
 				4FD3CFCA2C889FF600910867 /* UserIdBody.swift */,
 			);
@@ -666,6 +674,7 @@
 		4FF5B1592C851BB300176585 /* Extansions */ = {
 			isa = PBXGroup;
 			children = (
+				4FD6D1682CB605D500755D03 /* CLLocation+EXT.swift */,
 				4FF5B1542C851BB300176585 /* CharacterSet+EXT.swift */,
 				4FF5B1552C851BB300176585 /* Color+EXT.swift */,
 				4FF5B1562C851BB300176585 /* Dictionary+EXT.swift */,
@@ -780,7 +789,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					4FF5B0C12C851B6A00176585 = {
 						CreatedOnToolsVersion = 15.4;
@@ -881,11 +890,13 @@
 				4FE5C5E22C9080DB001C41F0 /* Singleton.swift in Sources */,
 				4FF4432C2C8E12DC003E5CA7 /* CoreDataManager.swift in Sources */,
 				4FF443242C8E0D45003E5CA7 /* MapDataSource.swift in Sources */,
+				4FD6D1642CB5ED2700755D03 /* TripModel.swift in Sources */,
 				4FF5B1CE2C851BB400176585 /* Modifiers.swift in Sources */,
 				4FF443202C8E0CA7003E5CA7 /* MapUseCases.swift in Sources */,
 				4FE5C60B2CB2AC78001C41F0 /* RideSuggestionView.swift in Sources */,
 				4FF5B1DD2C851BB400176585 /* Response.swift in Sources */,
 				4FF5B1792C851BB400176585 /* TSelectableButton.swift in Sources */,
+				4FD6D1692CB605E900755D03 /* CLLocation+EXT.swift in Sources */,
 				4FF5B1CC2C851BB400176585 /* AppDelegate.swift in Sources */,
 				4FF5B1B72C851BB400176585 /* ProfileUpdater.swift in Sources */,
 				4FF443112C8E0707003E5CA7 /* OnboardingRepository.swift in Sources */,
@@ -901,6 +912,7 @@
 				4FE5C5EC2C930541001C41F0 /* LaunchScreenStateManager.swift in Sources */,
 				4FF5B1BC2C851BB400176585 /* MapViewViewModel.swift in Sources */,
 				4FF5B1B82C851BB400176585 /* FilterView.swift in Sources */,
+				4FD6D1622CB5EC7700755D03 /* TripBody.swift in Sources */,
 				4FE5C5DC2C8F6CC2001C41F0 /* Repository.swift in Sources */,
 				4FE5C6072CB05CCC001C41F0 /* DestanationSearchView.swift in Sources */,
 				4FF4432A2C8E1182003E5CA7 /* CoreDataUseCases.swift in Sources */,
@@ -1181,7 +1193,6 @@
 		4FF5B0EF2C851B6C00176585 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1201,7 +1212,6 @@
 		4FF5B0F02C851B6C00176585 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1221,7 +1231,6 @@
 		4FF5B0F22C851B6C00176585 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D6DN86P8S8;
@@ -1239,7 +1248,6 @@
 		4FF5B0F32C851B6C00176585 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D6DN86P8S8;

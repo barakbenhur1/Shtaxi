@@ -121,4 +121,4 @@ class Authentication: Singleton {
 }
 
 
-extension String: Error {}
+extension String: @retroactive Error {}

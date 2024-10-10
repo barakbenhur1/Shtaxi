@@ -32,9 +32,7 @@ struct SizeCalculator: ViewModifier {
             .background(
                 GeometryReader { proxy in
                     Color.clear // we just want the reader to get triggered, so let's use an empty color
-                        .onAppear {
-                            size = proxy.size
-                        }
+                        .onAppear { size = proxy.size }
                 }
             )
     }

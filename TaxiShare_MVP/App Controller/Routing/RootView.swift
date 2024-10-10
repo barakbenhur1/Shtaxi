@@ -13,6 +13,7 @@ struct RootView: View {
     @EnvironmentObject private var router: Router
     @EnvironmentObject private var profileSync: ProfileSyncHendeler
     @EnvironmentObject private var launchScreenManager: LaunchScreenStateManager
+    @EnvironmentObject private var vmProvider: ViewModelProvider
     
     @State private var showAlert = true
     @State private var intilize = true

@@ -20,12 +20,12 @@ struct OnboardingLoginView<VM: OnboardingViewModel>: View {
             hideKeyboard()
             Task {
                 vm.googleAuth { model in
-                    main.async {
-                        didSignup(model.id,
-                                  model.givenName,
-                                  model.email, "",
-                                  nil)
-                    }
+                    //                    main.async {
+                    didSignup(model.id,
+                              model.givenName,
+                              model.email, "",
+                              nil)
+                    //                    }
                 } error: { error in print(error) }
             }
         }, label: {

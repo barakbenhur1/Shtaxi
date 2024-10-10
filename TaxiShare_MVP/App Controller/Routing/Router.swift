@@ -14,6 +14,7 @@ class Router: Singleton {
         case pinCode(phone: String, verificationID: String)
         case onboarding(screens: [OnboardingProgressble])
         case map
+        case trip(from: TripBody, to: TripBody, number: Int, filters: [String])
         case filter
     }
     
@@ -51,6 +52,13 @@ class Router: Singleton {
         case .map:
             MapView()
                 .navigationBarBackButtonHidden()
+            
+        case .trip(let from, let to, let number, let filters):
+            RideSuggestionView(from: from,
+                               to: to,
+                               number: number,
+                               searchFilters: filters)
+            .navigationBarBackButtonHidden()
             
         case .filter:
             FilterView()

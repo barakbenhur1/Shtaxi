@@ -7,4 +7,7 @@
 
 import Foundation
 
-protocol MapRepository {}
+protocol MapRepository {
+    func newTrip(id: String, fromBody: TripBody, toBody: TripBody, number: Int, complition: @escaping () -> (), error: @escaping (String) -> ())
+    func getTrips(complition: @escaping ([TripModel]) -> (), error: @escaping (String) -> ())
+}

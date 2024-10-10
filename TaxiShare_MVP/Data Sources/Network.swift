@@ -146,8 +146,8 @@ extension Network {
         static var value: String {
             get {
 #if DEBUG
-                // return "http://localhost:3000/"
-                return "https://shtaxi-server.onrender.com/"
+                 return "http://localhost:3000/"
+//                return "https://shtaxi-server.onrender.com/"
 #else
                 return "https://shtaxi-server.onrender.com/"
 #endif

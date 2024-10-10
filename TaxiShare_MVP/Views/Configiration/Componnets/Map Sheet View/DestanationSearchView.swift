@@ -9,19 +9,31 @@ import SwiftUI
 import Combine
 import MapKit
 
+struct DestanationSearch {
+    let city: String
+    let street: String
+    let location: CLLocation
+}
+
 struct DestanationSearchView: View {
-    @EnvironmentObject private var locationManager: LocationManager
+    @EnvironmentObject private var vmProvider: ViewModelProvider
+    
+    @State private var locationService = LocationService()
+    
+    private var vm: MapViewViewModel { return vmProvider.viewModel() }
     
     enum SerachField: Int, Hashable {
         case field
     }
     
+    private let queue = DispatchQueue.main
+    
     let image: String
     let placeHolder: String
     @State var text: String
-    let didSelect: (SearchCompletions?) -> ()
+    let didSelect: (DestanationSearch?) -> ()
     
-    @State private var locationService = LocationService()
+    @State private var isAnimating = false
     
     @FocusState private var focusedField: SerachField?
     
@@ -30,7 +42,8 @@ struct DestanationSearchView: View {
             HStack {
                 ButtonWithShadow(image: "back") {
                     hideKeyboard()
-                    didSelect(nil)
+                    withAnimation(.spring) { isAnimating = false }
+                    queue.asyncAfter(wallDeadline: .now() + 0.5) { didSelect(nil) }
                 }
                 Spacer()
             }
@@ -38,7 +51,6 @@ struct DestanationSearchView: View {
             .padding(.bottom, 5)
             
             textField()
-                .onReceive(Just(text)) { _ in locationService.update(queryFragment: text) }
                 .focused($focusedField,
                          equals: .field)
             
@@ -49,11 +61,15 @@ struct DestanationSearchView: View {
                         .frame(maxWidth: .infinity)
                         .onTapGesture {
                             hideKeyboard()
-                            lookUpCurrentLocation { place in
+                            withAnimation(.spring) { isAnimating = false }
+                            vm.lookUpCurrentLocation { place in
                                 guard let place else { return }
-                                guard let title = place.name else { return }
+                                guard let city = place.locality else { return }
+                                guard let street = place.subLocality else { return }
                                 guard let location = place.location else { return }
-                                didSelect(.init(title: title, subTitle: place.description, location: location))
+                                queue.asyncAfter(wallDeadline: .now() + 0.5) { didSelect(.init(city: city,
+                                                                                                street: street,
+                                                                                                location: location)) }
                             }
                         }
                 }
@@ -74,7 +90,14 @@ struct DestanationSearchView: View {
                         .listRowSeparator(.hidden)
                         .onTapGesture {
                             hideKeyboard()
-                            didSelect(serach)
+                            withAnimation(.spring) { isAnimating = false }
+                            vm.lookupLocation(location: serach.location) { place in
+                                guard let place else { return }
+                                guard let city = place.locality else { return }
+                                queue.asyncAfter(wallDeadline: .now() + 0.5) { didSelect(.init(city: city,
+                                                                                               street: serach.title,
+                                                                                               location: serach.location)) }
+                            }
                         }
                     }
                 }
@@ -88,39 +111,14 @@ struct DestanationSearchView: View {
         .frame(maxHeight: .infinity)
         .frame(maxWidth: .infinity)
         .onTapGesture { hideKeyboard() }
+        .offset(y: isAnimating ? 0 : UIScreen.main.bounds.height)
+        .opacity(isAnimating ? 1 : 0)
+        .onChange(of: text) { locationService.update(queryFragment: text) }
         .onAppear {
             focusedField = .field
             locationService.update(queryFragment: text)
+            withAnimation(.spring) { isAnimating = true }
         }
-    }
-    
-    private func lookUpCurrentLocation(completionHandler: @escaping (CLPlacemark?) -> Void) {
-        // Use the last reported location.
-        if let lastLocation = locationManager.lastKnownLocation {
-        lookupLocation(location: CLLocation(latitude: lastLocation.latitude, longitude: lastLocation.longitude),
-                       completionHandler: completionHandler)
-        }
-        else {
-            // No location was available.
-            completionHandler(nil)
-        }
-    }
-    
-    private func lookupLocation(location: CLLocation?, completionHandler: @escaping (CLPlacemark?) -> Void) {
-        guard let location else { return completionHandler(nil) }
-        let geocoder = CLGeocoder()
-        
-        // Look up the location and pass it to the completion handler
-        geocoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) in
-            if error == nil {
-                let firstLocation = placemarks?[0]
-                completionHandler(firstLocation)
-            }
-            else {
-                // An error occurred during geocoding.
-                completionHandler(nil)
-            }
-        })
     }
     
     @ViewBuilder private func textField() -> some View {
